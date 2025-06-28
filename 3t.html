@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에훗 (사사기 3:12-30)</title>
+    <style>
+        /*
+        GLOBAL STYLES (from 14t.html)
+        Consistent box-sizing, font-family, line-height, color, min-height, padding for body.
+        Container styling is also global.
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /*
+        HEADER STYLES (using 4t.html's specific colors, 14t.html's structure/text shadows)
+        */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); /* 4t.html color */
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* from 14t.html */
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /*
+        OVERVIEW STYLES (from 14t.html, with 4t.html's border color)
+        */
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        /*
+        CONTROLS & SEARCH BAR (from 14t.html, with 4t.html's border color)
+        */
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3498db;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3498db;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white; /* Changed for contrast on thinking-section background */
+        }
+        
+        .thinking-qa .important { /* Standardized to 'important' as in 14t.html */
+            color: #ffeb3b; /* Consistent with 14t.html's thinking section */
+            font-weight: bold;
+        }
+        
+        /*
+        CONCLUSION (from 14t.html, with 4t.html's color for key-point and important-text)
+        */
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        /*
+        KEY VERSES SECTION (from 14t.html, with 4t.html's border color)
+        */
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db; /* 4t.html color */
+            cursor: pointer; /* Retain toggle functionality from original 4t.html/5t.html */
+            transition: all 0.3s ease;
+        }
+
+        .key-verse:hover { /* Retain hover effect from original 4t.html/5t.html */
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+
+        /* Full verse text toggle for key verses - specific to original 4t.html/5t.html */
+        .verse-full-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #3498db; /* 4t.html color */
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .verse-full-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /*
+        NAVIGATION BUTTONS (from 14t.html)
+        */
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        /*
+        SEARCH HIGHLIGHT & NO RESULTS (from 14t.html)
+        */
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text { /* Used for general highlights within table data */
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        /*
+        RESPONSIVE DESIGN (from 14t.html)
+        */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗡️ 에훗 (사사기 3:12-30)</h1>
+            <p>두 번째 사사 - 지혜와 용기의 구원자</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 에훗 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">에훗 (사사기 3:12-30)</span>의 이야기는 <span class="important">사사기에 등장하는 두 번째 사사</span>로서, 옷니엘 이후 다시 타락한 이스라엘을 구원하기 위해 하나님께서 세우신 독특하고 지혜로운 구원자입니다.</p>
+                
+                <p>에훗의 이야기는 크게 <span class="emphasis">다섯 가지 단계</span>로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 이스라엘의 재타락과 모압의 압제(3:12-14)</strong><br>
+                이스라엘 자손이 <span class="important">다시 여호와의 목전에 악을 행하여</span> 하나님께서 모압 왕 에글론을 강하게 하시어 18년간 압제를 받게 됩니다. 이는 <span class="highlight">사사 시대의 반복적 패턴</span>이 시작됨을 보여줍니다.</p>
+                
+                <p><strong>둘째, 이스라엘의 부르짖음과 에훗의 부름(3:15)</strong><br>
+                고통 중에 있던 이스라엘이 <span class="emphasis">여호와께 부르짖자 하나님께서 구원자 에훗을 세우심</span>으로 응답하십니다. 에훗은 <span class="important">베냐민 족속의 왼손잡이</span>로 특별한 특징을 가진 인물이었습니다.</p>
+                
+                <p><strong>셋째, 에훗의 지혜로운 계획과 준비(3:16-19)</strong><br>
+                에훗은 <span class="highlight">한 규빗 길이의 양날 칼을 만들어 오른쪽 허벅지에 차고</span> 조공을 바치는 척하며 에글론 왕에게 접근합니다. 이는 <span class="important">하나님의 지혜와 인간의 지혜가 결합된 완벽한 전략</span>이었습니다.</p>
+                
+                <p><strong>넷째, 에글론 왕 암살과 탈출(3:20-26)</strong><br>
+                에훗은 <span class="emphasis">"하나님의 비밀한 말씀이 있다"</span>며 왕을 유인하여 단독으로 만난 후 칼로 찔러 죽이고 지혜롭게 탈출합니다. 이는 <span class="important">하나님의 심판이 구체적으로 실행되는 순간</span>이었습니다.</p>
+                
+                <p><strong>다섯째, 이스라엘의 완전한 승리와 평안(3:27-30)</strong><br>
+                에훗이 <span class="highlight">에브라임 산지에서 나팔을 불어</span> 이스라엘을 모으고 모압을 완전히 정복하여 <span class="important">80년간의 평안</span>을 얻게 됩니다. 이는 옷니엘의 40년보다 두 배나 긴 평안으로 하나님의 축복이 더욱 풍성함을 보여줍니다.</p>
+                
+                <p>에훗의 이야기는 <span class="important">하나님의 구원 방법의 다양성과 창의성</span>을 보여주며, <span class="highlight">인간의 특성과 재능을 하나님께서 어떻게 사용하시는지</span>를 명확히 드러냅니다. 특히 왼손잡이라는 신체적 특징과 지혜로운 전략이 결합되어 완벽한 구원을 이루어내는 모습은 하나님의 섭리의 놀라움을 보여줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 에훗, 에글론, 왼손잡이)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 에훗을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 에훗의 "왼손잡이"라는 특징이 그의 사역과 하나님의 구원 계획에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>에훗이 <span class="important">"왼손잡이"</span>였다는 것은 단순히 그의 신체적 특징을 넘어 중요한 상징적 의미를 가집니다. 당시 문화에서는 오른손잡이가 일반적이고 왼손잡이는 다소 <span class="highlight-answer">불리하거나 비정상적으로 여겨지는 경향</span>이 있었습니다. 이는 마치 사사기 전체에서 이스라엘 백성이 처한 <span class="important">절망적인 상황과 약점</span>을 반영하는 듯합니다. 그럼에도 불구하고 하나님께서는 이러한 에훗의 '약점'을 오히려 <span class="important">모압 왕 에글론을 암살하는 데 결정적인 강점</span>으로 사용하셨습니다. 오른손잡이 병사들은 에훗의 칼이 오른쪽에 숨겨져 있을 것이라고 예상했지만, 에훗은 왼손잡이였기에 예상치 못한 허벅지에 칼을 숨길 수 있었고, 이는 암살 성공의 핵심 요인이 되었습니다.</p>
+                    
+                    <p>이러한 에훗의 이야기는 하나님께서 <span class="highlight-answer">인간의 약점이나 세상의 기준으로 불리하다고 여겨지는 특성조차도 당신의 위대한 계획 속에서 비범한 강점으로 변모시켜 사용하신다</span>는 것을 분명히 가르쳐 줍니다. 우리의 부족함과 연약함이 하나님의 능력을 제한하는 요소가 아니라, 오히려 <span class="important">하나님께서 일하시는 방식의 독특함과 탁월함을 드러내는 통로</span>가 될 수 있습니다. 이는 우리가 자신이나 타인의 약점을 판단하고 실망하기보다, <span class="important">하나님께서 그 약점을 통해 어떻게 역사하실지 기대하고 신뢰해야 함</span>을 일깨웁니다. 우리의 약점은 하나님이 강함을 드러내시는 무대가 될 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 에훗이 에글론을 암살하는 데 사용한 "기묘한 전략"과 "은밀한 일"의 의미는 무엇이며, 이는 하나님의 구원 방식에 대해 무엇을 보여주는가?</h3>
+                    <p>에훗이 에글론을 암살하는 데 사용한 전략은 매우 <span class="important">기묘하고 대담하며, 심지어는 기만적인 요소</span>를 포함하고 있습니다. 그는 <span class="highlight-answer">양날 칼을 특별히 제작하여 오른쪽 허벅지에 차고, 조공을 바친 후 '은밀한 일'을 아뢰겠다며 에글론에게 단독 면담</span>을 요청했습니다. 이 모든 과정은 치밀한 계획과 과감한 실행력이 동반된 것이었습니다. 이러한 에훗의 '기묘한 전략'은 우리가 흔히 생각하는 도덕적인 기준이나 영웅적인 전투 방식과는 다소 거리가 있어 보일 수 있습니다.</p>
+                    
+                    <p>그러나 성경은 에훗의 행동을 비판하지 않고, 오히려 이를 통해 <span class="important">하나님의 구원이 이루어졌음</span>을 명시합니다. 이는 하나님께서 당신의 백성을 구원하시기 위해 <span class="highlight-answer">인간의 예상과 기대를 뛰어넘는 다양하고 창의적인 방법</span>을 사용하신다는 것을 보여줍니다. 때로는 우리가 이해하기 어렵거나 세상적인 기준으로 볼 때 합리적이지 않아 보이는 방식이라 할지라도, 하나님께서는 그것을 통해 당신의 뜻을 이루십니다. 중요한 것은 <span class="important">그 행동의 동기가 하나님의 구원을 위한 것</span>이었고, 결과적으로 이스라엘에게 80년이라는 긴 평화를 가져다주었다는 사실입니다.</p>
+                    
+                    <p>이 교훈은 우리에게 하나님의 지혜와 방법을 <span class="important">인간적인 잣대로 제한하려 들지 말아야 한다</span>는 것을 가르칩니다. 하나님은 선과 악의 절대적인 기준이시지만, 동시에 <span class="important">복잡하고 타락한 세상 속에서 당신의 뜻을 이루는 데 있어 다양한 도구와 방식을 활용</span>하십니다. 우리는 하나님의 주권과 그분의 놀라운 구원 방식에 대한 <span class="important">깊은 신뢰와 겸손한 이해</span>를 가져야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 에글론의 죽음이 이스라엘의 구원에 어떤 결정적인 역할을 했으며, 이는 통치자의 영적 상태와 백성의 운명 사이의 관계를 어떻게 보여주는가?</h3>
+                    <p>에글론은 모압의 왕이자 <span class="important">이스라엘을 18년간 압제했던 폭군</span>이었습니다. 그의 죽음은 단순히 한 인물의 제거를 넘어 <span class="highlight-answer">이스라엘 구원 사역의 결정적인 전환점</span>이 되었습니다. 에글론이 죽자마자 모압의 군사 시스템과 리더십은 마비되었고, 이는 에훗이 이스라엘 백성을 규합하여 <span class="important">모압을 완전히 진압하고 80년간의 평화</span>를 가져올 수 있는 기반을 마련했습니다. 이는 통치자 한 명의 영적, 도덕적 상태와 그 백성의 운명 사이에 <span class="important">깊은 상관관계</span>가 있음을 보여줍니다.</p>
+                    
+                    <p>에글론은 성경에서 <span class="important">"심히 비대한 자"</span>로 묘사되는데, 이는 단순히 육체적인 비만을 넘어 그의 <span class="highlight-answer">탐욕, 교만, 그리고 영적인 둔감함</span>을 상징하는 것으로 해석될 수 있습니다. 그의 비대함은 이스라엘의 고통과 대비되며, 압제자의 잔혹한 특성을 부각시킵니다. 에글론의 죽음은 하나님께서 <span class="important">당신 백성의 고통을 외면하지 않으시고, 심판을 통해 압제자를 제거하심으로써 의로운 구원을 이루신다</span>는 것을 보여줍니다.</p>
+                    
+                    <p>이 이야기는 현대 사회에서도 중요한 통찰을 제공합니다. 한 나라나 공동체의 리더십은 그 구성원들의 삶과 직접적인 영향을 미칩니다. <span class="important">리더의 영적, 도덕적 타락은 공동체 전체에 부정적인 영향</span>을 미칠 수 있으며, 반대로 <span class="highlight-answer">하나님을 경외하고 정의를 행하는 리더십은 백성들에게 평화와 번영</span>을 가져올 수 있습니다. 이는 우리가 리더들을 위해 기도하고, 동시에 우리 자신도 각자의 자리에서 하나님 앞에서 정직하고 의로운 리더십을 발휘해야 할 책임이 있음을 일깨웁니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 에훗이 요단강 나루턱을 장악하여 모압을 완전히 진압한 군사적 전략과 그 영적 의미는 무엇인가?</h3>
+                    <p>에훗의 군사적 전략은 에글론 암살 후 <span class="important">이스라엘 백성을 에브라임 산지에 소집</span>하고, 즉시 <span class="highlight-answer">요단강 나루턱을 장악</span>하여 모압 군대가 요단강을 건너 본국으로 도망치는 퇴로를 차단한 것이었습니다. 이는 매우 <span class="important">전략적이고 지리적인 이점을 활용한 영리한 전술</span>이었습니다. 모압 군대는 에글론 왕의 죽음으로 인해 지휘 체계를 잃고 혼란에 빠졌을 뿐만 아니라, 퇴로까지 막히자 사실상 독 안에 든 쥐 신세가 되었습니다. 그 결과 이스라엘은 모압 사람 <span class="important">일만 명</span>을 죽이며 한 사람도 남기지 않는 <span class="important">완전한 승리</span>를 거둘 수 있었습니다.</p>
+                    
+                    <p>이 군사적 승리의 <span class="important">영적 의미</span>는 깊습니다. 첫째, 이는 <span class="highlight-answer">하나님께서 단순히 압제자를 제거하는 것을 넘어, 당신의 백성이 완전한 해방과 평화를 누리게 하신다</span>는 것을 보여줍니다. 요단강 나루턱을 막은 것은 단순히 물리적인 승리를 넘어, <span class="important">이스라엘을 괴롭히던 모압의 세력을 뿌리 뽑는</span> 상징적인 행위였습니다. 둘째, 이 사건은 <span class="important">하나님께서 당신의 백성에게 지혜와 용기를 주셔서 압도적인 적에 맞서 승리하게 하신다</span>는 것을 보여줍니다. 에훗의 전략적 판단과 이스라엘 백성의 단합된 행동은 모두 하나님의 인도하심 아래 이루어졌습니다.</p>
+                    
+                    <p>이 교훈은 우리가 영적 전쟁에서 직면하는 상황에 대한 통찰을 제공합니다. 우리의 적은 단순히 눈에 보이는 문제가 아니라, 죄와 사탄의 강력한 세력입니다. 그러나 하나님께서는 우리에게 <span class="important">영적인 전략과 지혜</span>를 주시며, 때로는 예상치 못한 방법으로 <span class="highlight-answer">적의 퇴로를 차단하고 완전한 승리를 허락</span>하십니다. 우리는 문제의 본질을 파악하고, <span class="important">하나님께서 주시는 지혜를 구하며, 단호하고 전략적으로 영적인 싸움에 임해야 함</span>을 배울 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>5. 에훗의 사역을 통해 이스라엘에 80년간의 평화가 찾아온 의미와 현재 우리의 삶에 적용할 수 있는 교훈은 무엇인가?</h3>
+                    <p>에훗의 사역이 성공적으로 마무리된 후, 이스라엘 땅에는 <span class="important">80년간의 긴 평화</span>가 찾아왔습니다. 이는 사사기에 기록된 평화 기간 중 가장 긴 기간 중 하나로, <span class="highlight-answer">하나님의 구원이 얼마나 강력하고 지속적인 영향력을 가질 수 있는지</span>를 보여줍니다. 이 평화는 단순히 전쟁의 종식을 넘어, 백성들이 <span class="important">안정과 번영 속에서 하나님을 예배하고 율법을 따를 수 있는 기회</span>를 얻었음을 의미합니다. 이러한 긴 평화는 이스라엘 백성이 하나님의 구원에 올바르게 반응하고, 한동안은 여호와의 목전에 악을 행하지 않았음을 시사합니다.</p>
+                    
+                    <p>이 평화의 의미는 첫째, <span class="important">하나님의 구원은 완전하다</span>는 것을 보여줍니다. 하나님께서는 단순히 위기를 넘기게 하시는 것을 넘어, 백성이 진정한 안식과 축복을 누리도록 역사하십니다. 둘째, 이는 <span class="highlight-answer">백성의 순종과 하나님의 은혜가 만날 때 주어지는 결과</span>입니다. 이스라엘이 하나님께 부르짖었고, 에훗을 통해 구원받은 후, 그들은 한동안 하나님께 순종하는 삶을 살았을 것입니다. 이러한 순종은 하나님의 축복인 평화로 이어졌습니다.</p>
+                    
+                    <p>현재 우리의 삶에 적용할 수 있는 교훈은 분명합니다. 우리도 인생의 수많은 압제와 고난 속에서 하나님께 부르짖을 때, 하나님은 우리를 구원하시고 <span class="important">영적인 평화와 안식</span>을 허락하십니다. 이 평화는 <span class="highlight-answer">죄와의 싸움에서 승리하고, 세상의 유혹을 물리치며, 하나님과의 관계 속에서 누리는 진정한 자유</span>를 의미합니다. 또한, 우리가 받은 구원과 평화가 지속되기 위해서는 <span class="important">지속적인 순종과 감사, 그리고 영적 경각심</span>이 필요하다는 것을 일깨웁니다. 80년의 평화도 결국은 다음 세대의 타락으로 이어졌듯이, 영적인 게으름은 다시 고난을 초래할 수 있습니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>🎯 최종 결론: 약점 속의 강함, 기묘한 전략 속의 하나님의 구원</h3>
+                <p><strong>1. 약점 속의 하나님의 강함:</strong> 에훗의 <span class="key-point">"왼손잡이"</span>라는 특징은 인간적인 약점이 하나님의 손에 붙들릴 때 오히려 <span class="important-text">비범한 강점이 되어 위대한 구원 역사의 도구로 사용될 수 있다</span>는 심오한 진리를 보여줍니다. 우리의 부족함과 연약함이 하나님의 능력을 드러내는 통로가 됩니다.</p>
+                
+                <p><strong>2. 창의적 구원 방식의 주권:</strong> 에훗의 <span class="key-point">치밀하고 기묘한 암살 전략</span>은 하나님께서 당신의 백성을 구원하시기 위해 <span class="important-text">인간의 예상과 기대를 뛰어넘는 다양하고 독특한 방법</span>을 사용하신다는 것을 강조합니다. 우리는 하나님의 지혜와 주권을 인간적인 잣대로 제한하려 들지 말아야 합니다.</p>
+                
+                <p><strong>3. 통치자의 영향력과 하나님의 심판:</strong> 에글론 왕의 죽음은 <span class="key-point">통치자의 영적, 도덕적 상태가 백성의 운명에 미치는 지대한 영향</span>을 보여주며, 동시에 <span class="important-text">하나님께서 압제자를 심판하시고 당신 백성의 고통에 응답하신다</span>는 정의로운 속성을 드러냅니다. 의로운 리더십은 공동체에 평화와 번영을 가져다줍니다.</p>
+                
+                <p><strong>4. 완전한 승리와 지속적인 평화:</strong> 에훗이 요단강 나루턱을 장악하여 <span class="key-point">모압을 완전히 진압하고 80년의 평화를 가져온 것</span>은 <span class="important-text">하나님의 구원이 단순한 위기 모면을 넘어 완전한 해방과 지속적인 안식</span>을 포함한다는 것을 증명합니다. 그러나 이 평화는 백성의 지속적인 순종과 영적 경각심을 요구합니다.</p>
+                
+                <p>따라서 에훗의 이야기는 우리에게 <span class="key-point">하나님께서 우리의 약점과 한계에도 불구하고 우리를 사용하신다</span>는 희망과 <span class="important-text">그분의 구원 방식에 대한 깊은 신뢰</span>, 그리고 <span class="key-point">받은 평화에 대한 지속적인 책임감</span>을 일깨워주는 귀중한 교훈이 됩니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 이 단원의 핵심 성경 구절</h2>
+            
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>1. 사사기 3:12 - 재타락과 압제</h3>
+                <p>"이스라엘 자손이 또 여호와의 목전에 악을 행하니 이스라엘 자손이 여호와의 목전에 악을 행하므로 여호와께서 모압 왕 에글론을 강하게 하사 이스라엘을 치게 하시매"</p>
+                <div class="verse-full-text">이스라엘의 반복된 죄악은 하나님의 심판을 초래했고, 이는 외세의 압제로 나타났습니다. 이는 죄가 가져오는 고통스러운 결과를 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>2. 사사기 3:15 - 왼손잡이 구원자</h3>
+                <p>"이스라엘 자손이 여호와께 부르짖매 여호와께서 그들을 위하여 한 구원자를 세우셨으니 곧 베냐민 사람 게라의 아들 왼손잡이 에훗이라 이스라엘 자손이 그를 통하여 모압 왕 에글론에게 조공을 바치더라"</p>
+                <div class="verse-full-text">하나님은 백성의 부르짖음에 응답하시며, 세상의 기준으로 약점이라 여겨질 수 있는 특징(왼손잡이)을 가진 인물까지도 당신의 구원 도구로 사용하십니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>3. 사사기 3:20 - 기묘한 전략의 시작</h3>
+                <p>"에훗이 왕에게 나아가니 왕은 서늘한 다락방에 혼자 앉아 있는지라 에훗이 이르되 내가 하나님의 명령을 받들어 왕에게 아뢸 말씀이 있나이다 하매 왕이 그의 좌석에서 일어나니"</p>
+                <div class="verse-full-text">에훗은 지혜로운 언어로 왕의 경계를 허물고, 단독 면담의 기회를 얻어 하나님의 심판을 실행할 준비를 합니다. 이는 하나님의 역사가 예상치 못한 방법으로 이루어짐을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>4. 사사기 3:28 - 승리의 선언과 행동</h3>
+                <p>"에훗이 무리에게 이르되 나를 따르라 여호와께서 너희의 원수 모압 사람을 너희의 손에 넘겨 주셨느니라 하매 무리가 에훗을 따라 내려가서 모압에서 오는 길목인 요단 나루를 점령하여 한 사람도 건너지 못하게 하였고"</p>
+                <div class="verse-full-text">에훗은 하나님의 승리를 확신하며 백성을 이끌고, 적의 퇴로를 차단하는 전략으로 완전한 승리를 이끌어냅니다. 이는 하나님의 능력과 인간의 순종적 행동의 결합을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>5. 사사기 3:30 - 평화의 도래</h3>
+                <p>"그 날에 모압이 이스라엘의 수하에 항복하매 그 땅이 팔십 년 동안 평온하였더라"</p>
+                <div class="verse-full-text">에훗의 사역을 통해 이스라엘은 80년이라는 긴 평화를 누렸습니다. 이는 하나님의 구원이 백성에게 가져다주는 실제적인 안식과 지속적인 축복을 상징합니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./4t.html" class="nav-button secondary">
+                ➡️ 다음 단계로 가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 정의 (에훗 관련 내용, 중요사항 강조)
+        const data = [
+            {
+                verse: "사사기 3:12-14",
+                event: "이스라엘의 재타락과 모압의 압제 - 옷니엘 이후 이스라엘이 <span class='important'>다시 여호와의 목전에 악을 행하여</span> 하나님께서 <span class='important'>모압 왕 에글론을 강하게 하시어</span> <span class='important'>18년간 압제</span>를 받게 하심",
+                place: "<span class='important'>종려나무 성읍(여리고)</span>",
+                question: "이스라엘이 모압의 압제를 받게 된 원인은 무엇인가?",
+                answer: "옷니엘 사후 이스라엘 자손이 <span class='highlight-text'>다시 여호와의 목전에 악을 행하였기 때문</span>입니다. 이는 하나님의 죄에 대한 심판으로, 그들을 18년간 모압 왕 에글론의 압제 아래 두셨습니다.",
+                fullVerse: "이스라엘 자손이 또 여호와의 목전에 악을 행하니라 이스라엘 자손이 여호와의 목전에 악을 행하므로 여호와께서 모압 왕 에글론을 강성하게 하사 이스라엘을 치게 하시매 에글론이 암몬 자손과 아말렉 자손을 모아 가지고 와서 이스라엘을 쳐서 종려나무 성읍을 점령한지라 이에 이스라엘 자손이 모압 왕 에글론을 섬긴 지 열여덟 해였더라"
+            },
+            {
+                verse: "사사기 3:15-17",
+                event: "구원자 <span class='important'>에훗의 등장과 독특한 준비</span>",
+                place: "모압 왕궁, <span class='important'>에브라임 산지 베냐민 게라</span>",
+                question: "에훗이 '왼손잡이'라는 특징이 그의 사역에 어떻게 활용되었는가?",
+                answer: "에훗은 <span class='highlight-text'>오른손잡이가 아닌 왼손잡이</span>였기에, 그의 <span class='highlight-text'>오른쪽 허벅지 옷 속에 숨긴 칼</span>을 적들이 예상치 못하게 하여 에글론 암살에 성공할 수 있었습니다. 이는 약점을 강점으로 전환한 하나님의 기묘한 방법입니다.",
+                fullVerse: "이스라엘 자손이 여호와께 부르짖매 여호와께서 그들을 위하여 한 구원자를 세우셨으니 곧 베냐민 사람 게라의 아들 왼손잡이 에훗이라 이스라엘 자손이 그를 통하여 모압 왕 에글론에게 공물을 바칠 때에 에훗이 길이가 한 규빗 되는 좌우에 날 선 칼을 만들어 그의 오른쪽 허벅지 옷 속에 차고 공물을 에글론 왕에게 바쳤는데 에글론은 심히 비대한 자였더라"
+            },
+            {
+                verse: "사사기 3:18-26",
+                event: "<span class='important'>에글론 암살 작전</span>",
+                place: "모압 왕궁, <span class='important'>돌 뜨는 곳(길갈 근처)</span>",
+                question: "에훗이 에글론을 암살하기 위해 사용한 '은밀한 일' 전략의 핵심은 무엇인가?",
+                answer: "에훗은 조공 바친 후 사람들을 돌려보내고, '왕에게 <span class='highlight-text'>은밀한 말씀</span>을 아뢰려 한다'며 다시 돌아가 <span class='highlight-text'>단독 면담</span>을 요청했습니다. 이는 에글론이 방심하게 하여 암살 기회를 만든 치밀한 전략이었습니다.",
+                fullVerse: "공물 드리기를 마친 후에 에훗이 공물을 메고 온 자들을 가게 하고 자기는 길갈 근처 돌 뜨는 곳에서 돌아와서 이르되 왕이여 내가 하나님의 명령을 받들어 왕에게 아뢸 일이 있나이다 하매 왕이 명령하여 모셔 선 자들을 다 물러가게 하는지라 에훗이 그에게로 들어가니 왕은 서늘한 다락방에 홀로 앉아 있는 중이라 에훗이 이르되 내가 하나님의 명령을 받들어 왕에게 아뢸 일이 있나이다 하매 왕이 그의 좌석에서 일어나는지라 에훗이 왼손을 펴 칼을 그의 오른쪽 허벅지에서 뽑아 왕의 몸을 찌르매 칼자루도 칼날을 따라 들어가서 그 지방에 잠겼으므로 그가 칼을 그의 몸에서 빼내지 아니하였으나 오물이 나오니라 에훗이 현관으로 나와서 다락문들을 뒤에서 닫아 잠그니라 에훗이 나간 후에 왕의 신하들이 들어와서 다락문들이 잠겼음을 보고 이르되 왕이 분명히 서늘한 방에서 그의 발을 가리우신다 하고 그들이 오래 기다리다가 왕이 문을 열지 아니하므로 열쇠를 가져다가 여니 그들의 군왕이 이미 땅에 엎드러져 죽었더라"
+            },
+            {
+                verse: "사사기 3:27-30",
+                event: "<span class='important'>모압 진압과 80년간의 평화</span>",
+                place: "<span class='important'>에브라임 산지, 요단강 나루턱</span>",
+                question: "에훗이 모압을 완전히 진압하기 위해 사용한 군사적 전략의 핵심과 그 결과는 무엇인가?",
+                answer: "에훗은 이스라엘 백성을 소집한 후 <span class='highlight-text'>모압 사람들이 도망칠 요단강 나루턱을 선점</span>하여 퇴로를 차단했습니다. 그 결과 <span class='highlight-text'>모압 사람 만 명 가량을 죽이며 80년간의 평화</span>를 얻었습니다.",
+                fullVerse: "에훗이 도망하여 스이라로 가서 에브라임 산지에서 나팔을 불매 이스라엘 자손이 산지에서 에훗을 따라 내려오니 에훗이 그들을 거느리고 앞서 가서 그들에게 이르되 나를 따르라 여호와께서 너희의 원수 모압 사람을 너희의 손에 넘겨 주셨느느니라 하매 무리가 에훗을 따라 내려가 모압 맞은편 요단강 나루턱을 점령하여 한 사람도 건너지 못하게 하고 그 때에 모압 사람 만 명 가량을 죽였으니 모두 건장하고 용감한 자라 한 사람도 피하지 못하였더라 그 날에 모압이 이스라엘의 수하에 굴복하매 그 땅이 팔십 년 동안 평온하였더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        // 테이블 렌더링 함수
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+            
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleMainVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="main-verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // 메인 테이블 성경 구절 토글 함수
+        function toggleMainVerse(index) {
+            const verseText = document.getElementById(`main-verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 검색 기능
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm) ||
+                    item.fullVerse.toLowerCase().includes(searchTerm) /* Search full verse text as well */
+                );
+            }
+            
+            renderTable();
+            
+            // 검색 결과 하이라이트
+            if (searchTerm && filteredData.length > 0) {
+                setTimeout(() => {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.classList.add('highlight');
+                            setTimeout(() => row.classList.remove('highlight'), 2000);
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // 핵심 구절 토글 기능 (key-verses-section 전용)
+        function toggleVerseText(element) {
+            const verseText = element.querySelector('.verse-full-text');
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 초기 렌더링 및 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            document.getElementById('searchInput').addEventListener('input', searchTable);
+
+            // 페이지 로드 시 애니메이션
+            const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+            elementsToAnimate.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

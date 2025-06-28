@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 족집게 강의 사사기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif KR', serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 50%, #e8f5e8 100%);
+            min-height: 100vh;
+            color: #2d4a2d;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(45, 74, 45, 0.1);
+        }
+        
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a3a1a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.4);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 6px 24px rgba(45, 74, 45, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a3a1a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a7c4a;
+        }
+        
+        .subsection-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #2d4a2d;
+            margin: 20px 0 15px 0;
+        }
+        
+        .concept-box {
+            background: rgba(74, 124, 74, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #4a7c4a;
+        }
+        
+        .judges-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(45, 74, 45, 0.1);
+        }
+        
+        .judges-table th {
+            background: #4a7c4a;
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .judges-table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(74, 124, 74, 0.2);
+            font-size: 0.85rem;
+        }
+        
+        .judges-table tr:nth-child(even) {
+            background: rgba(74, 124, 74, 0.05);
+        }
+        
+        .judges-table tr:hover {
+            background: rgba(74, 124, 74, 0.15);
+            transition: background 0.3s ease;
+        }
+        
+        .cycle-diagram {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(45deg, rgba(74, 124, 74, 0.1), rgba(120, 160, 120, 0.1));
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .cycle-arrow {
+            color: #4a7c4a;
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .emphasis {
+            color: #2d5a2d;
+            font-weight: 600;
+        }
+        
+        .verse-reference {
+            font-style: italic;
+            color: #4a7c4a;
+            font-size: 0.9rem;
+        }
+        
+        .outline-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .outline-list li {
+            margin: 8px 0;
+            list-style-type: none;
+            position: relative;
+        }
+        
+        .outline-list li::before {
+            content: "▶";
+            color: #4a7c4a;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+        
+        .sub-outline {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .sub-outline li::before {
+            content: "•";
+            color: #6a9c6a;
+        }
+        
+        .quote-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 5px solid #4a7c4a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            box-shadow: 0 4px 12px rgba(45, 74, 45, 0.1);
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding: 30px 0;
+        }
+        
+        .nav-button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4a7c4a, #5a8c5a);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(74, 124, 74, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 124, 74, 0.4);
+            background: linear-gradient(45deg, #5a8c5a, #6a9c6a);
+        }
+        
+        .small-text {
+            font-size: 0.85rem;
+            color: #4a6a4a;
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .judges-table {
+                font-size: 0.8rem;
+            }
+            
+            .judges-table th,
+            .judges-table td {
+                padding: 8px 5px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">2025 족집게 강의 사사기</h1>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">1. 하나님의 완전한 신정정치</h2>
+            <div class="concept-box">
+                <p><strong>아브라함</strong> ▶ <span class="highlight">백성[국민]</span> + <strong>모세 법(모세오경)</strong> <span class="highlight">[주권]</span> + <strong>여호수아 땅</strong> <span class="highlight">[영토]</span> = <strong>유형국가 (이스라엘)</strong></p>
+                <p style="text-align: center; margin-top: 15px; font-weight: 600; color: #2d5a2d;">하나님의 국가 건설</p>
+            </div>
+            
+            <ul class="outline-list">
+                <li><span class="emphasis">중앙집권 왕정[하나님 (절대주권)]</span> 대 <span class="emphasis">지방자치제[인간 (자유의지)]</span> 정치 시스템</li>
+                <li>인간 사사 & 왕 불필요</li>
+                <li><span class="emphasis">사사</span>▷ Judges <span class="highlight">재(판관)</span> + <span class="highlight">선(지자)</span> + <span class="highlight">제(사장)</span> 여호와의 영이 임재한 지도자<span class="highlight">[일시적]</span></li>
+                <li><span class="emphasis">예수님 예표</span> 성령<span class="highlight">[(항)시적]</span></li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">2. (12)사사</h2>
+            <table class="judges-table">
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>징계</th>
+                        <th>안식</th>
+                        <th>상대 나라</th>
+                        <th>출신</th>
+                        <th>업적 및 특징과 성경</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>옷니엘[대]</strong></td>
+                        <td>8년</td>
+                        <td>40년</td>
+                        <td>메소보다미아</td>
+                        <td>유다</td>
+                        <td class="small-text">최초 사사, (갈렙) 조카, 딸 (사) 결혼, 가나안 요새 정복 (삿 3:7-11)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>에훗[대]</strong></td>
+                        <td>18년</td>
+                        <td>80년</td>
+                        <td>모압</td>
+                        <td>베냐민</td>
+                        <td class="small-text">(왼)손잡이, 모압 왕 에글론 물리침 (삿 3:12-30)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>삼갈[소]</strong></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>블레셋</td>
+                        <td>-</td>
+                        <td class="small-text">소모는 (막대기)로 600명 물리침 (삿 3:31)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>드보라[대]</strong></td>
+                        <td>20년</td>
+                        <td>40년</td>
+                        <td>가나안</td>
+                        <td>에브라임</td>
+                        <td class="small-text">여사사, 바락과 가나안왕 야빈, 군대장관 시스라 물리침 (삿 4-5장)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>기드온[대]</strong></td>
+                        <td>7년</td>
+                        <td>40년</td>
+                        <td>미디안</td>
+                        <td>므낫세</td>
+                        <td class="small-text">(300)명 용사들과 135,000명 미디안 군사 대파 (삿 6-8장)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>돌라[소]</strong></td>
+                        <td>-</td>
+                        <td>23년</td>
+                        <td>-</td>
+                        <td>잇사갈</td>
+                        <td class="small-text">(도도)의 손자 (삿 10:1-2)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>야일[소]</strong></td>
+                        <td>-</td>
+                        <td>22년</td>
+                        <td>-</td>
+                        <td>므낫세</td>
+                        <td class="small-text">길르앗사람, 30명의 아들 둠 (삿 10:3-5)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>입다[대]</strong></td>
+                        <td>-</td>
+                        <td>6년</td>
+                        <td>암몬</td>
+                        <td>므낫세</td>
+                        <td class="small-text">길르앗사람, (가생)의 아들, 암몬 족속 물리침 (삿 10:6-12:7)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>입산[소]</strong></td>
+                        <td>-</td>
+                        <td>7년</td>
+                        <td>-</td>
+                        <td>스불론</td>
+                        <td class="small-text">베들레헴사람, 아들 (30)명과 딸 30명을 둠 (삿 12:8-10)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>엘론[소]</strong></td>
+                        <td>-</td>
+                        <td>10년</td>
+                        <td>-</td>
+                        <td>스불론</td>
+                        <td class="small-text">스불론 지파 사람 (삿 12:11-12)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>압돈[소]</strong></td>
+                        <td>-</td>
+                        <td>8년</td>
+                        <td>-</td>
+                        <td>에브라임</td>
+                        <td class="small-text">비라돈사람, 아들 40명과 손자 30명을 둠 (삿 12:13-15)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>삼손[대]</strong></td>
+                        <td>40년</td>
+                        <td>20년</td>
+                        <td>블레셋</td>
+                        <td>단</td>
+                        <td class="small-text">(나실)인, 초인적 힘 소유, 블레셋 족속 물리침 (삿 13-16장)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">3. 죄의 악순환(사사 시대 약 400년 or 340년)</h2>
+            <div class="cycle-diagram">
+                <span class="emphasis">범죄(우상숭배)</span> <span class="cycle-arrow">→</span> 
+                <span class="emphasis">징계(도구: 이방나라)</span> <span class="cycle-arrow">→</span> 
+                <span class="emphasis">회개(기도)</span> <span class="cycle-arrow">→</span> 
+                <span class="emphasis">구원(도구: 사사)</span> <span class="cycle-arrow">→</span> 
+                <span class="emphasis">사사 (죽음)</span> <span class="cycle-arrow">→</span> 
+                <span class="emphasis">범죄(우상숭배)</span> <span class="cycle-arrow">→</span> ---
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">4. 장별 주제 정리</h2>
+            <table class="judges-table">
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>본문</th>
+                        <th>주제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2"><strong>사사시대 배경</strong></td>
+                        <td>1장</td>
+                        <td>가나안 정복</td>
+                    </tr>
+                    <tr>
+                        <td>2장</td>
+                        <td>책망과 징계</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="9"><strong>사사들의 활동</strong></td>
+                        <td>3장</td>
+                        <td>옷니엘, 에훗, 삼갈</td>
+                    </tr>
+                    <tr>
+                        <td>4-5장</td>
+                        <td>드보라 (바락)</td>
+                    </tr>
+                    <tr>
+                        <td>6-8장</td>
+                        <td>기드온</td>
+                    </tr>
+                    <tr>
+                        <td>9장</td>
+                        <td>아비멜렉과 세겜의 반역</td>
+                    </tr>
+                    <tr>
+                        <td>10:1-10:5</td>
+                        <td>돌라, 야일</td>
+                    </tr>
+                    <tr>
+                        <td>10:6-12:7</td>
+                        <td>입다</td>
+                    </tr>
+                    <tr>
+                        <td>12:8-15장</td>
+                        <td>입산, 엘론, 압돈</td>
+                    </tr>
+                    <tr>
+                        <td>13장-16장</td>
+                        <td>삼손</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><strong>사사시대 최악상</strong></td>
+                        <td>17-18장</td>
+                        <td>(미가)의 신상, 단 지파 이주</td>
+                    </tr>
+                    <tr>
+                        <td>19-21장</td>
+                        <td>기브아 범죄</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">5. 핵심 정리</h2>
+            
+            <div class="subsection-title">◎ 1장~3장 6절:</div>
+            <h3 style="color: #2d5a2d; margin: 15px 0;">I. 이스라엘의 배교 행위의 뿌리 (1:1~3:6)</h3>
+            <div class="concept-box">
+                <p><span class="highlight">"쫓아내지 못함"</span> x <span class="emphasis">(9)번</span> 나옴.</p>
+            </div>
+
+            <ul class="outline-list">
+                <li><strong>1. 가나안 족속을 모두 쫓아내지 못함 (1:1-2:5)</strong> 쫓아내지 못함 x <span class="emphasis">(9)번</span>
+                    <div class="sub-outline">
+                        <p>▶ 진멸 명령(신 7:1-5) 가나안<span class="highlight">(7)</span> 족속 : 기르가스, 아모리, 가나안, 헷, 여부스, 브리스, 히위☆</p>
+                        <ul>
+                            <li>초기 유다, 베냐민, 에브라임, 므낫세 전쟁 및 쫓아내지 못한 가나안 족속<span class="highlight">[철병거]</span> 때문 (탱크) (1:1-21)</li>
+                            <li>불완전한 정복과 공존(불순종+여지) (1:22-36)</li>
+                            <li>여호와의 사자 질책(희망) (2:1-5) 옆구리의 <span class="highlight">**(가시)**</span>와 <span class="highlight">**(올무)**</span>가 될 것</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li><strong>2. 지속적인 배교 행위와 그 결과 (2:6-3:6)</strong>
+                    <div class="sub-outline">
+                        <ul>
+                            <li>여호수아의 죽음과 전쟁을 모르는 여호와를 알지 못하는 세대 (2:6~10)</li>
+                            <li>바알(아서타)과 아스다롯(풍요&다산) 섬김, 이방 민족 징계 도구로 남겨두심 (2:11~23)</li>
+                            <li>여호와의 시험(연단), 전쟁을 가르치심 고난 의지 은혜를 경험 (3:1~6)</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="subsection-title">◎ 3장 7절~16장:</div>
+            <h3 style="color: #2d5a2d; margin: 15px 0;">II. 이스라엘의 배교 행위가 반복적 및 하향적으로 되풀이됨 (3:7~16:31)</h3>
+
+            <ul class="outline-list">
+                <li><strong>1. 옷니엘 (3:7~11)</strong> ▶ 우상숭배 ▶ 메소보다미아(아람 나하라임?) 왕 구산 리사다임의 <span class="highlight">**(손)**</span>에 파심</li>
+                
+                <li><strong>2. 에훗 (3:12~30)</strong> ▶ 악 ▶ 모압 왕 에글론 강성하게 하심</li>
+                
+                <li><strong>3. 삼갈 (3:31)</strong> ▶ 소모는 (막대기)</li>
+                
+                <li><strong>4. 드보라 (4:1~5:31)</strong> ▶ 악 ▶ 가나안 왕 야빈의 <span class="highlight">**(손)**</span>에 파심
+                    <div class="sub-outline">
+                        <ul>
+                            <li>재판관 드보라, <span class="highlight">**(바락)**</span>에게 <span class="highlight">**(다볼산)**</span>에게 하나님의 사명 전달, 만명 군사, 동행 요청(말씀 도전) (4:1~10)</li>
+                            <li><span class="highlight">**(시스라)**</span>와 철병거 900대, 건기 속 폭우 무용지물 병거, <span class="highlight">**(시스라)**</span>의 관자놀이 야일 말뚝 박음 (4:11~24)</li>
+                            <li>드보라와 바락의 승리의 노래(은혜 기억) (5:1~31)</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li><strong>5. 기드온 (6:1~8:35)</strong> ▶ 악 ▶ 미디안의 <span class="highlight">**(손)**</span>에 넘기심
+                    <div class="sub-outline">
+                        <ul>
+                            <li>죄악, 유목민 미디안 농작물&가축 약탈, 극심한 궁핍 선지자의 질책(희망) (6:1~10)</li>
+                            <li>기드온 집안 <span class="highlight">**(포도주)**</span>틀 숨은 타작, 여호와의 사자 <span class="highlight">**큰 (용사)**</span>여 여호와가 함께 (6:11~12)</li>
+                            <li>기드온의 부르심 표징(제단 불&양털 뭉치) 요구 승낙(인격적 인도), 바알&아세라 파괴 ▶ <span class="highlight">(여룹바알)</span>(바알이 그와 더불어 다툴 것이라) 이름 (6:13~40)</li>
+                            <li><span class="highlight">(32,000)</span>명 → 10,000명 → 300명(자랑X), 첫 번째 전쟁, 항아리+<span class="highlight">(나팔)</span>+횃불 승리 ▶ 에브라임 족속 미디안 지도자 <span class="highlight">**(오렙)**</span>과 (스업) 죽임 (7:1~8:3)</li>
+                            <li>에브라임의 불평 기드온의 겸손, 두 번째 전쟁, 미디안 지도자 <span class="highlight">**(세바)**</span>와 (살문나) 죽임 (8:4~21)</li>
+                            <li>왕 요구 거절 금귀고리 요구 금<span class="highlight">**(에봇)**</span> (에봇) 섬김 기드온의 배교 (8:22~28)</li>
+                            <li>기드온 아들 <span class="highlight">**(70)**</span>명+첩의 아들 (아비멜렉) 기드온 죽음 재범죄 (8:29~35)</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li><strong>6. 아비멜렉 배교의 '왕' (9:1~57)</strong>
+                    <div class="sub-outline">
+                        <ul>
+                            <li>아비멜렉의 혈연 및 지인 선동 은 70 깡패 동원 69명 아들들 살해 왕 (9:1~6)</li>
+                            <li>살아남은 막내 <span class="highlight">(요담)</span> 우화 열매 맺는 나무(형제) <span class="highlight">**(감람)**</span>나무, <span class="highlight">**(무화과)**</span>나무, <span class="highlight">**(포도)**</span>나무 ▶ 열매 없는 (가시) 나무(아비멜렉) 가시 주변 고통 & 잘 탐으로 주변 태울 것 (9:7~21)</li>
+                            <li>세겜 사람들 배반(<span class="highlight">(가알)</span> 따름) 세겜 망대 방화 <span class="highlight">**(1000)**</span>명 죽임 ▶ 데베스 망대 공격 ▶ ▶ 여인 던진 <span class="highlight">(맷돌윗짝)</span> 두개골 파열 무기 든 청년 통해 자살 (9:22~57)</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li><strong>7. 돌라 (10:1~2)</strong></li>
+                <li><strong>8. 야일 (10:3~5)</strong></li>
+                
+                <li><strong>9. 입다(10:6~12:7)</strong> ▶ 우상숭배 ▶ 블레셋과 암몬의 <span class="highlight">**(손)**</span>에 파심
+                    <div class="sub-outline">
+                        <ul>
+                            <li>암몬의 공격 부르짖음 하나님의 거부 포기 않는 회개 지도자 부재 (10:6~18)</li>
+                            <li><span class="highlight">**(기생)**</span>의 아들 입다 형제들 따돌림 <span class="highlight">(돕)</span> 땅 잡류들과 거주 (11:1~3)</li>
+                            <li>길르앗 장로들 입다 지도자로 세움 (11:4~11)</li>
+                            <li>외교적인 논쟁 ▶ 암몬 왕 영토 주장 하나님이 아모리에게서 주신 300년 (11:12~18)</li>
+                            <li>전쟁에서의 승리 및 어리석은 서원(요단 동편 문화) (11:29~40)</li>
+                            <li>에브라임의 불평 민족 전투 ▶ 도망자 요단 나루턱 쉽볼렛 vs <span class="highlight">(십볼렛)</span> (12:1~7)</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <li><strong>10. 입산 (12:8~10)</strong></li>
+                <li><strong>11. 엘론 (12:11~12)</strong></li>
+                <li><strong>12. 압돈 (12:13~15)</strong></li>
+                
+                <li><strong>13. 삼손 (13:1~16:31)</strong> ▶ 악 ▶ 블레셋의 <span class="highlight">**(손)**</span>에 넘기심 사라진 기도 회개도 X.
+                    <div class="sub-outline">
+                        <ul>
+                            <li><span class="highlight">(마노아)</span>의 아들 삼손 출생 종신 나실인[<span class="highlight">(삭도)</span>, <span class="highlight">(포도주)</span>, <span class="highlight">(시체)</span>] (13:1~25)</li>
+                            <li>딤나의 블레셋 여자 포도원의 <span class="highlight">**(사자)**</span>와 주검과 <span class="highlight">(꿀)</span> 30명 죽임 옷 노략 (14:1~14:20)</li>
+                            <li>친구에게 빼앗긴 신부 여우 300마리의 불붙은 묶은 꼬리, 곡식밭 방화 블레셋 공격 ▶ 유다 3,000명 삼손 결박 나귀 <span class="highlight">(턱뼈)</span> 블레셋 1,000명 죽임(라맛레히(?)-턱뼈의 산) ▶ 갈증 부르짖음 ▶ 응답의 물 <span class="highlight">(엔학고레)</span> (부르짖은 자의 샘) (15:1~20)</li>
+                            <li>가사의 기생과 매복 ▶ 성 문짝과 두 문설주와 문빗장 빼어 들고 헤브론으로 복귀 소렉 골짜기 <span class="highlight">(들릴라)</span> ▶ 지도자들은 천백 개씩 현상금 ① 새 <span class="highlight">(활줄)</span> 일곱 ② 새<span class="highlight">**(밧줄)**</span> ③ 머리털<span class="highlight">**(일)**</span> 가닥 베틀의 날실에 섞어 짜기 ④ 머리 밀기 ▶ 눈을 빼고 가사의 감옥 맷돌 ▶ 다곤 신전 부르짖음 두 기둥 무너져 <span class="highlight">**(3000)**</span>명 죽임 (16:1~31)</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="subsection-title">◎ 17장~21장: 사사시대 신앙 및 사회적 고발</div>
+            <div class="concept-box">
+                <p>▶ 여호수아 죽음 이후 각 지역 영적 지도자로 레위인들 <span class="highlight">(48)</span> 성읍 흩어지게 하여 지도 (레 10:8, 11) 8 여호와께서 아론에게 말씀하여 이르시되 11 또 나 여호와가 모세를 통하여 모든 규례를 이스라엘 자손에게 가르치리라 (민 35:7) 너희가 레위인에게 모두 사십팔 성읍을 주고 그 초장도 함께 주되</p>
+                <p>▶ 영적 지도자들의 타락으로 인한 두 가지 사건 잃어버린 회개(기도)</p>
+            </div>
+
+            <ul class="outline-list">
+                <li><strong>1. 이스라엘 공동체 전체의 종교적인 타락 (17:1~18:31)</strong>
+                    <div class="sub-outline">
+                        <p><span class="emphasis">미가 신상 사건</span> <span class="highlight">(레위인)</span> 영적 간음</p>
+                        <p>▶ 미가 어머니 잃어버린 은 1,100세겔, 도둑 저주, 미가 이실직고, 은 200세겔 우상 제작(에봇·드라빔), 레위인 제사장 고용[연봉은 <span class="highlight">(10세겔)</span>], 블레셋 인근 지역 영토 잃은 단 지파, 북쪽 <span class="highlight">(라이수)</span> 지역 이주 에브라임 산지 미가 집, 신상 훔침, 레위인 재고용 성경의 무지 & 영적 타락 & 레위인 타락</p>
+                    </div>
+                </li>
+                
+                <li><strong>2. 도덕적 및 사회적 타락(19:1~21:24)</strong>
+                    <div class="sub-outline">
+                        <p><span class="emphasis">레위인 첩 사건</span> <span class="highlight">(레위인)</span> 육적 간음</p>
+                        <p>▶ 도망간 첩 찾아오는 레위인, 기브아<span class="highlight">**(베냐민 지파)**</span> 유숙, 동성애 요구, 첩의 윤간, 시체 12토막 각 지파, 동족상잔 내전, <span class="highlight">(베냐민)</span> 남성 멸절 성경의 무지 & 성적 타락 & 레위인 타락</p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="quote-box">
+                <p><span class="verse-reference">(삿 8:23)</span> <span class="highlight">**(기드온)**</span>이 그들에게 이르되 내가 너희를 다스리지 아니하겠고 나의 아들도 너희를 다스리지 아니할 것이요 여호와께서 너희를 다스리시리라 하니라</p>
+            </div>
+
+            <div class="quote-box">
+                <p><span class="verse-reference">(삿 21:25)</span> 그 때에 <span class="highlight">**(이스라엘)**</span>에 <span class="highlight">**(왕)**</span>이 없으므로 사람이 각기 자기의 소견에 옳은 대로 행하였더라</p>
+            </div>
+
+            <div class="quote-box">
+                <p><span class="verse-reference">(삿 21:25)</span> "그 때에 <span class="highlight">**(이스라엘)**</span>에 <span class="highlight">**(왕)**</span>이 없으므로 사람이 각기 자기의 <span class="highlight">**(성경)**</span>에 옳은 대로 행하였더라"</p>
+            </div>
+
+            <div class="concept-box">
+                <p style="text-align: center; font-size: 1.1rem;">▶ "그 때에 이스라엘에 왕이 없으므로 사람이 각기 성경에 옳은 대로 행하였더라"</p>
+                <p style="text-align: center; font-style: italic; margin-top: 15px;">"하나님을 사랑하라. 그리고 마음대로 살아라" – 어거스틴</p>
+            </div>
+        </section>
+
+        <nav class="navigation-buttons">
+            <a href="index.html" class="nav-button">메인으로 돌아가기</a>
+            <a href="18t.html" class="nav-button">다음 단계로 가기</a>
+        </nav>
+    </div>
+</body>
+</html>

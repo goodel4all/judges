@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사사기 결론 및 종합</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .important {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+        
+        .emphasis {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .summary-section {
+            padding: 40px;
+            background: white;
+        }
+        
+        .summary-section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #34495e;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .summary-card h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card p {
+            color: #495057;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .thinking-section {
+            padding: 40px;
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        }
+        
+        .thinking-section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .thinking-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db;
+        }
+        
+        .thinking-qa h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+        
+        .thinking-qa p {
+            color: #495057;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .highlight-answer {
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .conclusion-content {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .conclusion-content h3 {
+            color: #ffd700;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            margin-top: 25px;
+        }
+        
+        .conclusion-content h3:first-child {
+            margin-top: 0;
+        }
+        
+        .conclusion-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .conclusion-content ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion-content li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        
+        .conclusion-highlight {
+            background: rgba(255, 215, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .conclusion-important {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        
+        .key-verses-section {
+            padding: 40px;
+            background: white;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .verses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .key-verse {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #34495e;
+            cursor: pointer;
+        }
+        
+        .key-verse:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        
+        .key-verse h3 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .key-verse p {
+            color: #495057;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+        
+        .verse-meaning {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: normal;
+            border-top: 1px solid #dee2e6;
+            padding-top: 10px;
+        }
+        
+        .navigation-buttons {
+            padding: 30px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 25px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .overview {
+                padding: 30px 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.7rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            .summary-section {
+                padding: 30px 25px;
+            }
+            
+            .summary-section h2 {
+                font-size: 1.7rem;
+            }
+            
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .thinking-section {
+                padding: 30px 25px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.7rem;
+            }
+            
+            .thinking-qa {
+                padding: 25px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 30px 25px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.7rem;
+            }
+            
+            .verses-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.1rem;
+            }
+            
+            .key-verse p {
+                font-size: 0.95rem;
+            }
+            
+            .navigation-buttons {
+                padding: 25px 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 25px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 25px 20px;
+            }
+            
+            .summary-section {
+                padding: 25px 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 20px;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 20px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 결론 및 생각해보기</h1>
+            <p>사사기 전체를 통한 하나님의 교훈과 현재적 적용</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 사사기 전체 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">사사기는 이스라엘이 가나안에 정착한 후부터 왕정이 시작되기 전까지의 약 350년간</span>을 다루는 구약의 중요한 역사서입니다. <span class="important">이 책은 단순한 역사 기록이 아니라 하나님의 백성이 어떻게 살아야 하는지를 보여주는 영적 교훈서</span>입니다.</p>
+                
+                <p>사사기의 구조는 크게 <span class="emphasis">세 부분</span>으로 나뉩니다:</p>
+                
+                <p><strong>첫째, 서론 (1:1-3:6)</strong><br>
+                <span class="important">이스라엘이 가나안 정복 과정에서 하나님의 명령을 완전히 순종하지 못한 결과</span>와 그로 인한 <span class="highlight">영적, 도덕적 타락의 시작</span>을 보여줍니다. 가나안 족속들을 완전히 쫓아내지 못한 것은 단순한 군사적 실패가 아니라 <span class="emphasis">하나님에 대한 불순종과 믿음의 부족</span>에서 비롯된 것이었습니다.</p>
+                
+                <p><strong>둘째, 본론 - 사사들의 이야기 (3:7-16:31)</strong><br>
+                <span class="important">배교 → 압제 → 부르짖음 → 구원</span>의 <span class="highlight">반복되는 순환 구조</span>를 통해 하나님의 은혜와 인간의 죄성을 동시에 보여줍니다. 12명의 사사들(옷니엘, 에훗, 삼갈, 드보라, 기드온, 돌라, 야일, 입다, 입산, 엘론, 압돈, 삼손)은 각각 다른 특성과 교훈을 가지고 있지만, 모두 <span class="emphasis">하나님의 주권적 은혜로 세워진 구원자들</span>이었습니다.</p>
+                
+                <p><strong>셋째, 결말 (17:1-21:25)</strong><br>
+                <span class="important">"그 때에 이스라엘에 왕이 없으므로 사람이 각기 자기의 소견에 옳은 대로 행하였더라"</span>는 반복되는 구절로 요약되는 <span class="highlight">무질서와 타락의 절정</span>을 보여줍니다. 미가의 우상 숭배와 기브아의 추악한 사건은 <span class="emphasis">영적 리더십의 부재가 가져오는 참담한 결과</span>를 극명하게 드러냅니다.</p>
+                
+                <p>사사기의 핵심 메시지는 <span class="important">하나님의 변함없는 사랑과 인간의 변덕스러운 신앙</span>의 대조입니다. 이스라엘이 반복적으로 하나님을 배반했음에도 불구하고, <span class="highlight">하나님은 그들의 부르짖음을 들으시고 구원자를 보내주셨습니다</span>. 이는 <span class="emphasis">하나님의 언약적 사랑과 신실하심</span>을 보여주는 동시에, <span class="important">인간의 죄성과 하나님 없는 삶의 허무함</span>을 경고합니다.</p>
+                
+                <p>또한 사사기는 <span class="important">개인의 선택이 공동체 전체에 미치는 파급효과</span>를 보여줍니다. 한 사람의 불순종이나 타락이 가족과 지파, 나아가 전체 이스라엘에 어떤 영향을 미치는지를 생생하게 기록하고 있습니다.</p>
+                
+                <p>사사기는 <span class="emphasis">왕정 제도의 필요성을 암시</span>하면서도, 동시에 <span class="highlight">진정한 왕은 하나님이시라는 신정 사상</span>을 강조합니다. 인간 왕의 필요성을 인정하면서도, 그 왕은 반드시 <span class="important">하나님의 통치 아래 있어야 한다</span>는 것을 보여줍니다.</p>
+                
+                <p>현재 우리에게 사사기는 <span class="important">개인의 신앙 생활과 교회 공동체의 영적 상태</span>를 점검하게 하는 거울과 같은 역할을 합니다. <span class="emphasis">형식적 종교의 위험성</span>, <span class="highlight">절대적 기준의 필요성</span>, 그리고 <span class="important">영적 리더십의 중요성</span> 등은 오늘날에도 여전히 유효한 교훈들입니다.</p>
+            </div>
+        </div>
+        
+        <div class="summary-section">
+            <h2>📚 사사기 주요 인물들 요약</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>🛡️ 옷니엘</h3>
+                    <p>첫 번째 사사로서 완벽한 모범을 보인 구원자. 여호와의 영이 임하여 40년간 평안을 가져다준 이상적인 사사의 전형.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>⚔️ 에훗</h3>
+                    <p>왼손잡이 베냐민 사람으로 지혜와 용기로 모압 왕 에글론을 암살하여 이스라엘을 구원한 전략적 사사.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>🌟 드보라</h3>
+                    <p>유일한 여성 사사로서 뛰어난 리더십과 영적 분별력으로 바락과 협력하여 가나안 연합군을 물리친 지혜로운 지도자.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>🔥 기드온</h3>
+                    <p>연약함에서 시작하여 하나님의 능력으로 미디안을 물리친 믿음의 성장을 보여준 사사. 300명의 용사로 대승리를 거둠.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>👑 아비멜렉</h3>
+                    <p>기드온의 아들이지만 사사가 아닌 부정적 인물. 권력욕과 교만으로 형제들을 죽이고 왕이 되려다 비참한 최후를 맞음.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>⚖️ 입다</h3>
+                    <p>서원과 희생의 비극적 영웅. 암몬과의 전쟁에서 승리했지만 경솔한 서원으로 딸을 잃은 복잡한 인물.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>💪 삼손</h3>
+                    <p>나실인으로 태어나 초인적 힘을 가졌지만 개인적 욕망과 연약함으로 실패한 후 마지막에 하나님께 돌아온 역설적 영웅.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>🕊️ 소사사들</h3>
+                    <p>삼갈, 돌라, 야일, 입산, 엘론, 압돈 등 짧게 언급되지만 평안한 시대를 이끈 안정적 지도자들.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 사사기 전체를 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 사사기의 반복되는 순환 구조(배교→압제→부르짖음→구원)가 현재 우리의 신앙 생활과 교회 역사에 주는 교훈과 경고는 무엇인가?</h3>
+                    <p>사사기의 순환 구조는 <span class="highlight-answer">인간의 죄성과 하나님의 은혜가 반복적으로 나타나는 영적 패턴</span>을 보여줍니다. 
+                    
+                    <br><br>이스라엘이 하나님의 구원을 경험한 후에도 다시 배교하는 모습은 <span class="important">인간의 영적 건망증과 죄에 대한 경향성</span>을 적나라하게 드러냅니다. 
+                    
+                    <br><br>현재 우리의 신앙 생활에서도 이와 같은 패턴을 발견할 수 있습니다. 
+                    
+                    <br><br><strong>첫째</strong>, 개인적 차원에서 우리는 종종 <span class="highlight-answer">하나님의 은혜를 경험한 후에도 다시 세상적 가치관에 빠지거나 영적 나태함</span>에 빠지는 경우가 있습니다. 이는 사사기 시대 이스라엘의 배교와 같은 맥락입니다. 
+                    
+                    <br><br><strong>둘째</strong>, 교회 역사적으로도 <span class="important">부흥과 쇠퇴가 반복되는 패턴</span>을 볼 수 있습니다. 대각성 운동 이후의 영적 침체, 종교개혁 이후의 형식주의 등이 그 예입니다. 
+                    
+                    <br><br><strong>셋째</strong>, 이러한 순환 구조는 우리에게 <span class="highlight-answer">지속적인 영적 각성의 필요성</span>을 교훈합니다. 한 번의 은혜 체험이나 결단으로 끝나는 것이 아니라, 매일매일 하나님과의 관계를 새롭게 하는 것이 중요합니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="important">하나님의 변함없는 사랑과 신실하심</span>을 확인할 수 있습니다. 이스라엘이 반복적으로 배반했음에도 불구하고 하나님은 그들의 부르짖음을 들으셨습니다. 이는 우리가 실패하고 넘어져도 다시 하나님께 돌아갈 수 있다는 희망을 줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">예방의 중요성</span>을 깨닫게 됩니다. 문제가 생긴 후에 부르짖는 것보다는 평상시에 하나님과의 관계를 잘 유지하는 것이 더 지혜로운 삶입니다. 
+                    
+                    <br><br><strong>여섯째</strong>, <span class="important">공동체적 책임감</span>을 가져야 합니다. 개인의 배교가 전체 공동체에 영향을 미치듯이, 우리의 신앙 상태도 가정과 교회에 영향을 미칩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 사사기에 나타난 다양한 리더십 유형들(드보라의 지혜, 기드온의 겸손, 삼손의 개인주의 등)을 통해 현재 우리가 추구해야 할 영적 리더십의 모델은 무엇인가?</h3>
+                    <p>사사기의 다양한 리더십 유형들은 <span class="highlight-answer">영적 리더십의 다면성과 복합성</span>을 보여줍니다. 
+                    
+                    <br><br>각 사사들은 서로 다른 배경과 성격, 리더십 스타일을 가지고 있었지만, 모두 <span class="important">하나님의 주권적 선택을 받은 구원자들</span>이었습니다. 
+                    
+                    <br><br>현재 우리가 추구해야 할 영적 리더십의 모델을 살펴보면 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">드보라의 지혜로운 리더십</span>을 본받아야 합니다. 그녀는 여성이라는 당시의 사회적 제약에도 불구하고 뛰어난 영적 분별력과 지혜로 백성들을 이끌었습니다. 현재의 리더들도 성별, 나이, 배경에 관계없이 하나님이 주신 은사와 지혜를 활용해야 합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="important">기드온의 겸손함과 하나님 의존적 태도</span>를 배워야 합니다. 그는 자신의 연약함을 인정하고 하나님의 확신을 구했으며, 승리 후에도 하나님께 영광을 돌렸습니다. 진정한 리더는 자신의 능력을 과신하지 않고 하나님을 의지하는 사람입니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">옷니엘의 모범적 리더십</span>을 추구해야 합니다. 그는 여호와의 영이 임하여 완전한 승리를 거두고 40년간 평안을 가져다주었습니다. 이는 성령 충만한 리더십의 전형을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="important">삼손의 개인주의적 리더십에서 교훈</span>을 얻어야 합니다. 그의 초인적 능력에도 불구하고 개인적 욕망과 독단적 행동은 결국 실패를 가져왔습니다. 현재의 리더들은 개인의 은사보다는 공동체와의 협력을 중시해야 합니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">입다의 경우에서 신중함의 중요성</span>을 배워야 합니다. 그의 경솔한 서원은 개인적 비극을 가져왔습니다. 리더의 말과 결정은 많은 사람에게 영향을 미치므로 신중해야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. "각기 자기의 소견에 옳은 대로 행하였더라"는 사사기의 핵심 메시지가 현재 상대주의와 개인주의가 팽배한 시대에 주는 경고와 대안은 무엇인가?</h3>
+                    <p>사사기의 핵심 메시지인 "각기 자기의 소견에 옳은 대로 행하였더라"는 <span class="highlight-answer">절대적 기준 없는 상대주의적 판단의 위험성</span>을 경고하는 예언적 말씀입니다. 
+                    
+                    <br><br>이는 현재 우리가 살고 있는 포스트모던 시대의 상황과 놀랍도록 유사합니다. 
+                    
+                    <br><br>현재 시대에 주는 경고를 살펴보면 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="important">도덕적 상대주의의 위험성</span>입니다. "절대적인 것은 없다", "모든 것이 상대적이다"라는 사고방식은 결국 도덕적 혼란과 사회적 무질서를 가져옵니다. 사사기 말기의 참상이 바로 이를 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">개인주의의 극단화 문제</span>입니다. 개인의 자유와 선택을 절대시하는 문화는 공동체의 가치와 책임감을 약화시킵니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">권위에 대한 거부감</span>이 증가하고 있습니다. 하나님의 권위는 물론 부모, 교사, 정부 등 모든 권위에 대한 불신이 팽배해지고 있습니다. 
+                    
+                    <br><br>이에 대한 대안을 제시하면 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">하나님의 말씀을 절대적 기준</span>으로 삼아야 합니다. 성경은 변하지 않는 진리의 기준이며, 우리의 모든 판단과 행동의 근거가 되어야 합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="important">공동체적 가치관을 회복</span>해야 합니다. 개인의 자유도 중요하지만, 그것이 공동체의 선과 조화를 이루어야 합니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">건전한 권위에 대한 존중</span>을 배워야 합니다. 하나님이 세우신 권위들을 인정하고 순종하는 것은 질서 있는 사회를 위해 필요합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 사사기에 나타난 하나님의 은혜와 인간의 배은망덕이 반복되는 패턴을 통해 우리가 깨달아야 할 하나님의 성품과 인간의 본성은 무엇인가?</h3>
+                    <p>사사기의 반복되는 패턴은 <span class="highlight-answer">하나님의 변함없는 사랑과 인간의 변덕스러운 신앙</span>을 극명하게 대조시켜 보여줍니다. 
+                    
+                    <br><br>먼저 하나님의 성품에 대해서입니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="important">하나님의 무조건적 사랑</span>입니다. 이스라엘이 반복적으로 배반했음에도 불구하고 하나님은 그들을 포기하지 않으셨습니다. 이는 하나님의 사랑이 인간의 행위에 좌우되지 않는 무조건적 사랑임을 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">하나님의 신실하심</span>입니다. 하나님은 아브라함과 맺으신 언약을 끝까지 지키셨습니다. 인간이 언약을 어겨도 하나님은 언약에 신실하셨습니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">하나님의 오래 참으심</span>입니다. 하나님은 즉시 심판하지 않으시고 회개할 기회를 주셨습니다. 이는 하나님의 인내와 자비를 보여줍니다. 
+                    
+                    <br><br>다음으로 인간의 본성에 대해서입니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">인간의 영적 건망증</span>입니다. 하나님의 은혜를 경험하고도 쉽게 잊어버리는 것이 인간의 본성입니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="important">죄에 대한 경향성</span>입니다. 인간은 본능적으로 하나님보다는 자신의 욕망을 따르려는 경향이 있습니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">환경에 쉽게 영향받는 연약함</span>입니다. 주변의 이방 문화에 쉽게 동화되는 모습을 통해 인간의 연약함을 볼 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>5. 사사기가 보여주는 영적 쇠퇴의 과정(점진적 타협→형식적 종교→도덕적 타락→사회적 혼란)이 현재 교회와 성도들에게 주는 경고와 예방책은 무엇인가?</h3>
+                    <p>사사기는 <span class="highlight-answer">영적 쇠퇴가 하루아침에 일어나는 것이 아니라 점진적인 타협과 타락의 과정</span>을 통해 진행됨을 보여줍니다. 
+                    
+                    <br><br>영적 쇠퇴의 과정을 단계별로 살펴보겠습니다. 
+                    
+                    <br><br><strong>첫 번째 단계는 점진적 타협</strong>입니다. 이스라엘이 가나안 족속들을 완전히 쫓아내지 못한 것에서 시작되었습니다. 이는 <span class="important">하나님의 명령에 대한 부분적 순종, 즉 타협</span>을 의미합니다. 현재 교회에서도 세상의 가치관과 성경적 가치관 사이에서 타협하는 경우가 많습니다. 
+                    
+                    <br><br><strong>두 번째 단계는 형식적 종교</strong>입니다. 미가의 우상 숭배 사건에서 보듯이, <span class="highlight-answer">하나님을 섬긴다고 하면서도 우상을 만드는 종교적 혼합주의</span>가 나타납니다. 현재도 겉으로는 신앙생활을 하지만 내면의 변화가 없는 형식적 신앙의 위험이 있습니다. 
+                    
+                    <br><br><strong>세 번째 단계는 도덕적 타락</strong>입니다. 기브아의 추악한 사건처럼 <span class="important">극도의 도덕적 타락</span>이 나타납니다. 이는 영적 기준이 무너지면 도덕적 기준도 함께 무너진다는 것을 보여줍니다. 
+                    
+                    <br><br><strong>네 번째 단계는 사회적 혼란</strong>입니다. 베냐민 지파 전쟁처럼 <span class="highlight-answer">공동체 내부의 갈등과 분열</span>이 극에 달합니다. 이는 개인의 타락이 공동체 전체의 혼란으로 이어진다는 것을 보여줍니다. 
+                    
+                    <br><br>예방책으로는 다음과 같은 것들이 있습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="important">말씀 중심의 신앙생활</span>을 해야 합니다. 성경을 정기적으로 읽고 묵상하며, 말씀에 기초한 판단과 결정을 내려야 합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">진실한 회개와 성찰</span>이 필요합니다. 자신의 영적 상태를 정기적으로 점검하고, 필요시 회개하는 습관을 가져야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>6. 사사기 전체를 통해 나타나는 하나님의 구원 역사와 그리스도의 예표적 의미, 그리고 현재 우리가 경험해야 할 참된 구원의 의미는 무엇인가?</h3>
+                    <p>사사기는 <span class="highlight-answer">하나님의 구원 역사의 중요한 한 장면으로서 그리스도의 구원 사역을 예표적으로 보여주는</span> 귀중한 말씀입니다. 
+                    
+                    <br><br>사사기의 구원 역사적 의미를 살펴보면 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="important">하나님의 주권적 구원</span>입니다. 사사들은 모두 하나님의 주권적 선택을 받은 구원자들이었습니다. 이는 구원이 인간의 공로나 자격이 아니라 하나님의 은혜로 이루어진다는 것을 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">반복되는 구원의 필요성</span>입니다. 이스라엘이 반복적으로 구원을 필요로 했듯이, 인간은 지속적으로 구원의 은혜가 필요한 존재임을 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">불완전한 구원자들의 한계</span>입니다. 모든 사사들은 각각의 한계와 약점을 가지고 있었으며, 완전한 구원을 제공하지 못했습니다. 이는 완전한 구원자의 필요성을 보여줍니다. 
+                    
+                    <br><br>그리스도의 예표적 의미를 살펴보면 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">사사들은 모두 그리스도의 예표</span>입니다. 하나님이 보내신 구원자로서 백성들을 대적의 손에서 구원했듯이, 그리스도는 우리를 죄와 사탄의 손에서 구원하셨습니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="important">여호와의 영이 임한 사사들은 성령으로 기름부음 받은 그리스도</span>를 예표합니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">사사들의 승리는 그리스도의 십자가 승리</span>를 예표합니다. 
+                    
+                    <br><br>현재 우리가 경험해야 할 참된 구원의 의미는 다음과 같습니다. 
+                    
+                    <br><br><strong>첫째</strong>, <span class="important">죄로부터의 구원</span>입니다. 그리스도의 십자가를 통해 우리는 죄의 형벌과 권세로부터 완전히 해방되었습니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">사탄의 권세로부터의 구원</span>입니다. 우리는 더 이상 사탄의 종이 아니라 하나님의 자녀가 되었습니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 하나님 없는 왕국, 인간의 한계와 하나님의 구원</h3>
+                <p><strong>1. 죄악의 끝없는 순환</strong><br>
+                사사기 전체는 <span class="key-point">이스라엘의 영적 실패와 타락이 어떻게 반복되는지</span>를 보여줍니다. <span class="important-text">하나님을 왕으로 모시지 않을 때 발생하는 혼란과 비극</span>은 우리에게 경고가 됩니다.</p>
+                
+                <p><strong>2. 참된 왕의 필요성</strong><br>
+                <span class="key-point">인간 왕들의 실패와 무질서한 시대</span>는 <span class="important-text">궁극적인 왕이신 예수 그리스도의 필요성</span>을 더욱 부각시킵니다.</p>
+                
+                <p><strong>3. 개인과 공동체의 책임</strong><br>
+                <span class="key-point">개인의 신앙적 선택이 공동체 전체에 미치는 영향</span>을 보며, <span class="important-text">개인의 거룩함과 공동체의 순결을 위해 힘써야 함</span>을 깨닫습니다.</p>
+                
+                <p><strong>4. 하나님의 신실하심과 구원 계획</strong><br>
+                인간의 죄에도 불구하고 <span class="key-point">하나님은 끊임없이 당신의 백성을 구원하시려 하셨습니다</span>. 이는 <span class="important-text">우리의 연약함 속에서도 역사하시는 하나님의 신실하심과 구원 능력</span>을 증거합니다.</p>
+                
+                <p><strong>5. 현재적 적용</strong><br>
+                사사기의 교훈은 오늘날 우리에게 <span class="key-point">하나님 말씀에 대한 절대적 순종, 진정한 회개, 그리고 개인과 공동체의 영적 각성</span>을 촉구합니다. <span class="important-text">참된 질서와 평화는 하나님을 왕으로 모실 때만 가능하다</span>는 것을 잊지 말아야 합니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 사사기 핵심 성경 구절</h2>
+            <div class="key-verse">
+                <h3>사사기 17:6</h3>
+                <p>"그 때에 이스라엘에 왕이 없으므로 사람이 각기 자기의 소견에 옳은 대로 행하였더라"</p>
+                <div class="verse-meaning">사사기 말기의 핵심 구절, 절대 기준 부재의 위험</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 18:1</h3>
+                <p>"그 때에 이스라엘에 왕이 없었고 단 지파는 이때까지 거주할 기업을 얻지 못하였으므로"</p>
+                <div class="verse-meaning">단 지파의 이주와 우상 숭배의 시작</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 19:1</h3>
+                <p>"이스라엘에 왕이 없을 그 때에 에브라임 산지 구석에 거류하는 어떤 레위 사람이 유다 베들레헴에서 첩을 맞이하였더니"</p>
+                <div class="verse-meaning">도덕적 타락의 시작</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 19:25</h3>
+                <p>"그 무리가 그 말을 듣지 아니하므로 그 사람이 자기 첩을 붙들어 그들에게로 이끌어 내매 그들이 그 여자와 관계하였고 밤새도록 그 여자를 능욕하다가 새벽 미명에 놓은지라"</p>
+                <div class="verse-meaning">인간 존엄성의 파괴와 그 파장</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 20:1</h3>
+                <p>"이에 모든 이스라엘 자손이 단에서부터 브엘세바까지와 길르앗 땅에서 나왔는데 그 회중이 일제히 미스바에서 여호와 앞에 모였으니"</p>
+                <div class="verse-meaning">이스라엘의 연합과 하나님의 뜻을 묻는 모습</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 21:25</h3>
+                <p>"그 때에 이스라엘에 왕이 없으므로 사람이 각기 자기의 소견에 옳은 대로 행하였더라"</p>
+                <div class="verse-meaning">사사 시대의 혼란을 요약하는 결정적 구절</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button main">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./1t.html" class="nav-button">
+                🔄 처음부터 다시 보기
+            </a>
+            <a href="#" class="nav-button complete" onclick="alert('🎉 사사기 전체 학습을 완료하셨습니다! 하나님의 은혜와 교훈을 마음에 새기시기 바랍니다.')">
+                ✅ 학습 완료
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // Table data
+        const data = [
+            {
+                verse: "사사기 17:1-6",
+                event: "미가의 우상 제작 및 레위인 제사장 고용",
+                place: "에브라임 산지",
+                question: "미가가 개인적인 우상 숭배를 시작하게 된 근본 원인은 무엇인가?",
+                answer: "하나님을 자신의 소유로 삼고, 자신의 방식으로 통제하려는 욕망 때문",
+                fullVerse: "에브라임 산지에 미가라 이름하는 사람이 있더니 그의 어머니에게 이르되 어머니께서 은 천백을 잃어버리셨으므로 저주하시고 내 귀에도 말씀하셨더니 보소서 그 은이 내게 있나이다 내가 그것을 가졌나이다 하니 그의 어머니가 이르되 내 아들이 여호와께 복 받기를 원하노라 하니라 미가가 은 천백을 그의 어머니에게 도로 주매 그의 어머니가 이르되 내가 내 아들을 위하여 한 신상을 새기며 한 신상을 부어만들기 위해 내 손에서 이 은을 여호와께 거룩히 드리노라 그러므로 내가 이제 이 은을 네게 도로 주리라 미가가 그 은을 그의 어머니에게 도로 주었으므로 어머니가 그 은 이백을 가져다 은장색에게 주어 한 신상을 새기고 한 신상을 부어만들었더니 그 신상이 미가의 집에 있더라 그 사람 미가에게 신당이 있으므로 그가 에봇과 드라빔을 만들고 한 아들을 세워 그의 제사장으로 삼았더라 그 때에 이스라엘에 왕이 없으므로 사람이 각기 자기의 소견에 옳은 대로 행하였더라"
+            },
+            {
+                verse: "사사기 18:1-31",
+                event: "단 지파의 라이스 정복과 우상 숭배 확산",
+                place: "라이스 (단)",
+                question: "단 지파가 미가의 우상과 제사장을 빼앗은 행위가 보여주는 영적 상태는 무엇인가?",
+                answer: "하나님보다 자신들의 필요와 욕망을 우선시하는 탐욕적인 모습",
+                fullVerse: "그 때에 이스라엘에 왕이 없었고 단 지파는 이때까지 거주할 기업을 얻지 못하였으므로 그들이 거주할 땅을 찾고자 하여 단 자손의 온 가족 중에서 용맹스런 다섯 사람을 소라와 에스다올에서 보내어 땅을 정탐하고 살피게 하며 그들에게 이르되 너희는 가서 땅을 살펴보라 하매 그들이 에브라임 산지에 가서 미가의 집에 이르러 거기서 유숙하니라 그들이 미가의 집에 있을 때에 그 레위 청년의 음성을 알아듣고 그리로 돌아가서 그에게 이르되 누가 너를 이리로 인도하였으며 네가 여기서 무엇을 하며 여기서 무엇을 얻었느냐 하니 그가 그들에게 이르되 미가가 이러이러하게 나를 대우하고 나를 고용하여 나를 자기의 제사장으로 삼았느니라 하니 그들이 그에게 이르되 청하건대 우리를 위하여 하나님께 물어 보아서 우리가 가는 길이 형통할는지 우리에게 알게 하라 하니 그 제사장이 그들에게 이르되 평안히 가라 너희가 가는 길은 여호와께서 함께 하시느니라 하니라 이에 다섯 사람이 떠나 라이스에 이르러 거기 있는 백성을 본즉 염려 없이 거주하며 시돈 사람들이 사는 것처럼 평온하며 안전하니 그 땅에는 부족한 것이 무엇이라도 하나도 없으며 부를 누리며 시돈 사람들과 거리가 멀고 어떤 사람과도 상종하는 자가 없었더라 그들이 소라와 에스다올에 돌아가서 그들의 형제들에게 말하매 형제들이 그들에게 묻되 너희가 보기에 어떠하더냐 하니 이르되 라이스 땅을 본즉 평온하고 жителей은 시돈 사람처럼 염려 없이 사는 땅이니 우리가 가서 그 땅을 얻을 수 있겠느냐 하며 그들이 다섯 사람에게 말하되 가서 그 땅을 탐지하라 하매 다섯 사람이 가서 미가의 집에 유숙하였던 레위 청년에게 이르러 그에게 말하여 이르되 너는 어떻게 하는 것이 좋겠느냐 미가의 집에 있는 새긴 신상과 에봇과 드라빔과 부어 만든 신상을 어디에 두었느냐 하니 그 제사장이 그들에게 이르되 그들이 너희에게 행한 모든 일을 알고 너희가 무엇을 원하는지를 안즉 너희는 너희의 행할 것을 생각하라 하니 다섯 사람이 미가의 집에 들어가서 그 새긴 신상과 에봇과 드라빔과 부어 만든 신상을 가져가니 그 제사장이 그들에게 이르되 너희가 무엇을 하느냐 하는지라 그들이 그에게 이르되 장막 문을 막고 손으로 네 입을 막으라 우리가 들어가서 그 땅에 들어갈 때에 이 소리를 내지 못하게 하여 네가 우리의 아버지요 제사장이 되는 것과 이스라엘의 한 지파와 한 족속의 제사장이 되는 것 중 어느 것이 낫겠느냐 하는지라 그 제사장이 그 사람의 말을 듣고 에봇과 드라빔과 새긴 우상을 받아 가지고 그 백성 가운데로 들어가니 그들이 돌이켜서 어린 아이들과 가축과 값진 물건들을 앞에 두고 길을 떠나더니 그들이 미가의 집을 멀리 떠난 때에 미가의 이웃집 사람들이 모여서 단 자손을 따라붙어서 단 자손을 부르는지라 그들이 얼굴을 돌려 미가에게 이르되 네가 무슨 일로 이같이 모아 가지고 왔느냐 하니 미가가 이르되 내가 만든 신들과 제사장을 빼앗아 갔으니 이제 내게 남은 것이 무엇이냐 너희가 어찌하여 내게 무슨 일이냐고 하느냐 하는지라 단 자손이 그에게 이르되 네 목소리를 우리에게 들리게 하지 말라 노한 자들이 너희를 쳐서 네 생명과 네 가족의 생명을 잃게 할까 하노라 하고 단 자손이 자기 길을 가니라 미가가 단 자손이 자기보다 강한 것을 보고 돌이켜 집으로 돌아갔더라 단 자손이 미가가 만든 바 그 신상을 가지고 나아갔고 그 제사장은 아론의 손자요 레위인인 요나단과 그의 자손은 단 지파가 사로잡혀 가는 날까지 그 사당의 제사장이 되었더라 단 자손이 미가가 만든 신상과 그가 만든 바 그 다른 점치는 우상을 가지고 라이스에 거주하는 한가하고 평화롭고 안전한 백성을 쳐서 칼날로 그들을 치며 그 성읍을 불사르되"
+            },
+            {
+                verse: "사사기 19:1-21:25",
+                event: "레위인의 첩 사건과 베냐민 내전",
+                place: "기브아",
+                question: "기브아 사건이 이스라엘 전체에 미친 영향은 무엇인가?",
+                answer: "이스라엘 전체의 분노를 일으켜 베냐민 지파와의 내전으로 이어졌고, 거의 모든 베냐민 남성이 전멸될 뻔한 비극을 초래",
+                fullVerse: "이스라엘에 왕이 없을 그 때에 에브라임 산지 구석에 거류하는 어떤 레위 사람이 유다 베들레헴에서 첩을 맞이하였더니 그 첩이 행음하고 남편을 떠나 유다 베들레헴 그의 아버지의 집에 돌아가서 거기서 넉 달 동안을 지내매 그의 남편이 그에게 다정하게 말하고 그를 데려오고자 하여 하인 한 사람과 나귀 두 마리를 데리고 그에게로 가라 그의 아버지를 만나 뵙고 그에게 이르되 내가 내 첩을 데리러 유다 베들레헴에 왔으니 청하건대 내 첩을 나의 집으로 보내 주소서 하니 그의 장인이 그를 데리고 가라 하니라 그러나 그 사람의 장인이 일어나서 그에게 이르되 떡을 조금 먹고 그대의 기력을 돋운 후에 그대의 길을 가라 하니 두 사람이 앉아서 함께 먹고 마시매 그 여자의 아버지가 그 사람에게 이르되 청하노니 이 밤을 여기서 유숙하여 그대의 마음을 즐겁게 하라 하니 그 사람이 일어나서 가고자 하되 그의 장인의 간청을 따라 거기서 다시 유숙하니라 다섯째 날 아침에 일찍이 일어나 떠나고자 하매 그 여자의 아버지가 이르되 청하건대 그대의 기력을 돋우고 해가 기울도록 머물라 하므로 두 사람이 함께 먹고 그 사람이 첩과 하인과 더불어 일어나 떠나고자 하매 그의 장인 곧 그 여자의 아버지가 그에게 이르되 보라 이제 날이 저물어 가니 청하건대 이 밤도 유숙하라 보라 해가 기울었느니라 그대는 여기서 유숙하여 그대의 마음을 즐겁게 하고 내일 일찍이 그대의 길을 가서 그대의 집으로 돌아가라 하되 그 사람이 다시 밤을 지내고 싶어하지 아니하여 일어나서 떠나 여부스 맞은쪽에 이르렀으니 여부스는 곧 예루살렘이라 안장 지운 나귀 두 마리와 첩이 그와 함께 하였더라 그들이 여부스에 가까이 갔을 때에 해가 지려 하는지라 종이 주인에게 이르되 청하건대 우리가 돌이켜 여부스 사람의 이 성읍에 들어가서 유숙하십시다 하니 주인이 그에게 이르되 우리가 돌이켜 이스라엘 자손에게 속하지 아니한 이방 사람의 성읍으로 들어갈 것이 아니니 기브아나 라마 중 한 곳에 가서 거기서 유숙하자 하고 모두 앞으로 나아가더니 베냐민에 속한 기브아에 가까이 이르러 해가 진지라 기브아에 들어가서 유숙하려고 그리로 돌아가서 성읍 넓은 거리에 앉아 있으나 그를 집으로 영접하여 유숙하게 하는 자가 없음이더라 때에 한 노인이 밭에서 일하다가 저녁 때에 돌아오니 그는 본래 에브라임 산지 사람으로서 기브아에 거류하는 자요 그 곳 사람들은 베냐민 자손이었더라 노인이 눈을 들어 성읍 넓은 거리에 나그네가 있는 것을 본지라 노인이 그에게 묻되 그대는 어디로 가며 어디서 왔느냐 하니 그가 그에게 이르되 나는 유다 베들레헴에서 에브라임 산지 구석으로 가나이다 나는 그 곳 사람으로서 유다 베들레헴에 갔다가 이제 여호와의 집으로 가는 중인데 나를 자기 집으로 영접하는 사람이 없나이다 우리에게는 나귀들에게 먹일 짚과 여물이 있고 나와 당신의 여종과 당신의 종인 우리들과 함께 한 청년에게 먹을 양식과 포도주가 있어 부족함이 없다 하는지라 그 노인이 이르되 그대는 안심하라 그대의 쓸 것은 모두 내가 담당할 것이니 거리에서는 유숙하지 말라 하고 그를 그의 집으로 인도하여 나귀에게 먹이고 그들이 발을 씻고 먹고 마시니라 그들이 마음을 즐겁게 할 때에 그 성읍의 불량배들이 그 집을 에워싸고 문을 두들기며 집 주인 노인에게 말하여 이르되 네 집에 들어온 사람을 이끌어내라 우리가 그와 관계하리라 하니 집 주인 그 사람이 그들에게로 나와서 이르되 아니라 내 형제들아 청하노니 이같은 악행을 저지르지 말라 이 사람이 내 집에 들어왔으니 이런 망령된 일을 행하지 말라 여기 내 처녀 딸과 이 사람의 첩이 있은즉 내가 그들을 이끌어 내리니 너희가 그들을 욕보이든지 너희 눈에 좋은 대로 행하되 오직 이 사람에게는 이런 망령된 일을 행하지 말라 하니 그 무리가 듣지 아니하므로 그 사람이 자기 첩을 붙들어 그들에게로 이끌어 내매 그들이 그 여자와 관계하였고 밤새도록 그 여자를 능욕하다가 새벽 미명에 놓은지라 동틀 때에 여인이 자기의 주인이 있는 그 사람의 집 문에 이르러 엎드러져 밝기까지 거기 엎드러져 있었더라 그의 주인이 아침에 일어나서 집 문을 열고 길을 떠나고자 하더니 그 여인이 그의 집 문 이스라엘의 집에 엎드러져 있는 것을 보고 그에게 이르되 일어나라 우리가 떠나가자 하였으나 아무 대답이 없는지라 이에 그의 시체를 나귀에 싣고 행하여 자기 곳으로 돌아가서 그 집에 이르러서는 칼을 가지고 자기 첩의 시체를 거두어 그 마디를 찍어 열두 덩이에 나누고 그것을 이스라엘 사방에 두루 보내매 그것을 보는 자가 다 이르되 누구든지 이 일을 당한 일을 생각하고 상의한 후에 말할지니라 하니"
+            },
+            {
+                verse: "사사기 20:12-48",
+                event: "이스라엘 연합군과 베냐민 내전",
+                place: "기브아",
+                question: "이스라엘 연합군이 처음 두 번의 전투에서 패배한 이유는 무엇인가?",
+                answer: "자신들의 의로움만 믿고 하나님의 뜻을 온전히 구하지 않았기 때문",
+                fullVerse: "이스라엘 지파들이 베냐민 온 지파에 사람들을 보내어 두루 다니며 이르되 너희 중에서 일어난 이 악행이 어찌 됨이냐 그런즉 이제 기브아 사람들 곧 그 불량배들을 우리에게 넘겨 주어서 우리가 그들을 죽여 이스라엘 중에서 악을 제거하여 버리게 하라 하나 베냐민 자손이 그들의 형제 이스라엘 자손의 말을 듣지 아니하더라 베냐민 온 지파 사람이 그들의 성읍들에 거주하는 형제들에게로 모여서 나가서 이스라엘 자손과 싸우고자 하매 그 때에 그 성읍들에서 칼을 빼는 자의 수가 이만 사천 명이었더라 이스라엘 자손이 올라가서 벧엘에 이르러 하나님께 여쭈되 우리 중에 누가 먼저 올라가서 베냐민 자손과 싸우리이까 하니 여호와께서 이르시되 유다가 먼저 갈지니라 하시니라 이스라엘 자손이 아침에 일어나 기브아를 대하여 진을 치니라 이스라엘 사람들이 나가서 베냐민을 치려고 전열을 갖추고 기브아에 맞서서 전열을 갖추매 베냐민 사람이 그 날에 그들에게서 나와서 이스라엘 사람 만 팔천 명을 무찔렀으니 다 칼을 빼는 자였더라 이에 이스라엘 자손이 올라가서 벧엘에 이르러 거기서 저물도록 하나님 앞에 앉아 금식하고 여호와 앞에 번제와 화목제를 드리고 이스라엘 자손이 여호와께 물으니 곧 그 때에는 하나님의 언약궤가 거기 있고 아론의 손자인 엘르아살의 아들 비느하스가 그 앞에 모시고 섰더라 이스라엘 자손이 여쭈기를 우리가 다시 나아가 내 형제 베냐민 자손과 싸우리이까 말리이까 하니 여호와께서 이르시되 올라가라 내일은 내가 그를 네 손에 넘겨 주리라 하시니라 이스라엘이 기브아 주위에 군사를 매복하였으니"
+            },
+            {
+                verse: "사사기 21:1-25",
+                event: "베냐민 지파의 재건과 해결책",
+                place: "미스바, 실로, 야베스 길르앗",
+                question: "베냐민 지파의 생존을 위해 취한 해결책은 무엇이며, 그 윤리적 문제는?",
+                answer: "야베스 길르앗 처녀들을 강제로 데려온 것으로, 이는 또 다른 폭력과 속임수를 정당화함",
+                fullVerse: "이스라엘 사람들이 미스바에 모였더라 이에 이르되 우리 중에 누구든지 딸을 베냐민 사람에게 아내로 주지 아니하리라 하였더라 백성이 벧엘에 이르러 거기서 저녁까지 하나님 앞에 앉아 큰 소리로 울며 이르되 이스라엘의 하나님 여호와여 어찌하여 이스라엘 중에 이런 일이 생겨서 오늘 이스라엘 중에 한 지파가 없어지게 되었나이까 하니 이튿날에 백성이 일찍이 일어나 거기에 한 제단을 쌓고 번제와 화목제를 드렸더라 이스라엘 자손이 이르되 이스라엘의 모든 지파 중에 총회와 함께 하여 여호와 앞에 올라오지 아니한 자가 누구냐 하니 이는 그들이 크게 맹세하기를 미스바에 와서 여호와 앞에 이르지 아니하는 자는 반드시 죽일 것이라 하였음이라 이스라엘 자손이 그들의 형제 베냐민을 위하여 뉘우쳐 이르되 오늘 이스라엘 중에서 한 지파가 끊어졌도다 그 남은 자들에게 우리가 어떻게 하여 아내를 얻게 하리요 우리가 전에 여호와로 맹세하여 이르기를 우리 딸을 그들의 아내로 주지 아니하리라 하였도다 또 이르되 이스라엘 지파 중에 미스바에 와서 여호와께 이르지 아니한 자가 누구냐 하니 보라 길르앗 야베스에서는 한 사람도 진영에 이르러 총회에 참여하지 아니하였으니 백성을 계수할 때에 그 곳에 있는 백성을 세어 보니 야베스 길르앗 주민이 하나도 없음을 보았음이라 그러므로 회중이 장로들에게 이르되 이스라엘의 모든 지파 중에서 이스라엘 하나님 여호와의 총회에 나오지 아니한 자가 누구냐 하니 보라 길르앗 야베스 주민 중 한 사람도 총회에 이르지 아니하였으므로 이스라엘 자손이 그들에게 사람을 보내어 그들에게 이르기를 너희는 가서 야베스 길르앗 주민과 남자와 그들의 모든 여자와 그들의 모든 자를 칼날로 진멸하고"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm) ||
+                    item.place.toLowerCase().includes(searchTerm) ||
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

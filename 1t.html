@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사사기 서론(1:1-3:6)</title>
+    <style>
+        /*
+        GLOBAL STYLES (from 14t.html)
+        Consistent box-sizing, font-family, line-height, color, min-height, padding for body.
+        Container styling is also global.
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /*
+        HEADER STYLES (using blue colors, 14t.html's structure/text shadows)
+        */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); /* Blue color */
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* from 14t.html */
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /*
+        OVERVIEW STYLES (from 14t.html, with blue border color)
+        */
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* Blue color */
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        /*
+        CONTROLS & SEARCH BAR (from 14t.html, with blue border color)
+        */
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db; /* Blue color */
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        /*
+        CONTENT & TABLE STYLES (from 14t.html, with blue header colors)
+        */
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%); /* Blue header color */
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3498db; /* Blue color */
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3498db; /* Blue color */
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c; /* Consistent with 14t.html for answers */
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        /*
+        THINKING SECTION (using blue colors)
+        */
+        .thinking-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Blue color */
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white; /* Changed for contrast on thinking-section background */
+        }
+        
+        .thinking-qa .important { /* Standardized to 'important' as in 14t.html */
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        /*
+        CONCLUSION (from 14t.html, with blue colors for key-point and important-text)
+        */
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        /*
+        KEY VERSES SECTION (from 14t.html, with blue border color)
+        */
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* Blue color */
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db; /* Blue color */
+            cursor: pointer; /* Retain toggle functionality from previous versions */
+            transition: all 0.3s ease;
+        }
+
+        .key-verse:hover { /* Retain hover effect from previous versions */
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+
+        /* Full verse text toggle for key verses */
+        .verse-full-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #3498db; /* Blue color */
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .verse-full-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /*
+        NAVIGATION BUTTONS (from 14t.html)
+        */
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        /*
+        SEARCH HIGHLIGHT & NO RESULTS (from 14t.html)
+        */
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text { /* Used for general highlights within table data */
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        /*
+        RESPONSIVE DESIGN (from 14t.html)
+        */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 사사기 서론(1:1-3:6)</h1>
+            <p>하나님의 언약과 인간의 불순종</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 사사기 서론 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">사사기 서론(1:1-3:6)</span>은 <span class="important">여호수아의 죽음 이후 이스라엘이 겪게 될 영적 타락과 혼란의 원인</span>을 명확히 보여주는 중요한 단락입니다. 이 부분은 사사 시대 전체의 배경과 주제를 제시하며, 하나님의 백성에게 어떤 일이 일어났는지를 설명합니다.</p>
+                
+                <p>이 서론은 크게 <span class="emphasis">세 가지 주제</span>로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 가나안 정복의 미완성(1:1-36)</strong><br>
+                각 지파가 <span class="important">하나님의 명령에 따라 가나안 족속을 완전히 쫓아내지 못하고 타협한 결과</span>를 상세히 기록합니다. 유다와 시므온의 초기 성공에서 시작하여, 다른 지파들이 철 병거를 두려워하거나, 노역을 시키거나, 아예 쫓아내지 못하는 등 <span class="highlight">다양한 불순종의 형태</span>를 보여줍니다. 이로 인해 가나안 족속들이 이스라엘 가운데 남아 '옆구리의 가시'가 됩니다.</p>
+                
+                <p><strong>둘째, 하나님의 경고와 심판 선언(2:1-5)</strong><br>
+                <span class="highlight">여호와의 사자가 보김에 나타나</span> 이스라엘의 불순종에 대한 엄중한 경고를 전달합니다. 그들은 하나님과의 언약을 어기고 가나안 주민과 언약을 맺었으며 그들의 제단을 헐지 않았습니다. 이 경고는 단순한 예언이 아니라 <span class="important">언약 파기에 따른 필연적인 심판의 결과</span>를 선언하는 중대한 사건이었고, 백성들은 이에 소리를 높여 울었습니다.</p>
+                
+                <p><strong>셋째, 영적 타락의 순환 구조 예고(2:6-3:6)</strong><br>
+                여호수아와 그 세대가 죽은 후, <span class="emphasis">새로운 세대는 여호와를 알지 못하게 됩니다</span>. 이들은 바알과 아스다롯을 섬기는 등 우상 숭배에 빠지고, 하나님은 그들을 대적의 손에 넘기십니다. 고통 중에 이스라엘이 부르짖으면 하나님은 사사를 세워 구원하시지만, 사사가 죽으면 다시 죄를 짓는 <span class="important">'죄악-압제-부르짖음-구원-평안-다시 죄악'이라는 반복적 패턴</span>이 예고됩니다. 이는 사사기 전체를 관통하는 핵심 신학적 주제입니다.</p>
+                
+                <p>이러한 서론은 단순한 역사적 기록을 넘어, <span class="important">사사 시대 전체를 이해하는 데 필수적인 신학적 주제와 교훈을 제시하는 핵심적인 서막 역할</span>을 합니다. 특히 <span class="highlight">하나님의 언약에 대한 이스라엘의 불순종과 그에 따른 고통스러운 결과</span>, 그럼에도 불구하고 <span class="emphasis">계속되는 하나님의 인내와 구원의 은혜</span>를 분명하게 보여줍니다. 이는 오늘날 우리의 신앙생활에도 중요한 경고와 동시에 희망의 메시지를 전달합니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 가나안, 여호수아, 보김, 바알, 사사)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 사사기 서론을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 이스라엘이 가나안 족속을 완전히 쫓아내지 못한 근본적인 이유는 무엇이며, 이것이 현재 우리에게 주는 교훈은 무엇인가?</h3>
+                    <p>이스라엘이 가나안 족속을 완전히 쫓아내지 못한 근본적인 이유는 <span class="highlight-answer">하나님께 대한 온전한 신뢰와 명령에 대한 완전한 순종의 부족</span>이었습니다. 그들은 하나님의 전능하신 능력을 믿기보다는 눈앞의 현실적인 어려움에 압도되었습니다. 예를 들어, <span class="important">철 병거를 가진 골짜기 주민들을 두려워</span>하거나, 가나안 족속과의 공존을 통해 <span class="important">노동력이라는 경제적 이익을 얻으려는 욕심</span>에 사로잡혔습니다. 이는 하나님의 절대적인 명령보다 인간적인 계산과 이득을 우선시한 결과였습니다. 그들은 불완전한 순종, 즉 '부분적 순종'을 선택함으로써 영적 타락의 씨앗을 스스로 뿌린 것입니다.</p>
+                    
+                    <p>현재 우리에게 이러한 이스라엘의 실패는 강력한 경고와 교훈을 줍니다. 신앙생활에서 <span class="highlight-answer">세상과의 타협이 얼마나 위험한지</span>를 보여줍니다. 우리는 종종 하나님이 원하시는 완전한 순종 대신, 세상의 유혹이나 현실적인 이득 앞에서 적당히 타협하려는 경향이 있습니다. 그러나 이러한 타협은 영적 타락의 시작점이 되며, 결국 우리 삶에 '옆구리의 가시'와 같은 고통을 초래할 수 있습니다. 참된 믿음은 세상의 권세나 물질적 이익을 두려워하지 않고, <span class="important">오직 하나님의 말씀에 대한 전적인 신뢰와 용기 있는 순종</span>을 요구합니다. 하나님께서 우리에게 명하신 영적인 싸움을 끝까지 완수해야만 진정한 자유와 평화를 누릴 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 새로운 세대가 "여호와를 알지 못하게" 된 원인은 무엇이며, 이를 방지하기 위한 실제적인 방법은?</h3>
+                    <p>사사기 2장 10절은 "그 후에 일어난 다른 세대는 여호와를 알지 못하며 여호와께서 이스라엘을 위하여 행하신 일도 알지 못하였더라"고 기록합니다. 새로운 세대가 여호와를 알지 못하게 된 근본적인 원인은 <span class="highlight-answer">이전 세대가 하나님의 역사와 은혜를 다음 세대에게 제대로 '전수'하지 못했기 때문</span>입니다. 여호수아와 그의 세대는 하나님의 크신 구원 역사를 직접 경험했지만, 그들의 자녀들에게는 그 경험을 단순히 이야기하는 것을 넘어 삶으로 보여주고 가르치는 데 소홀했습니다. 신명기 6장 6-9절에서 하나님께서 명령하신 대로, 하나님의 말씀을 자녀들에게 부지런히 가르치고, 일상생활 속에서 하나님의 역사를 증거하며, 하나님을 사랑하고 경외하는 삶의 본을 보여주었어야 했습니다. 신앙의 전승은 자동적으로 이루어지는 것이 아니라, <span class="important">의도적이고 지속적인 교육과 체험의 공유</span>가 필요한데, 이 부분이 실패한 것입니다.</p>
+                    
+                    <p>이러한 비극을 방지하기 위한 실제적인 방법은 다음과 같습니다. 첫째, <span class="important">가정에서의 신앙교육을 최우선</span>해야 합니다. 부모가 먼저 하나님의 말씀을 생활의 중심으로 삼고, 자녀들에게 성경 이야기를 살아있는 말씀으로 전달하며, 함께 예배하고 기도하는 시간을 가져야 합니다. 둘째, <span class="highlight-answer">하나님의 역사와 은혜에 대한 구체적이고 생생한 증거</span>를 지속적으로 공유해야 합니다. 단순히 '하나님이 구원하셨다'가 아니라, '어떤 고난에서 어떻게 구원하셨는지'를 세밀하게 나누어야 합니다. 셋째, 다음 세대가 <span class="important">직접 하나님을 경험할 수 있는 기회를 적극적으로 제공</span>해야 합니다. 봉사, 선교, 말씀 암송, 찬양 등 다양한 활동을 통해 하나님과의 인격적인 만남을 가질 수 있도록 도와야 합니다. 넷째, <span class="important">교회 공동체 전체가 다음 세대 양육에 대한 책임감을 가지고 참여</span>해야 합니다. 교회는 가정을 돕는 역할을 하며, 모든 세대가 함께 믿음 안에서 성장할 수 있는 환경을 제공해야 합니다. 신앙 전승은 한 두 사람의 노력으로 되는 것이 아니라, 공동체 전체의 헌신적인 노력을 통해 이루어집니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 사사 시대의 반복적 순환 구조가 주는 교훈과 이 악순환의 패턴을 깨뜨리는 방법은 무엇인가?</h3>
+                    <p>사사 시대의 반복적 순환 구조, 즉 '죄악-압제-부르짖음-구원-평안-다시 죄악'의 패턴은 <span class="highlight-answer">인간의 죄성과 하나님의 변함없는 은혜와 신실하심이 동시에 드러나는</span> 매우 중요한 신학적 주제입니다. 이 패턴은 인간이 얼마나 쉽게 하나님을 떠나고 죄에 빠지는 연약한 존재인지를 보여줍니다. 그러나 동시에, 하나님께서는 백성의 부르짖음에 즉시 응답하시고 구원자를 보내시는 <span class="important">변함없는 사랑과 긍휼의 하나님</span>이심을 증명합니다. 이 순환은 시간이 지날수록 점점 더 깊은 영적, 도덕적 타락으로 이어지는 악순환의 양상을 띠었습니다.</p>
+                    
+                    <p>이러한 악순환의 패턴을 깨뜨리기 위한 방법은 다음과 같습니다. 첫째, <span class="important">하나님과의 지속적이고 친밀한 관계를 유지</span>하는 것입니다. 매일의 말씀 묵상과 기도를 통해 하나님과의 교제를 깊게 하고, 그분의 뜻을 분별하며 순종하는 삶을 살아야 합니다. 둘째, <span class="highlight-answer">죄에 대한 철저한 회개와 단호한 결단</span>이 필요합니다. 죄를 가볍게 여기거나 합리화하지 않고, 즉시 하나님 앞에 나아가 죄를 고백하고 돌이켜야 합니다. 셋째, <span class="important">신앙 공동체 안에서의 상호 책임과 격려</span>가 중요합니다. 서로의 영적 상태를 돌보고, 어려움에 처한 지체들을 돕고 세워주며, 함께 말씀과 은혜를 나누어야 합니다. 넷째, 다음 세대에 대한 <span class="important">지속적이고 의도적인 신앙 전수</span>에 힘써야 합니다. 하나님의 역사를 가르치고 보여줌으로써 그들이 하나님을 인격적으로 경험하게 해야 합니다. 마지막으로, <span class="important">하나님의 은혜와 과거의 구원 역사에 대한 깊은 감사와 기억</span>을 잃지 않는 것입니다. 감사와 기억은 우리를 교만과 나태로부터 지켜주며, 겸손히 하나님을 의지하게 만듭니다. 이 패턴은 인간의 노력만으로는 깨뜨릴 수 없으며, <span class="highlight-answer">오직 하나님의 은혜와 성령의 능력</span>만이 우리를 이 악순환에서 벗어나게 할 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 하나님이 이방 민족들을 남겨두신 목적과 현재 우리 삶의 시험들에 대한 이해는 무엇인가?</h3>
+                    <p>하나님께서 이스라엘 백성 가운데 이방 민족들을 완전히 쫓아내지 않고 <span class="highlight-answer">남겨두신 목적은 여러 가지</span>가 있습니다. 이는 단순히 이스라엘의 불순종에 대한 심판일 뿐만 아니라, 그들에게 <span class="important">영적 훈련과 교육을 시키기 위한 하나님의 주권적인 뜻</span>이었습니다. 첫째, 그들을 <span class="important">시험하기 위함</span>이었습니다(사 3:4). 이스라엘이 과연 하나님의 명령들을 순종하며 그분의 도를 지켜 행하는지 시험하시려 했습니다. 이는 그들이 하나님만을 의지하고 세상의 유혹에 넘어가지 않도록 하기 위한 연단의 과정이었습니다. 둘째, <span class="important">전쟁을 알지 못하는 새로운 세대에게 싸움을 가르치려 함</span>이었습니다(사 3:2). 평화에 안주하여 영적으로 무감각해진 세대에게 영적 전쟁의 현실을 일깨우고, 하나님의 능력으로 싸워야 함을 가르치려 하신 것입니다. 셋째, 이방 신들이 이스라엘에게 <span class="important">올무가 되게 하심으로써 죄의 심각성을 깨닫게 하려 함</span>이었습니다(사 2:3).</p>
+                    
+                    <p>현재 우리 삶에 닥치는 수많은 시험과 어려움들도 마찬가지입니다. 하나님은 우리를 파멸시키기 위해서가 아니라, 우리의 <span class="highlight-answer">신앙을 정련하고 성숙시키며, 그분을 더욱 깊이 의지하게 하시려고</span> 때로는 시험을 허락하십니다. 시험을 통해 우리는 자신의 연약함과 한계를 깨닫고, <span class="important">오직 하나님만이 참된 피난처이시며 우리의 능력이 되심</span>을 배우게 됩니다. 세상의 가치관과 유혹, 물질에 대한 의존을 버리고 하나님께만 전적으로 의지하게 됩니다. 또한, 영적 싸움의 현실을 직시하고, <span class="important">영적으로 깨어 기도하며 말씀으로 무장해야 함</span>을 깨닫습니다. 그러므로 우리는 시험 앞에서 낙심하거나 좌절하기보다, <span class="important">하나님의 선한 목적을 믿고 겸손히 그분의 뜻을 구하며 인내</span>해야 합니다. 시험은 우리가 더 강한 믿음을 가진 하나님의 자녀로 성장하게 하는 통로가 될 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>5. 현재 우리에게 적용할 수 있는 사사기 서론의 핵심 메시지와 실천 방안은 무엇인가?</h3>
+                    <p>사사기 서론의 핵심 메시지는 <span class="highlight-answer">하나님과의 언약 관계에서 어떠한 타협도 영적 타락과 고통을 초래할 수 있다</span>는 것입니다. 하나님의 명령에 대한 불완전한 순종은 결국 죄의 확산과 하나님의 심판으로 이어집니다. 또한, <span class="important">하나님의 말씀과 역사를 다음 세대에게 부지런히 전수하는 것의 중요성</span>을 강조합니다. 이스라엘의 실패는 신앙 전승의 실패에서 비롯되었음을 명확히 보여줍니다. 그럼에도 불구하고, 인간의 반복적인 죄에도 불구하고 <span class="important">하나님의 변함없는 사랑과 구원의 은혜</span>는 항상 존재한다는 희망의 메시지를 전달합니다.</p>
+                    
+                    <p>이러한 핵심 메시지를 바탕으로 현재 우리가 실천할 수 있는 방안은 다음과 같습니다. 첫째, <span class="important">개인적으로는 하나님의 말씀에 대한 온전한 순종을 추구하고 세상과의 모든 영적 타협을 단호히 거부</span>해야 합니다. 우리의 삶의 모든 영역에서 하나님을 주인으로 모시고 그분의 뜻을 따르려 노력해야 합니다. 둘째, <span class="highlight-answer">가정에서는 신앙 교육의 최전선</span>이 되어야 합니다. 부모는 자녀들에게 성경 말씀을 가르치고, 하나님의 은혜와 역사를 생생하게 증언하며, 믿음의 본을 보여주어야 합니다. 셋째, <span class="important">교회 공동체에서는 서로를 영적으로 격려하고 책임지며, 다음 세대 양육에 온 힘을 다해야</span> 합니다. 모든 세대가 함께 참여하여 믿음의 유산을 다음 세대에 물려줄 수 있도록 헌신해야 합니다. 넷째, 우리는 <span class="important">사회 속에서 하나님의 뜻을 실현하는 빛과 소금의 역할</span>을 감당해야 합니다. 세상의 어둠과 부패 속에서 하나님의 공의와 사랑을 실천하며, 주변에 선한 영향력을 끼쳐야 합니다. 사사기의 경고와 하나님의 인내를 기억하며, 우리의 삶이 하나님께 영광을 돌리는 순종의 삶이 되도록 노력해야 합니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>🎯 최종 결론: 언약 백성의 실패와 하나님의 신실하심</h3>
+                <p><strong>1. 불순종의 필연적 결과:</strong> 사사기 서론은 <span class="key-point">이스라엘이 가나안 족속을 완전히 쫓아내지 못하고 타협한 결과</span>로, 하나님의 언약을 어겼을 때 발생하는 <span class="important-text">영적 타락과 필연적인 고통</span>을 명확히 보여줍니다. 이는 부분적 순종이 완전한 불순종으로 이어질 수 있음을 경고합니다.</p>
+                
+                <p><strong>2. 신앙 전승의 중요성:</strong> "여호와를 알지 못하는 세대"의 등장은 <span class="key-point">신앙 교육과 영적 유산 전수의 실패가 다음 세대와 공동체 전체에 얼마나 치명적인 영향</span>을 미치는지를 강조합니다. 가정과 교회의 적극적인 역할이 필수적입니다.</p>
+                
+                <p><strong>3. 반복되는 죄와 하나님의 인내:</strong> '죄악-압제-부르짖음-구원-평안'의 순환 구조는 <span class="key-point">인간의 반복적인 연약함에도 불구하고 포기하지 않으시고 계속해서 구원의 손길을 내미시는 하나님의 무한한 사랑과 인내</span>를 증명합니다. 이는 하나님의 은혜가 우리의 죄보다 크다는 희망을 줍니다.</p>
+                
+                <p><strong>4. 시험을 통한 연단:</strong> 하나님이 이방 민족들을 남겨두신 것은 이스라엘을 <span class="key-point">시험하고 훈련시키기 위한 교육적 목적</span>이 있었습니다. 우리 삶의 시험들도 마찬가지로, 우리의 신앙을 정련하고 하나님께만 전적으로 의지하도록 인도하는 하나님의 섭리입니다.</p>
+                
+                <p>따라서 사사기 서론은 오늘날 우리에게 <span class="key-point">하나님과의 언약 관계에서 온전한 순종을 추구하고, 신앙을 다음 세대에게 적극적으로 전수하며, 하나님의 변함없는 은혜와 인내를 신뢰하며 살아가야 할 영원한 교훈</span>을 제시합니다. 이는 죄에 대한 경각심과 동시에 하나님의 구원에 대한 확신을 줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>🔑 이 단원의 중요 성경 구절</h2>
+            
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>1. 사사기 1:19 - 불완전한 정복</h3>
+                <p>"여호와께서 유다와 함께 하신 고로 그가 산지 주민을 쫓아내지 아니하였으나 골짜기의 주민들은 철 병거가 있으므로 그들을 쫓아내지 못하였더라"</p>
+                <div class="verse-full-text">하나님의 함께하심에도 불구하고, 인간의 두려움(철 병거) 때문에 완전한 순종에 실패한 이스라엘의 모습을 보여줍니다. 이는 세상의 유혹 앞에서 타협하는 우리의 모습을 돌아보게 합니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>2. 사사기 2:2-3 - 언약 파기에 대한 경고</h3>
+                <p>"너희는 이 땅의 주민과 언약을 맺지 말며 그들의 제단들을 헐라 하였거늘 너희가 내 목소리를 순종하지 아니하였도다 그리한 까닭이 무엇이냐 그러므로 내가 또 말하기를 내가 그들을 너희 앞에서 쫓아내지 아니하리니 그들이 너희 옆구리에 가시가 될 것이며 그들의 신들이 너희에게 올무가 되리라 하였노라"</p>
+                <div class="verse-full-text">여호와의 사자가 이스라엘의 불순종을 책망하고, 언약을 어긴 결과로 가나안 족속이 '옆구리의 가시'와 '올무'가 될 것이라고 선언합니다. 이는 죄의 필연적인 결과와 하나님의 공의를 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>3. 사사기 2:10 - 신앙 전승의 단절</h3>
+                <p>"그 세대 사람도 다 그 조상들에게로 돌아갔고 그 후에 일어난 다른 세대는 여호와를 알지 못하며 여호와께서 이스라엘을 위하여 행하신 일도 알지 못하였더라"</p>
+                <div class="verse-full-text">여호수아 시대의 믿음이 다음 세대로 이어지지 못하면서 영적 암흑기가 시작됩니다. 이는 신앙 교육의 중요성과 세대 간 신앙 전수의 책임을 강조하는 구절입니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>4. 사사기 2:16 - 사사 제도의 시작</h3>
+                <p>"여호와께서 사사들을 세우사 노략하는 자의 손에서 그들을 구원하게 하셨으나"</p>
+                <div class="verse-full-text">이스라엘의 반복적인 죄와 고통 속에서 하나님께서 긍휼히 여기시어 구원자들(사사들)을 세우기 시작하셨음을 보여줍니다. 이는 하나님의 은혜와 구원의 계획이 끊어지지 않음을 나타냅니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>5. 사사기 2:18-19 - 악순환의 패턴</h3>
+                <p>"여호와께서 그들을 위하여 사사들을 세우실 때에는 여호와께서 그 사사와 함께 하셨고 그 사사가 사는 날 동안에는 여호와께서 그들을 대적의 손에서 구원하셨으니 이는 그들이 대적에게 압박과 괴롭힘을 받아 슬피 부르짖으므로 여호와께서 뜻을 돌이키셨음이거늘 그 사사가 죽은 후에는 그들이 돌이켜 그들의 조상들보다 더욱 타락하여 다른 신들을 따라 그들을 섬기며 그들에게 절하고 그들의 악한 행위와 완고한 행위를 그치지 아니하였더라"</p>
+                <div class="verse-full-text">사사 시대의 핵심 패턴인 '죄악-압제-부르짖음-구원-평안'이 반복되지만, 사사가 죽으면 더 깊은 타락으로 빠지는 악순환을 상세히 설명합니다. 이는 인간의 연약함과 하나님의 끊임없는 구원의 노력을 대조시킵니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>6. 사사기 3:4 - 시험과 순종</h3>
+                <p>"그들이 있음은 이스라엘을 시험하여 여호와께서 모세를 통하여 그들의 조상들에게 명령하신 명령들을 순종하는지 알려 하심이었더라"</p>
+                <div class="verse-full-text">남겨진 이방 민족들의 목적 중 하나는 이스라엘이 하나님의 명령에 순종하는지 시험하기 위함이었습니다. 이는 하나님이 시험을 통해 우리의 믿음을 연단하시고 순종을 가르치신다는 것을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>7. 사사기 3:5-6 - 완전한 동화</h3>
+                <p>"이스라엘 자손은 가나안 족속과 헷 족속과 아모리 족속과 브리스 족속과 히위 족속과 여부스 족속 가운데에 거주하여 그들의 딸들을 맞아 아내로 삼으며 자기들의 딸들을 그들의 아들들에게 주고 또 그들의 신들을 섬겼더라"</p>
+                <div class="verse-full-text">이방 민족과의 통혼은 영적 혼합주의의 정점으로, 이스라엘이 하나님의 백성으로서의 정체성을 완전히 상실하고 우상 숭배에 깊이 빠져들었음을 보여줍니다. 이는 세상과의 타협이 가져오는 최종적인 결과를 경고합니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./2t.html" class="nav-button secondary">
+                ➡️ 다음 단계로 가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 정의 (전체 데이터 포함, 순번 2-11 추가, 사건 설명 자세히, 중요사항 강조)
+        const data = [
+            {
+                order: 1,
+                verse: "사사기 1:1-3",
+                event: "여호수아 사후 가나안 정복 재개 - 이스라엘이 <span class='important'>하나님께 지도력에 대해 묻고</span> 유다가 선택받아 <span class='important'>시므온과 연합</span>하여 정복 전쟁을 시작함",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "여호수아 사후 이스라엘이 가나안 정복을 재개하며 가장 먼저 한 일은 무엇인가?",
+                answer: "이스라엘 자손이 <span class='highlight-text'>여호와께 누가 먼저 올라가서 싸울지 물었습니다</span>. 하나님은 <span class='highlight-text'>유다 지파</span>가 올라가라고 하셨고, 유다는 형제 <span class='highlight-text'>시므온 지파와 연합</span>하여 전쟁을 시작했습니다.",
+                fullVerse: "여호수아가 죽은 후에 이스라엘 자손이 여호와께 묻자 여러분 중에 누가 올라가서 우리를 위하여 가나안 족속과 먼저 싸우리이까 하니 여호와께서 이르시되 유다가 올라갈지니라 보라 내가 이 땅을 그의 손에 붙였노라 하시니라 유다가 그의 형제 시므온에게 이르되 내가 제비 뽑아 얻은 땅에 나와 함께 올라가서 가나안 족속과 싸우자 그리하면 나도 네가 제비 뽑아 얻은 땅에 함께 가리라 하니 시므온이 그와 함께 가니라"
+            },
+            {
+                order: 2,
+                verse: "사사기 1:4-7",
+                event: "유다와 시므온의 베섹 대승 - <span class='important'>하나님의 도우심</span>으로 만 명을 죽이고 <span class='important'>아도니 베섹 왕을 사로잡아</span> 그가 과거에 다른 왕들에게 행한 잔혹한 행위와 동일한 형벌을 가함",
+                place: "<span class='important'>베섹, 예루살렘</span>",
+                question: "유다 지파가 베섹에서 아도니 베섹 왕에게 어떤 방식으로 심판을 행했는가?",
+                answer: "유다가 아도니 베섹을 사로잡아 <span class='highlight-text'>그의 엄지손가락과 엄지발가락을 끊었습니다</span>. 이는 아도니 베섹이 과거에 70명의 왕들에게 행했던 잔혹한 행위와 동일한 방식으로, <span class='highlight-text'>하나님의 공의로운 심판</span>이 그에게 임했음을 보여줍니다.",
+                fullVerse: "유다가 올라가매 여호와께서 가나안 족속과 브리스 족속을 그들의 손에 넘겨 주시니 그들이 베섹에서 만 명을 죽이고 또 베섹에서 아도니 베섹을 만나서 그와 싸워 가나안 족속과 브리스 족속을 죽이매 아도니 베섹이 도망하는지라 그를 쫓아가서 잡아 그의 엄지손가락과 엄지발가락을 끊으매 아도니 베섹이 이르되 옛적에 칠십 명의 왕들이 그들의 엄지손가락과 엄지발가락을 찍히고 내 상 아래에서 음식 찌꺼기를 줍더니 하나님이 내가 행한 대로 내게 갚으시는도다 하니라 무리가 그를 예루살렘으로 끌고 가매 그가 거기서 죽으므로"
+            },
+            {
+                order: 3,
+                verse: "사사기 1:8-10",
+                event: "예루살렘과 헤브론의 완전 정복 - 유다 자손이 예루살렘을 <span class='important'>완전히 파괴하고 불태운 후</span>, 헤브론에서 <span class='important'>아낙 후손인 거인족</span> 세새, 아히만, 달매를 제거하여 약속의 땅을 정화함",
+                place: "<span class='important'>예루살렘, 헤브론(기럇 아르바)</span>",
+                question: "유다 지파가 예루살렘과 헤브론에서 어떤 성공적인 정복을 이루었는가?",
+                answer: "유다 자손은 <span class='highlight-text'>예루살렘을 쳐서 점령하여 불살랐습니다</span>. 이어서 헤브론으로 내려가 아낙의 후손인 거인족 <span class='highlight-text'>세새, 아히만, 달매를 죽이며 헤브론을 정복</span>하여 초기 정복의 성공적인 본보기를 보여주었습니다.",
+                fullVerse: "유다 자손이 예루살렘을 쳐서 그것을 점령하여 칼날로 치고 성을 불살랐으며 그 후에 유다 자손이 내려가서 산지와 남방과 평지에 거주하는 가나안 족속과 싸웠고 유다가 또 가서 헤브론에 거주하는 가나안 족속을 쳐서 세새와 아히만과 달매를 죽였더라 헤브론의 본 이름은 기럇 아르바였더라"
+            },
+            {
+                order: 4,
+                verse: "사사기 1:11-15",
+                event: "옷니엘의 드빌 정복과 결혼 - 갈렙이 제시한 조건에 따라 <span class='important'>옷니엘이 기럇 세벨을 점령</span>하고 악사와 결혼하며, 악사가 지혜롭게 아버지에게 <span class='important'>물 샘을 요청</span>하여 받음",
+                place: "<span class='important'>드빌(기럇 세벨)</span>",
+                question: "갈렙의 딸 악사가 아버지 갈렙에게 요청한 것은 무엇이며, 그 의미는?",
+                answer: "악사는 남방 땅으로 갈 때 아버지 갈렙에게 <span class='highlight-text'>샘물을 달라고 요청</span>했습니다. 이는 단순히 물질적인 요구를 넘어, <span class='highlight-text'>생명을 유지하는 데 필수적인 물(하나님의 축복)</span>을 구하는 지혜로운 행동이었으며, 갈렙은 윗샘과 아랫샘을 주어 그녀의 요구를 충족시켰습니다.",
+                fullVerse: "거기서 나아가서 드빌 주민을 쳤으니 드빌의 본 이름은 기럇 세벨이라 갈렙이 말하되 기럇 세벨을 쳐서 그것을 점령하는 자에게는 내 딸 악사를 아내로 주리라 하매 갈렙의 아우 그나스의 아들 옷니엘이 그것을 점령한지라 갈렙이 딸 악사를 그에게 아내로 주었더니 악사가 출가할 때에 그에게 청하여 자기 아버지에게 밭을 구하자 하고 나귀에서 내리매 갈렙이 그에게 묻되 네가 무엇을 원하느냐 하니 이르되 내게 복을 주소서 아버지께서 나를 남방 땅으로 보내시오니 샘물도 내게 주소서 하매 갈렙이 윗샘과 아랫샘을 그에게 주었더라"
+            },
+            {
+                order: 5,
+                verse: "사사기 1:16-17",
+                event: "겐 족속과의 동맹과 스밧 완전 정복 - <span class='important'>모세의 장인 후손인 겐 족속</span>이 유다 지파와 연합하고, 유다와 시므온이 스밧을 <span class='important'>완전히 진멸</span>하여 하나님의 명령을 철저히 수행함",
+                place: "종려나무 성읍, 아랏 남방, <span class='important'>스밧(호르마)</span>",
+                question: "유다와 시므온이 스밧을 '진멸'하여 '호르마'라고 부른 것의 의미는?",
+                answer: "'호르마'는 <span class='highlight-text'>'진멸' 또는 '저주받은 것'</span>이라는 의미입니다. 이는 유다와 시므온 지파가 하나님의 명령에 따라 가나안 족속을 완전히 파괴하여 <span class='highlight-text'>이 땅을 정화하고 거룩하게 구별</span>했음을 상징합니다. 이는 초기 이스라엘의 순종적인 모습을 보여줍니다.",
+                fullVerse: "모세의 장인 겐 족속의 자손들이 유다 자손과 함께 종려나무 성읍에서 올라가서 아랏 남방 유다 광야에 가서 그 백성 중에 거주하니라 유다가 그의 형제 시므온과 함께 가서 스밧에 거주하는 가나안 족속을 쳐서 그 성읍을 진멸하였으므로 그 성읍의 이름을 호르마라 하니라"
+            },
+            {
+                order: 6,
+                verse: "사사기 1:18-19",
+                event: "블레셋 지역 부분 정복과 첫 번째 한계 - 블레셋의 주요 성읍들을 점령했으나 <span class='important'>철 병거를 가진 골짜기 주민들</span> 앞에서 하나님의 능력보다 인간적 두려움이 앞서 <span class='important'>완전한 정복에 실패</span>함",
+                place: "가사, 아스글론, 에그론, 산지, <span class='important'>골짜기</span>",
+                question: "유다 지파가 산지 주민은 쫓아냈으나 골짜기 주민은 쫓아내지 못한 이유는 무엇이며, 이는 어떤 의미를 가지는가?",
+                answer: "유다 지파는 산지 주민을 쫓아낼 때는 <span class='highlight-text'>여호와께서 함께 하셨으므로 성공</span>했습니다. 그러나 골짜기의 주민들은 <span class='highlight-text'>철 병거를 가지고 있었기 때문에</span> 쫓아내지 못했습니다. 이는 이스라엘이 하나님의 능력을 믿고 순종하기보다 <span class='highlight-text'>세상의 물리적 힘(철 병거)을 두려워</span>하여 불완전한 순종에 머물렀음을 보여주는 첫 번째 사례입니다.",
+                fullVerse: "유다가 또 가사와 그 경계와 아스글론과 그 경계와 에그론과 그 경계를 점령하였고 여호와께서 유다와 함께 하신 고로 그가 산지 주민을 쫓아내지 아니하였으나 골짜기의 주민들은 철 병거가 있으므로 그들을 쫓아내지 못하였더라"
+            },
+            {
+                order: 7,
+                verse: "사사기 1:20-21",
+                event: "갈렙의 성공과 베냐민의 실패 대조 - <span class='important'>갈렙은 약속대로 헤브론을 받아 거인족을 완전히 제거</span>했으나, <span class='important'>베냐민은 예루살렘의 여부스족을 쫓아내지 못해</span> 타협적 공존 상태가 됨",
+                place: "<span class='important'>헤브론, 예루살렘</span>",
+                question: "갈렙과 베냐민 지파의 정복 결과가 대조되는 이유는 무엇인가?",
+                answer: "<span class='highlight-text'>갈렙은 하나님의 약속과 능력에 대한 온전한 믿음</span>으로 거인족 아낙 자손을 쫓아내는 데 성공했습니다. 반면 <span class='highlight-text'>베냐민 지파는 예루살렘의 여부스 족속을 쫓아내지 못하고 공존</span>함으로써 불순종의 한계를 보여주었습니다. 이는 인간의 믿음과 순종 여부가 정복 결과에 결정적인 영향을 미쳤음을 시사합니다.",
+                fullVerse: "그들이 모세가 말한 대로 헤브론을 갈렙에게 주었더니 그가 거기서 아낙의 세 아들을 쫓아내었고 베냐민 자손은 예루살렘에 거주하는 여부스 족속을 쫓아내지 못하였으므로 여부스 족속이 베냐민 자손과 함께 오늘까지 예루살렘에 거주하니라"
+            },
+            {
+                order: 8,
+                verse: "사사기 1:22-26",
+                event: "요셉 가문의 벧엘 정복과 불완전한 순종 - 하나님의 도우심으로 벧엘을 정복했으나, <span class='important'>협력자에게 '선대'하여 놓아준 것</span>이 결과적으로 <span class='important'>새로운 이방인 거주지를 형성하는 씨앗</span>이 되어 완전한 제거 명령에 불순종함",
+                place: "<span class='important'>벧엘(루스)</span>, 헷 족속의 땅",
+                question: "요셉 가문이 벧엘을 정복하는 과정에서 완전한 순종을 이루지 못한 부분은 무엇인가?",
+                answer: "요셉 가문은 벧엘 성읍의 입구를 알려준 사람과 그의 가족을 <span class='highlight-text'>살려주어 놓아 보냈습니다</span>. 이는 하나님의 '진멸' 명령에 대한 <span class='highlight-text'>불완전한 순종</span>이었고, 그 사람이 헷 족속의 땅에 새로운 성읍(루스)을 건설하여 <span class='highlight-text'>이스라엘에게 잠재적인 위협</span>이 될 씨앗을 남겼습니다.",
+                fullVerse: "요셉 가문도 벧엘을 치러 올라가니 여호와께서 그들과 함께 하시니라 요셉 가문이 벧엘을 정탐하게 하였는데 그 성읍의 본 이름은 루스라 정탐꾼들이 그 성읍에서 한 사람이 나오는 것을 보고 그에게 이르되 청하노니 이 성읍의 입구를 우리에게 가르쳐 주라 그리하면 우리가 네게 선대하리라 하매 그 사람이 성읍의 입구를 가르쳐 준지라 이에 그들이 칼날로 그 성읍을 쳤으되 오직 그 사람과 그의 가족은 놓아 보내매 그 사람이 헷 족속의 땅에 가서 성읍을 건축하고 그것의 이름을 루스라 하였더니 오늘까지 그곳의 이름이더라"
+            },
+            {
+                order: 9,
+                verse: "사사기 1:27-28",
+                event: "므낫세의 타협적 정복 정책 - 전략적 요충지들을 완전히 정복하지 못하고 가나안족의 강한 저항에 굴복하여, 나중에 힘이 생겼을 때도 <span class='important'>경제적 이익을 위해 완전한 제거 대신 노예화 정책</span>을 선택함",
+                place: "벧스안, 다아낙, 돌, 이블르암, <span class='important'>므깃도</span>",
+                question: "므낫세 지파가 가나안 족속을 완전히 쫓아내지 못하고 노역을 시킨 것의 문제점은?",
+                answer: "므낫세 지파는 가나안 족속의 <span class='highlight-text'>강한 저항</span>에 부딪혀 그들을 완전히 쫓아내지 못했습니다. 후에 이스라엘이 강성해진 뒤에도 하나님의 명령인 '진멸' 대신 <span class='highlight-text'>경제적 이익을 위해 그들에게 노역을 시키는 타협적인 정책</span>을 선택했습니다. 이는 하나님의 뜻보다 현실적인 이득을 우선시한 불순종의 예입니다.",
+                fullVerse: "므낫세가 벧스안과 그에 딸린 마을들의 주민과 다아낙과 그에 딸린 마을들의 주민과 돌과 그에 딸린 마을들의 주민과 이블르암과 그에 딸린 마을들의 주민과 므깃도와 그에 딸린 마을들의 주민들을 쫓아내지 못하매 가나안 족속이 결심하고 그 땅에 거주하였더니 이스라엘이 강성한 후에야 가나안 족속에게 노역을 시켰고 다 쫓아내지는 못하였더라"
+            },
+            {
+                order: 10,
+                verse: "사사기 1:29",
+                event: "에브라임의 정복 실패와 혼합 거주 - <span class='important'>게셀</span>이라는 중요한 성읍을 완전히 정복하지 못하고 <span class='important'>가나안족과 혼합 거주</span>하게 되어 후에 종교적, 문화적 타락의 원인이 됨",
+                place: "<span class='important'>게셀</span>",
+                question: "에브라임 지파가 게셀의 가나안 족속을 쫓아내지 못한 결과는?",
+                answer: "에브라임 지파는 게셀에 거주하는 가나안 족속을 <span class='highlight-text'>쫓아내지 못했고, 그들이 이스라엘 중에 계속 거주</span>하게 되었습니다. 이는 후에 <span class='highlight-text'>종교적, 문화적 혼합주의와 타락의 원인</span>이 되어 하나님의 백성으로서의 정체성을 위협하게 됩니다.",
+                fullVerse: "에브라임이 게셀에 거주하는 가나안 족속을 쫓아내지 못하매 가나안 족속이 게셀에서 그들 중에 거주하였더라"
+            },
+            {
+                order: 11,
+                verse: "사사기 1:30",
+                event: "스불론의 부분적 성공과 타협 - 기드론과 나할롤 주민들을 완전히 제거하지 못하고 <span class='important'>노예로 부리는 것으로 만족</span>하여, 하나님의 완전한 명령보다 <span class='important'>경제적 실익을 우선시</span>함",
+                place: "<span class='important'>기드론, 나할롤</span>",
+                question: "스불론 지파의 정복 실패가 보여주는 타협의 모습은?",
+                answer: "스불론 지파는 기드론과 나할롤 주민들을 <span class='highlight-text'>쫓아내지 못하고, 그들에게 노역을 시키는 것으로 만족</span>했습니다. 이는 가나안 족속을 완전히 제거하라는 하나님의 명령 대신 <span class='highlight-text'>경제적 이득을 위해 타협</span>한 불순종의 사례이며, 영적 위협을 내재하게 만들었습니다.",
+                fullVerse: "스불론이 기드론 주민과 나할롤 주민을 쫓아내지 못하였으므로 가나안 족속이 그들 중에 거주하면서 노역을 하였더라"
+            },
+            {
+                order: 12,
+                verse: "사사기 1:31-32",
+                event: "아셀의 광범위한 정복 실패 - 해안 지역의 여러 중요한 성읍들을 전혀 정복하지 못하고 오히려 <span class='important'>가나안족 가운데 소수로 거주</span>하게 되어 <span class='important'>정복자가 아닌 거류민 신세</span>가 됨",
+                place: "악고, 시돈, 알랍, 악십, 헬바, 아빅, <span class='important'>르홉</span>",
+                question: "아셀 지파의 정복 실패는 다른 지파들과 어떤 차이를 보이는가?",
+                answer: "아셀 지파는 언급된 여러 성읍의 주민들을 <span class='highlight-text'>전혀 쫓아내지 못했습니다</span>. 다른 지파들이 부분적으로나마 노역을 시키거나 혼합 거주한 것과 달리, 아셀은 오히려 <span class='highlight-text'>가나안 족속 가운데 거주하게 되어</span> 정복자로서의 우위를 잃고 <span class='highlight-text'>점령당한 것과 다름없는 상태</span>가 되었습니다.",
+                fullVerse: "아셀이 악고 주민과 시돈 주민과 알랍과 악십과 헬바와 아빅과 르홉 주민을 쫓아내지 못하고 그 땅 주민 가나안 족속 가운데 거주하였으니 이는 그들을 쫓아내지 못함이었더라"
+            },
+            {
+                order: 13,
+                verse: "사사기 1:33",
+                event: "납달리의 제한적 성공 - 벧세메스와 벧아낫을 완전히 정복하지는 못했으나 최소한 <span class='important'>우위를 점하여 가나안족들로 하여금 노역</span>을 하게 만드는 부분적 성과를 거둠",
+                place: "<span class='important'>벧세메스, 벧아낫</span>",
+                question: "납달리 지파는 벧세메스와 벧아낫에서 어떤 결과를 얻었는가?",
+                answer: "납달리 지파는 벧세메스와 벧아낫 주민들을 <span class='highlight-text'>완전히 쫓아내지 못하고 그들 가운데 거주</span>했습니다. 그러나 <span class='highlight-text'>가나안 주민들이 납달리에게 노역을 했다는 점</span>에서, 최소한 그들을 지배하는 부분적인 성공은 거두었음을 알 수 있습니다.",
+                fullVerse: "납달리가 벧세메스 주민과 벧아낫 주민을 쫓아내지 못하고 그 땅 주민 가나안 족속 가운데 거주하였으나 벧세메스와 벧아낫 주민들이 그들에게 노역을 하였더라"
+            },
+            {
+                order: 14,
+                verse: "사사기 1:34-36",
+                event: "단 지파의 완전한 실패와 역전 - 정복자가 되어야 할 단 지파가 오히려 <span class='important'>아모리족에게 밀려 산지로 쫓겨나는 굴욕</span>을 당했으나, 후에 <span class='important'>요셉 가문의 도움</span>으로 상황이 역전됨",
+                place: "<span class='important'>헤레스 산, 아얄론, 사알빔</span>",
+                question: "단 지파의 정복 실패는 다른 지파들과 비교하여 어떤 심각한 문제점을 보여주는가?",
+                answer: "단 지파는 다른 지파들과 달리 오히려 <span class='highlight-text'>아모리 족속에게 밀려 산지로 쫓겨났고, 골짜기에 내려오는 것조차 허락받지 못했습니다</span>. 이는 이스라엘이 정복자가 아닌 피지배민으로 전락한 <span class='highlight-text'>가장 심각한 실패 사례</span>를 보여줍니다. 후에 요셉 가문의 도움으로 아모리 족속에게 노역을 시키게 되지만, 이는 단 지파 자체의 힘이 아니었습니다.",
+                fullVerse: "아모리 족속이 단 자손을 산지로 쫓아들이고 골짜기에 내려오기를 용납하지 아니하였으며 아모리 족속이 결심하고 헤레스 산과 아얄론과 사알빔에 거주하였더니 요셉 가문의 힘이 강성하매 아모리 족속이 노역을 하였으며 아모리 족속의 경계는 아그랍빔 비탈 곧 셀라에서부터 그 위였더라"
+            },
+            {
+                order: 15,
+                verse: "사사기 2:1-5",
+                event: "여호와의 사자의 엄중한 경고와 심판 선언 - 이스라엘의 불순종에 대한 하나님의 최종 경고로, 언약 파기의 결과로 가나안족들이 <span class='important'>영구적인 가시와 올무</span>가 될 것임을 선언하여 백성들이 통곡함",
+                place: "길갈, <span class='important'>보김</span>",
+                question: "여호와의 사자가 보김에서 이스라엘에게 경고한 핵심 내용은 무엇이며, 이스라엘의 반응은?",
+                answer: "여호와의 사자는 이스라엘이 <span class='highlight-text'>가나안 주민과 언약을 맺지 말고 제단들을 헐라는 명령을 불순종했음</span>을 책망했습니다. 그 결과 하나님께서 가나안 족속들을 쫓아내지 않고 <span class='highlight-text'>'옆구리의 가시'와 '올무'가 되게 할 것</span>이라고 선언하자, 백성들은 <span class='highlight-text'>크게 통곡했습니다</span>(그래서 그곳 이름이 '보김', 즉 '우는 자들'이 됨).",
+                fullVerse: "여호와의 사자가 길갈에서부터 보김으로 올라와서 이르되 내가 너희를 애굽에서 나오게 하여 너희 조상들에게 맹세한 땅으로 인도하여 이르기를 내가 너희와 맺은 언약을 영원히 어기지 아니하리니 너희는 이 땅의 주민들과 언약을 맺지 말며 그들의 제단들을 헐라 하였거늘 너희가 내 목소리를 순종하지 아니하였도다 그리한 까닭이 무엇이냐 그러므로 내가 또 말하기를 내가 그들을 너희 앞에서 쫓아내지 아니하리니 그들이 너희 옆구리에 가시가 될 것이며 그들의 신들이 너희에게 올무가 되리라 하였노라 여호와의 사자가 이 말씀을 온 이스라엘 자손에게 이르매 백성이 소리를 높여 울었더라 그러므로 그 곳의 이름을 보김이라 하니라 무리가 거기서 여호와께 제사를 드렸더라"
+            },
+            {
+                order: 16,
+                verse: "사사기 2:6-9",
+                event: "여호수아 시대의 마지막과 신실한 지도력의 종료 - <span class='important'>여호수아와 그를 따른 장로들이 살아있는 동안</span>은 하나님을 섬겼으나, 이들의 죽음으로 <span class='important'>영적 지도력의 공백</span>이 생기고 신앙 전승의 위기가 시작됨",
+                place: "<span class='important'>딤낫 헤레스</span>",
+                question: "여호수아와 장로들이 죽은 후 이스라엘의 영적 상태는 어떻게 변화되었는가?",
+                answer: "여호수아와 그의 세대는 <span class='highlight-text'>하나님께서 행하신 모든 큰 일을 직접 보고 여호와를 섬겼습니다</span>. 그러나 그들이 죽은 후에는 <span class='highlight-text'>영적 리더십의 공백</span>이 생기며 신앙 전승에 위기가 찾아왔고, 이는 이스라엘이 하나님을 떠나게 되는 계기가 됩니다.",
+                fullVerse: "전에 여호수아가 백성을 보내매 이스라엘 자손이 각각 그들의 기업으로 가서 땅을 차지하였고 백성이 여호수아가 사는 날 동안과 여호수아 뒤에 생존한 장로들 곧 여호와께서 이스라엘을 위하여 행하신 모든 큰 일을 본 자들이 사는 날 동안에 여호와를 섬겼더라 여호와의 종 눈의 아들 여호수아가 백십 세에 죽으매 무리가 그를 에브라임 산지 가아스 산 북쪽 딤낫 헤레스 그의 기업의 경내에 장사하였고"
+            },
+            {
+                order: 17,
+                verse: "사사기 2:10",
+                event: "신앙 전승의 완전한 단절과 새로운 세대의 영적 무지 - 출애굽과 정착 과정을 직접 경험한 세대가 모두 죽고, <span class='important'>하나님의 역사를 전혀 모르는 세대</span>가 등장하여 영적 암흑기가 시작됨",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "새로운 세대가 '여호와를 알지 못하게' 된 가장 큰 원인은 무엇인가?",
+                answer: "새로운 세대가 <span class='highlight-text'>하나님께서 이스라엘을 위해 행하신 큰 일들을 직접 보지 못했고</span>, 이전 세대가 그들에게 <span class='highlight-text'>신앙을 제대로 전수하지 못했기 때문</span>입니다. 이는 영적 교육과 신앙적 체험의 부재가 다음 세대의 영적 무지로 이어졌음을 보여줍니다.",
+                fullVerse: "그 세대 사람도 다 그 조상들에게로 돌아갔고 그 후에 일어난 다른 세대는 여호와를 알지 못하며 여호와께서 이스라엘을 위하여 행하신 일도 알지 못하였더라"
+            },
+            {
+                order: 18,
+                verse: "사사기 2:11-15",
+                event: "이스라엘의 전면적 배교와 하나님의 심판 - <span class='important'>여호와를 완전히 버리고</span> 가나안의 <span class='important'>바알과 아스다롯을 섬기게 되어</span>, 하나님의 진노로 사방의 대적들에게 지속적으로 패배하고 고통받게 됨",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "이스라엘이 바알과 아스다롯을 섬김으로써 어떤 고통을 겪게 되었는가?",
+                answer: "이스라엘이 하나님을 버리고 우상 숭배에 빠지자 <span class='highlight-text'>여호와께서 진노하시어 노략하는 자들의 손에 그들을 넘겨주셨습니다</span>. 그 결과 이스라엘은 사방의 모든 대적에게 <span class='highlight-text'>노략과 괴롭힘을 당하고 심한 고통</span>을 겪게 되었습니다. 이는 죄에 대한 하나님의 심판이 실제적인 재앙으로 나타났음을 보여줍니다.",
+                fullVerse: "이스라엘 자손이 여호와의 목전에 악을 행하여 바알들을 섬기며 애굽 땅에서 그들을 인도하여 내신 그들의 조상들의 하나님 여호와를 버리고 다른 신들 곧 그들의 사방에 있는 민족들의 신들을 따라 그들에게 절하여 여호와를 진노하시게 하였으되 곧 그들이 여호와를 버리고 바알과 아스다롯을 섬겼으므로 여호와께서 이스라엘에게 진노하사 노략하는 자의 손에 넘겨 주어 그들로 노략을 당하게 하시며 또 그들을 그 사방의 모든 대적의 손에 파시매 그들이 다시는 그들의 대적을 당하지 못하였으며 그들이 어디를 가든지 여호와의 손이 그들에게 재앙을 내리시매 곧 여호와께서 말씀하신 것과 같고 여호와께서 그들에게 맹세하신 것과 같아서 그들의 괴로움이 심하였더라"
+            },
+            {
+                order: 19,
+                verse: "사사기 2:16-19",
+                event: "사사 제도의 시작과 악순환의 패턴 형성 - 하나님의 긍휼로 <span class='important'>사사들을 세워 구원</span>하시지만, <span class='important'>사사가 죽으면 이전보다 더 심한 타락</span>을 반복하여 영적 상태가 점진적으로 악화되는 순환 구조가 확립됨",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "사사들이 이스라엘을 구원했음에도 불구하고 악순환이 반복된 근본적인 원인은 무엇인가?",
+                answer: "이스라엘 백성이 <span class='highlight-text'>사사들에게도 순종하지 않고 다른 신들을 따라 음행하며 절하는 등 영적으로 완고했기 때문</span>입니다. 사사가 살아 있을 때는 하나님이 구원하셨지만, 사사가 죽으면 백성들은 <span class='highlight-text'>이전보다 더욱 타락하여 악한 행위를 그치지 않았습니다</span>. 이는 인간의 죄악 된 본성과 진정한 회개가 없었음을 보여줍니다.",
+                fullVerse: "여호와께서 사사들을 세우사 노략하는 자의 손에서 그들을 구원하게 하셨으나 그들이 그 사사들에게도 순종하지 아니하고 오히려 다른 신들을 따라가서 음행하며 그들에게 절하고 그들의 조상들이 여호와의 명령을 순종하던 길에서 속히 치우쳐 그와 같이 행하지 아니하였더라 여호와께서 그들을 위하여 사사들을 세우실 때에는 여호와께서 그 사사와 함께 하셨고 그 사사가 사는 날 동안에는 여호와께서 그들을 대적의 손에서 구원하셨으니 이는 그들이 대적에게 압박과 괴롭힘을 받아 슬피 부르짖으므로 여호와께서 뜻을 돌이키셨음이거늘 그 사사가 죽은 후에는 그들이 돌이켜 그들의 조상들보다 더욱 타락하여 다른 신들을 따라 그들을 섬기며 그들에게 절하고 그들의 악한 행위와 완고한 행위를 그치지 아니하였더라"
+            },
+            {
+                order: 20,
+                verse: "사사기 2:20-23",
+                event: "하나님의 최종 심판 선언과 이방 민족들의 영구 거주 허용 - 언약 파기에 대한 응답으로 <span class='important'>이방 민족들을 영구히 남겨두어</span> 이스라엘을 지속적으로 <span class='important'>시험하고 훈련시키는 도구</span>로 사용하기로 결정하심",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "하나님께서 이방 민족들을 이스라엘 가운데 남겨두신 최종적인 목적은 무엇인가?",
+                answer: "하나님께서는 이스라엘이 언약을 어기고 불순종했으므로, <span class='highlight-text'>여호수아가 죽을 때 남겨 둔 이방 민족들을 하나도 쫓아내지 않겠다고 선언하셨습니다</span>. 그 목적은 이스라엘을 <span class='highlight-text'>시험하여 그들이 여호와의 도를 지켜 행하는지 아닌지 알기 위함</span>이었습니다. 이는 하나님의 심판이면서 동시에 그 백성을 연단하고 회개로 이끌려는 목적이었습니다.",
+                fullVerse: "여호와께서 이스라엘에게 진노하여 이르시되 이 민족이 내가 그들의 조상들에게 명령한 언약을 어기고 내 목소리를 순종하지 아니하였은즉 나도 여호수아가 죽을 때에 남겨 둔 이방 민족들을 그들 앞에서 하나도 쫓아내지 아니하리라 하셨으니 이는 그들로 이스라엘을 시험하여 그들이 그들의 조상들이 지킨 것 같이 여호와의 도를 지켜 행하나 안 하나 알려 하심이라 그러므로 여호와께서 그 이방 민족들을 머물러 두사 속히 쫓아내지 아니하셨으며 여호수아의 손에 넘겨 주지도 아니하셨더라"
+            },
+            {
+                order: 21,
+                verse: "사사기 3:1-4",
+                event: "남겨진 이방 민족들의 구체적 목록과 교육적 목적 - 하나님이 의도적으로 남겨두신 민족들을 열거하며, 이들이 이스라엘의 <span class='important'>영적 훈련과 전쟁 교육</span>, 그리고 <span class='important'>순종 여부를 시험하는 도구</span>임을 명확히 함",
+                place: "<span class='important'>블레셋, 가나안, 시돈, 레바논 산</span>",
+                question: "하나님께서 남겨두신 이방 민족들이 이스라엘에게 어떤 두 가지 주요 목적을 가지고 있었는가?",
+                answer: "첫째, 이스라엘을 <span class='highlight-text'>시험하여 여호와의 명령들을 순종하는지 알기 위함</span>이었습니다. 둘째, <span class='highlight-text'>아직 전쟁을 알지 못하는 이스라엘 후손들에게 전쟁을 가르쳐 알게</span> 하려 함이었습니다. 이는 영적, 물리적 훈련을 통해 그들의 신앙과 민족적 역량을 강화하려는 목적이었습니다.",
+                fullVerse: "여호와께서 가나안의 모든 전쟁을 알지 못한 이스라엘을 시험하려 하사 남겨 두신 이방 민족들은 이러하니라 이는 이스라엘의 후손들 중에 아직 전쟁을 알지 못하는 자들에게 그것을 가르쳐 알게 하려 하심이라 곧 블레셋 다섯 방백과 모든 가나안 족속과 시돈 족속과 레바논 산에 거주하는 헷 족속이니 바알 헤르몬 산에서부터 하맛 어귀까지라 그들이 있음은 이스라엘을 시험하여 여호와께서 모세를 통하여 그들의 조상들에게 명령하신 명령들을 순종하는지 알려 하심이었더라"
+            },
+            {
+                order: 22,
+                verse: "사사기 3:5-6",
+                event: "이스라엘의 완전한 동화와 종교적 타락의 완성 - <span class='important'>이방 민족들과의 통혼</span>을 통해 혈통적 순수성을 잃고, 최종적으로 <span class='important'>그들의 신들을 섬기게 되어</span> 하나님의 백성으로서의 정체성을 완전히 상실함",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "이스라엘이 이방 민족들과 통혼하게 된 결과는 무엇이며, 이는 사사 시대의 어떤 패턴을 보여주는가?",
+                answer: "이스라엘 자손은 남겨진 이방 민족들과 <span class='highlight-text'>통혼하며 그들의 딸들을 아내로 삼고 자기 딸들을 아들들에게 주었습니다</span>. 그 결과 <span class='highlight-text'>이방 민족들의 신들을 섬기게 되어</span> 하나님의 백성으로서의 정체성을 완전히 상실하고 종교적으로 타락했습니다. 이는 사사 시대 전체에 걸쳐 반복될 <span class='highlight-text'>'혼합주의로 인한 배교' 패턴</span>의 시작을 보여줍니다.",
+                fullVerse: "이스라엘 자손은 가나안 족속과 헷 족속과 아모리 족속과 브리스 족속과 히위 족속과 여부스 족속 가운데에 거주하여 그들의 딸들을 맞아 아내로 삼으며 자기들의 딸들을 그들의 아들들에게 주고 또 그들의 신들을 섬겼더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        // 테이블 렌더링 함수
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+            
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.order}</td>
+                    <td class="verse-cell" onclick="toggleMainVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="main-verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // 메인 테이블 성경 구절 토글 함수
+        function toggleMainVerse(index) {
+            const verseText = document.getElementById(`main-verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 검색 기능
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm) ||
+                    item.fullVerse.toLowerCase().includes(searchTerm) /* Search full verse text as well */
+                );
+            }
+            
+            renderTable();
+            
+            // 검색 결과 하이라이트
+            if (searchTerm && filteredData.length > 0) {
+                setTimeout(() => {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.classList.add('highlight');
+                            setTimeout(() => row.classList.remove('highlight'), 2000);
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // 핵심 구절 토글 기능 (key-verses-section 전용)
+        function toggleVerseText(element) {
+            const verseText = element.querySelector('.verse-full-text');
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 초기 렌더링 및 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            document.getElementById('searchInput').addEventListener('input', searchTable);
+
+            // 페이지 로드 시 애니메이션
+            const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+            elementsToAnimate.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

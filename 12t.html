@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입산 (사사기 12:8-10)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #7b68ee;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #7b68ee;
+            box-shadow: 0 0 10px rgba(123, 104, 238, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #7b68ee;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #7b68ee;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .thinking-qa .important {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #7b68ee;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #7b68ee;
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👨‍🦳 엘론 (사사기 12:11-12)</h1>
+            <p>열 번째 사사 - 스불론의 충실한 목자</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 엘론 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">엘론 (사사기 12:11-12)</span>의 이야기는 <span class="important">입다 이후 이스라엘에 찾아온 평안과 안정의 시대</span>를 보여주는 중요한 전환점입니다. 비록 <span class="emphasis">단 두 구절에만 기록된 간단한 내용</span>이지만, 그의 통치는 이스라엘 역사에서 매우 특별한 의미를 가지고 있습니다.</p>
+                
+                <p>엘론의 이야기는 크게 <span class="emphasis">네 가지 특징</span>으로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 스불론 지파의 배경(12:11)</strong><br>
+                엘론은 <span class="important">스불론 사람</span>으로 기록되어 있습니다. 스불론 지파는 <span class="highlight">갈릴리 바다 서쪽 지역에 정착한 지파</span>로, 야곱의 열 번째 아들 스불론의 후손들입니다. <span class="emphasis">스불론은 "거함"이라는 뜻으로, 안정과 정착을 의미</span>합니다. 이 지파는 <span class="important">상업과 무역에 능숙한 지파</span>로 알려져 있었으며, 지중해와 갈릴리 바다를 연결하는 중요한 교통로에 위치해 있었습니다.</p>
+                
+                <p><strong>둘째, 10년간의 안정적인 통치(12:11)</strong><br>
+                엘론은 <span class="important">10년 동안 이스라엘을 다스렸다</span>고 기록되어 있습니다. 이 기간 동안 <span class="highlight">특별한 전쟁이나 갈등에 대한 언급이 없다</span>는 것은 그의 통치가 평화롭고 안정적이었음을 보여줍니다. <span class="emphasis">10년이라는 기간은 한 세대에 해당하는 충분한 시간</span>으로, 그의 리더십이 백성들에게 깊이 인정받았음을 의미합니다. 특히 <span class="important">입다의 격렬한 갈등 이후에 찾아온 평화</span>는 더욱 소중한 의미를 가집니다.</p>
+                
+                <p><strong>셋째, 스불론 아얄론에서의 장사(12:12)</strong><br>
+                엘론은 <span class="important">스불론 땅 아얄론에서 죽어 장사되었다</span>고 기록되어 있습니다. <span class="highlight">아얄론은 "사슴의 땅"이라는 뜻</span>으로, 아름답고 비옥한 땅을 의미합니다. 그가 <span class="emphasis">자신의 지파 땅에 묻힌 것</span>은 그가 평생 자신의 뿌리와 공동체를 소중히 여겼음을 보여줍니다. 또한 <span class="important">스불론 땅에서 태어나 스불론 땅에서 생을 마감한 것</span>은 그의 삶이 일관되고 안정적이었음을 나타냅니다.</p>
+                
+                <p><strong>넷째, 조용한 충실함의 리더십</strong><br>
+                엘론의 이야기는 <span class="important">조용하지만 충실한 리더십의 모범</span>을 보여줍니다. 그는 <span class="highlight">화려한 업적이나 극적인 사건 없이도 10년간 평화를 유지한 지혜로운 지도자</span>였습니다. <span class="emphasis">스불론 지파의 상업적 배경</span>은 그가 외교와 협상에 능숙했을 가능성을 시사하며, 이는 평화로운 통치의 비결이었을 것입니다.</p>
+                
+                <p>현재 우리에게 엘론의 이야기는 <span class="important">진정한 리더십이 무엇인지</span>에 대한 깊은 성찰을 요구합니다. 그의 리더십은 <span class="highlight">화려한 성취보다 꾸준한 섬김과 안정적인 관리</span>에 기반했습니다. <span class="emphasis">10년간의 평화는 하루아침에 이루어진 것이 아니라 매일매일의 지혜로운 결정과 신실한 섬김의 결과</span>였습니다. 또한 <span class="important">자신의 뿌리를 잊지 않고 공동체와 함께 살아간 그의 모습</span>은 현재 우리가 추구해야 할 균형 잡힌 삶의 모델을 제시합니다. 마지막으로 <span class="highlight">하나님의 백성을 평안 가운데 인도하는 것이 리더의 가장 중요한 사명</span>임을 깨닫게 합니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 엘론, 스불론, 10년)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 엘론을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 엘론이 스불론 지파 출신으로서 10년간 평화로운 통치를 할 수 있었던 배경은 무엇이며, 이는 현재 우리의 리더십과 사역에 어떤 교훈을 주는가?</h3>
+                    <p>엘론의 평화로운 통치는 <span class="highlight-answer">스불론 지파의 특성과 그의 개인적 자질이 결합된 결과</span>였습니다. 
+                    
+                    <br><br>스불론 지파의 배경:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">지리적 이점</span>입니다. 스불론 지파는 <span class="important">갈릴리 바다와 지중해를 연결하는 중요한 교통로에 위치</span>해 있었습니다. 이는 그들이 <span class="highlight-answer">다양한 민족과 문화를 접하며 외교적 감각을 기를 수 있는 환경</span>에 있었음을 의미합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">상업적 전통</span>입니다. 스불론 지파는 <span class="important">무역과 상업에 능숙한 지파</span>였습니다. 상업 활동은 <span class="highlight-answer">협상 능력과 평화적 해결 방식을 발달시키는 중요한 요소</span>였습니다. 갈등보다는 상호 이익을 추구하는 방식에 익숙했을 것입니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">안정성을 추구하는 성향</span>입니다. <span class="important">\"스불론\"이라는 이름 자체가 \"거함\", \"안정\"을 의미</span>합니다. 이는 이 지파가 본질적으로 <span class="highlight-answer">평화와 안정을 중시하는 문화적 배경</span>을 가지고 있었음을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">입다 이후의 시대적 요구</span>입니다. 입다의 격렬한 갈등과 에브라임과의 내전 이후, 이스라엘은 <span class="important">평화와 치유가 절실히 필요한 상황</span>이었습니다. 엘론은 이러한 시대적 요구에 부응하는 적절한 리더였습니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">진정한 리더십은 자신의 배경과 특성을 시대적 요구에 맞게 활용하는 것</span>입니다. 또한 <span class="highlight-answer">화려한 성취보다 꾸준한 평화 유지가 더 큰 가치</span>를 가질 수 있습니다. 마지막으로 <span class="important">다양성을 경험하고 상호 이익을 추구하는 자세가 갈등 해결의 열쇠</span>가 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 엘론의 10년 통치 기간 동안 특별한 사건이 기록되지 않은 것이 갖는 의미는 무엇이며, 이는 현재 우리의 삶과 사역에 어떤 시사점을 주는가?</h3>
+                    <p>엘론의 조용한 10년은 <span class="highlight-answer">평범함 속에 숨겨진 위대함과 꾸준함의 가치</span>를 보여줍니다. 
+                    
+                    <br><br>특별한 사건이 없다는 것의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">예방적 리더십의 성공</span>입니다. <span class="important">문제가 발생하기 전에 미리 해결하는 지혜</span>를 가졌다는 증거입니다. 이는 <span class="highlight-answer">위기 관리 능력보다 예방 능력</span>이 더 중요하다는 교훈을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">안정적인 일상의 가치</span>입니다. <span class="important">평화로운 시대의 지속</span>은 <span class="highlight-answer">백성들이 생업에 종사하고 가정을 꾸릴 수 있었음</span>을 의미합니다. 이는 <span class="important">진정한 번영의 기초</span>가 됩니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">겸손한 섬김의 리더십</span>입니다. <span class="important">자신을 드러내지 않고 묵묵히 백성을 섬긴 것</span>은 <span class="highlight-answer">진정한 리더는 자신보다 공동체를 우선시한다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">하나님의 은혜 가운데서의 평안</span>입니다. <span class="important">10년간의 평화는 하나님께서 주신 특별한 은혜</span>였고, 엘론은 이를 잘 관리했습니다. 이는 <span class="highlight-answer">주어진 환경에 감사하고 최선을 다하는 것이 중요하다</span>는 것을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">모든 사역이 주목받거나 화려할 필요는 없으며, 평범함 속에서의 충실함이 더 큰 가치</span>를 가질 수 있습니다. 또한 <span class="highlight-answer">삶의 안정을 소중히 여기고 그것을 지키기 위한 노력이 필요</span>합니다. 마지막으로 <span class="important">하나님께서는 우리의 겸손한 섬김을 통해 일하신다</span>는 믿음을 가져야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 엘론이 스불론 땅 아얄론에 장사된 것이 갖는 의미는 무엇이며, 이는 현재 우리의 정체성과 뿌리에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>엘론의 고향 장사는 <span class="highlight-answer">그의 삶이 자신의 뿌리와 공동체에 대한 깊은 애착과 책임감을 바탕으로 했음</span>을 보여줍니다. 
+                    
+                    <br><br>아얄론에서의 장사가 갖는 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">뿌리에 대한 존중</span>입니다. 엘론은 <span class="important">자신의 출신 지파인 스불론 땅 아얄론에 장사됨으로써 자신의 뿌리를 잊지 않았음</span>을 보여주었습니다. 이는 <span class="highlight-answer">자신의 정체성과 배경을 소중히 여기는 태도</span>의 중요성을 강조합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">공동체에 대한 헌신</span>입니다. 고향에 묻힌다는 것은 <span class="important">그의 삶이 단순히 개인적인 성공에 머무르지 않고, 공동체의 역사와 함께 엮여 있음</span>을 보여줍니다. 이는 <span class="highlight-answer">진정한 리더는 공동체의 일원으로서 함께 성장하고 함께 마무리한다</span>는 것을 의미합니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">일관성 있는 삶의 태도</span>입니다. 스불론에서 태어나 스불론에서 생을 마감한 것은 <span class="important">그의 삶이 매우 일관되고 안정적이었음</span>을 나타냅니다. <span class="highlight-answer">자신의 정체성을 지키며 살아가는 것</span>이 얼마나 중요한지를 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">신앙 공동체 안에서의 소속감</span>입니다. <span class="important">약속의 땅에 장사된다는 것은 하나님과의 언약 관계 안에서 소속감을 확인하는 행위</span>입니다. 이는 <span class="highlight-answer">우리의 삶도 하나님 안에서 뿌리를 내려야 함</span>을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">우리의 정체성과 뿌리를 잊지 않고 그것을 소중히 여기며 살아야 한다</span>는 것입니다. 또한 <span class="highlight-answer">우리가 속한 공동체 안에서 의미 있는 역할을 감당하고, 그 공동체의 역사의 일부가 되는 삶</span>이 가치 있음을 깨닫게 됩니다. 마지막으로 <span class="important">진정한 영향력은 자신의 이름을 높이는 것이 아니라, 공동체의 유익과 조화에 기여하는 것</span>에 있음을 배웁니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 평안한 리더십의 모범</h3>
+                <p><strong>1. 평범함 속의 위대함</strong><br>
+                엘론의 이야기는 <span class="key-point">화려한 사건 없이도 조용하고 꾸준한 섬김이 이스라엘 역사에 평안을 가져다주었음</span>을 보여줍니다. <span class="important-text">하나님께서는 평범한 삶 속에서도 위대한 역사를 이루신다</span>는 것을 증명합니다.</p>
+                
+                <p><strong>2. 예방적 리더십의 가치</strong><br>
+                <span class="key-point">문제가 발생하기 전에 관리하고 안정시키는 리더십</span>은 <span class="important-text">공동체의 지속가능한 발전에 필수적</span>입니다. 엘론의 10년 통치는 이를 잘 보여줍니다.</p>
+                
+                <p><strong>3. 정체성과 뿌리의 소중함</strong><br>
+                <span class="key-point">자신의 뿌리와 공동체를 소중히 여기는 삶</span>은 <span class="important-text">안정적인 영향력을 행사하고 다음 세대에 긍정적인 유산을 남기는 기반</span>이 됩니다.</p>
+                
+                <p><strong>4. 평화의 중요성과 책임</strong><br>
+                <span class="key-point">하나님께서 주신 평화로운 시기를 감사하며 잘 관리하는 것</span>은 <span class="important-text">모든 공동체의 책임</span>입니다. 엘론의 통치는 이러한 평화의 가치를 잘 보여줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 엘론 핵심 성경 구절</h2>
+            <div class="key-verse">
+                <h3>사사기 12:11</h3>
+                <p>"그 후에 스불론 사람 엘론이 이스라엘을 다스렸더라 그가 십 년 동안 이스라엘을 다스렸더라"</p>
+                <div class="verse-full-text">엘론은 스불론 지파 출신으로 10년간 이스라엘을 다스리며 평화로운 시대를 이끌었습니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 12:12</h3>
+                <p>"스불론 사람 엘론이 죽어 스불론 땅 아얄론에 장사되었더라"</p>
+                <div class="verse-full-text">그의 고향인 스불론 땅 아얄론에 장사된 것은 그의 삶이 공동체와 깊이 연결되어 있었음을 보여줍니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./13t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 12:11",
+                event: "엘론의 사사직 시작과 10년 통치",
+                place: "스불론 땅",
+                question: "엘론이 10년간 평화롭게 통치할 수 있었던 배경은 무엇인가?",
+                answer: "<span class='highlight-text'>스불론 지파의 상업적 배경과 외교적 감각, 그리고 입다 이후 평화에 대한 시대적 요구가 결합된 결과</span>",
+                fullVerse: "그 후에 스불론 사람 엘론이 이스라엘을 다스렸더라 그가 십 년 동안 이스라엘을 다스렸더라"
+            },
+            {
+                verse: "사사기 12:12",
+                event: "엘론의 죽음과 스불론 아얄론 장사",
+                place: "스불론 땅 아얄론",
+                question: "엘론의 고향 장사가 갖는 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>뿌리에 대한 존중과 공동체에 대한 책임감, 그리고 일관된 정체성을 유지한 삶의 증거</span>",
+                fullVerse: "스불론 사람 엘론이 죽어 스불론 땅 아얄론에 장사되었더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm) ||
+                    item.place.toLowerCase().includes(searchTerm) ||
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

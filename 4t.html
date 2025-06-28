@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼갈 (사사기 3:31)</title>
+    <style>
+        /*
+        GLOBAL STYLES (from 14t.html)
+        Consistent box-sizing, font-family, line-height, color, min-height, padding for body.
+        Container styling is also global.
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /*
+        HEADER STYLES (4t.html's specific colors, 14t.html's structure/text shadows)
+        */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); /* 4t.html color */
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* from 14t.html */
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /*
+        OVERVIEW STYLES (from 14t.html, with 4t.html's border color)
+        */
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        /*
+        CONTROLS & SEARCH BAR (from 14t.html, with 4t.html's border color)
+        */
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db; /* 4t.html color */
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        /*
+        CONTENT & TABLE STYLES (from 14t.html, with 4t.html's header colors)
+        */
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%); /* 4t.html color */
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3498db; /* 4t.html color */
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3498db; /* 4t.html color */
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c; /* Consistent with 14t.html for answers */
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        /*
+        THINKING SECTION (4t.html's specific colors)
+        */
+        .thinking-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white; /* Changed for contrast on thinking-section background */
+        }
+        
+        .thinking-qa .important { /* Standardized to 'important' as in 14t.html */
+            color: #ffeb3b; /* Consistent with 14t.html's thinking section */
+            font-weight: bold;
+        }
+        
+        /*
+        CONCLUSION (from 14t.html, with 4t.html's color for key-point and important-text)
+        */
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        /*
+        KEY VERSES SECTION (from 14t.html, with 4t.html's border color)
+        */
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db; /* 4t.html color */
+            cursor: pointer; /* Retain toggle functionality from original 4t.html/5t.html */
+            transition: all 0.3s ease;
+        }
+
+        .key-verse:hover { /* Retain hover effect from original 4t.html/5t.html */
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+
+        /* Full verse text toggle for key verses - specific to original 4t.html/5t.html */
+        .verse-full-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #3498db; /* 4t.html color */
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .verse-full-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /*
+        NAVIGATION BUTTONS (from 14t.html)
+        */
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        /*
+        SEARCH HIGHLIGHT & NO RESULTS (from 14t.html)
+        */
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text { /* Used for general highlights within table data */
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        /*
+        RESPONSIVE DESIGN (from 14t.html)
+        */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 삼갈 (사사기 3:31)</h1>
+            <p>세 번째 사사 - 소 모는 막대기의 영웅</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 삼갈 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">삼갈 (사사기 3:31)</span>은 <span class="important">사사기에 등장하는 세 번째 사사</span>로서, 단 한 구절에만 기록되어 있지만 <span class="emphasis">매우 중요한 의미</span>를 담고 있는 독특한 인물입니다.</p>
+                
+                <p>삼갈의 이야기는 간결하지만 <span class="emphasis">세 가지 핵심 요소</span>를 포함하고 있습니다:</p>
+                
+                <p><strong>첫째, 삼갈의 정체성 - "아낫의 아들"</strong><br>
+                삼갈은 <span class="important">"아낫의 아들"</span>로 소개됩니다. 아낫은 가나안의 전쟁 여신의 이름으로, 이는 삼갈이 <span class="highlight">이방인이거나 이방 문화의 영향을 받은 배경</span>을 가졌을 가능성을 시사합니다. 그럼에도 하나님께서 그를 사용하신 것은 <span class="important">하나님의 구원 계획이 민족이나 출신을 초월한다</span>는 것을 보여줍니다.</p>
+                
+                <p><strong>둘째, 독특한 무기 - "소 모는 막대기"</strong><br>
+                삼갈은 <span class="emphasis">소 모는 막대기로 블레셋 사람 600명을 죽였습니다</span>. 이는 전문적인 무기가 아닌 <span class="highlight">일상적인 농기구를 사용한 놀라운 승리</span>였습니다. 소 모는 막대기는 길이가 2-3미터에 달하는 긴 막대로, 끝에 쇠꼬챙이가 달려 있어 소를 몰 때 사용했습니다. 이는 <span class="important">하나님께서 평범한 도구를 통해 비범한 일을 행하신다</span>는 진리를 보여줍니다.</p>
+                
+                <p><strong>셋째, 이스라엘을 구원함</strong><br>
+                삼갈의 행동은 단순한 개인적 영웅담이 아니라 <span class="important">"이스라엘을 구원한" 공적인 구원 사역</span>이었습니다. 비록 한 구절에만 기록되어 있지만, 그의 행위는 <span class="highlight">하나님의 백성을 위한 의미 있는 구원</span>이었습니다.</p>
+                
+                <p>삼갈의 이야기가 주는 교훈은 매우 깊습니다. <span class="important">출신이나 배경보다 하나님의 부르심에 응답하는 것</span>이 중요하며, <span class="highlight">평범한 도구라도 하나님의 손에 있으면 놀라운 역사의 도구</span>가 될 수 있음을 보여줍니다.</p>
+                
+                <p>또한 삼갈의 기록이 간결한 것은 <span class="emphasis">하나님의 구원 역사에서 모든 세부사항이 기록될 필요는 없으며, 중요한 것은 하나님의 영광과 백성의 구원</span>이라는 것을 보여줍니다. 때로는 <span class="important">조용하고 겸손한 섬김이 화려한 업적보다 더 큰 의미</span>를 가질 수 있습니다.</p>
+                
+                <p>삼갈의 이야기는 <span class="highlight">하나님의 구원 계획의 포용성과 창의성</span>을 보여주며, 어떤 배경을 가진 사람이든 하나님의 뜻에 순종할 때 귀한 도구로 사용될 수 있음을 확신시켜 줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 삼갈, 막대기, 블레셋)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 삼갈을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 삼갈이 "아낫의 아들"로 불린 것의 의미와 하나님의 구원 계획의 포용성은 무엇인가?</h3>
+                    <p>삼갈이 <span class="important">"아낫의 아들"</span>로 불린 것은 <span class="highlight-answer">하나님의 구원 계획이 혈통이나 출신, 그리고 문화적 배경을 초월한다</span>는 중요한 의미를 담고 있습니다. '아낫'은 가나안의 전쟁 여신의 이름으로, 이는 삼갈이 <span class="important">이방인이거나 최소한 이방 문화의 영향을 받은 배경</span>을 가졌을 가능성을 시사합니다. 그럼에도 불구하고 하나님께서 그를 이스라엘의 구원자로 사용하신 것은, 하나님의 은혜와 부르심이 <span class="important">민족적, 사회적, 문화적 경계를 뛰어넘어 역사</span>한다는 것을 분명히 보여줍니다. 구약 시대에도 하나님의 구원이 이스라엘 민족에게만 제한되지 않았으며, 하나님의 뜻에 순종하는 자라면 누구든지 <span class="important">그분의 강력한 도구로 사용될 수 있음</span>을 의미합니다.</p>
+                    
+                    <p>오늘날 우리에게 이러한 교훈은 매우 중요합니다. 우리는 종종 사람을 판단할 때 그의 배경, 학벌, 사회적 지위, 경제적 능력 등 외적인 조건에 얽매이곤 합니다. 그러나 삼갈의 이야기는 <span class="highlight-answer">하나님 앞에서는 모든 사람이 동등하며, 진정으로 중요한 것은 인간의 조건이 아니라 하나님의 부르심에 기꺼이 응답하려는 마음과 태도</span>라는 것을 깨닫게 합니다. 교회와 사회에서 소외되거나 주목받지 못하는 이들도 하나님의 손에 붙들릴 때 놀라운 역사를 이룰 수 있습니다. 이는 우리가 <span class="important">편견 없이 모든 사람의 잠재력을 인정하고, 하나님의 시선으로 서로를 바라볼 필요성</span>을 강조합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 삼갈이 "소 모는 막대기"로 600명을 죽인 것의 의미와 현재 우리의 평범한 도구 사용에 대한 교훈은 무엇인가?</h3>
+                    <p>삼갈이 <span class="important">"소 모는 막대기"</span>라는 <span class="important">지극히 평범하고 일상적인 농기구</span>를 사용하여 블레셋 사람 600명을 죽였다는 사실은 <span class="highlight-answer">하나님께서 비범한 역사를 이루시는 데 있어 특별한 도구나 화려한 수단이 필요하지 않다</span>는 놀라운 진리를 보여줍니다. 소 모는 막대기는 단순한 농기구였지만, 하나님의 능력이 그와 함께할 때 블레셋 군대를 압도하는 강력한 무기가 되었습니다. 이는 하나님의 역사에서 중요한 것은 <span class="important">도구 자체의 크기나 화려함이 아니라, 그 도구를 사용하시는 하나님의 능력과 그 도구에 담긴 사용자의 믿음</span>이라는 것을 명확히 보여줍니다.</p>
+                    
+                    <p>현재 우리에게 삼갈의 이야기는 깊은 위로와 도전을 동시에 줍니다. 우리는 종종 자신에게 <span class="important">특별한 재능이나 대단한 능력이 없다고 생각하여 하나님의 일에 동참하기를 주저</span>하곤 합니다. 그러나 삼갈의 예는 우리가 가진 평범한 재능, 일상적인 직업, 또는 현재 처한 환경과 상황이 하나님께 온전히 드려질 때 <span class="highlight-answer">놀라운 일들이 일어날 수 있다</span>는 희망을 선사합니다. 교사는 교육을 통해, 의사는 치료를 통해, 사업가는 사업을 통해, 가정주부는 가정을 돌봄으로써 하나님의 영광을 나타내고 세상을 변화시킬 수 있습니다. 중요한 것은 자신이 가진 것을 <span class="important">하나님께 온전히 맡기고 그분의 뜻을 이루는 겸손한 도구로 사용되려는 마음</span>입니다. 우리의 평범한 일상이 하나님의 손에 붙들릴 때 비범한 기적이 될 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 삼갈의 기록이 성경에 단 한 구절에 불과한 것의 의미와 현재 우리의 겸손하고 보이지 않는 섬김에 대한 이해는?</h3>
+                    <p>삼갈의 이야기가 성경에 <span class="important">단 한 구절</span>에 불과하다는 사실은 <span class="highlight-answer">하나님의 구원 역사에서 중요한 것은 기록의 분량이나 세상의 주목이 아니라, 하나님의 뜻을 이루는 진실한 행위 그 자체</span>라는 깊은 의미를 담고 있습니다. 삼갈의 행위는 분명히 "이스라엘을 구원한" 매우 중요한 사건이었지만, 다른 사사들과 달리 그의 배경이나 구체적인 통치 기간 등에 대한 상세한 기록은 없습니다. 이는 하나님께서 모든 세부사항을 나열하시는 것보다, 핵심적인 구원의 사실과 그로 인한 하나님의 영광을 강조하신다는 것을 보여줍니다.</p>
+                    
+                    <p>더 나아가, 삼갈의 간결한 기록은 <span class="important">조용하고 겸손한 섬김도 하나님 앞에서는 매우 귀중하다</span>는 것을 의미합니다. 많은 신앙인들이 자신의 봉사나 헌신이 주목받지 못하거나 인정받지 못한다고 느껴 낙심할 때가 있습니다. 그러나 삼갈의 이야기는 <span class="highlight-answer">사람의 눈에 띄지 않더라도, 오직 하나님만을 의지하며 충성되이 행한 모든 선한 일들은 결코 헛되지 않다</span>는 위로를 줍니다. 하나님께서는 우리의 모든 진실한 섬김과 헌신을 기억하시며, 때로는 화려하고 공개적인 업적보다 조용하고 묵묵한 충성이 더 큰 영적인 영향을 미칠 수 있음을 일깨워 줍니다. 진정한 가치는 <span class="important">사람의 인정이 아니라 하나님의 인정</span>에 있음을 잊지 말아야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 삼갈과 블레셋의 대결이 주는 영적 의미와 현재 우리가 직면한 영적 전쟁에서의 교훈은 무엇인가?</h3>
+                    <p>삼갈이 블레셋 사람 <span class="important">600명</span>이라는 압도적인 적군을 상대로 싸워 승리했다는 것은 <span class="highlight-answer">개인의 용기와 하나님의 능력이 결합될 때 물리적인 힘이나 수적 우세와 관계없이 압도적인 적도 이길 수 있다</span>는 강력한 영적 진리를 보여줍니다. 인간적인 관점에서 한 사람이 600명을 상대한다는 것은 불가능에 가깝지만, 삼갈의 승리는 군대의 규모나 무기의 질이 아니라 <span class="important">하나님의 도우심이 승패를 결정하는 가장 중요한 요소</span>임을 증명합니다.</p>
+                    
+                    <p>현재 우리가 직면한 영적 전쟁도 마찬가지입니다. 우리는 죄의 유혹, 세상의 가치관, 사탄의 교활한 공격 등 <span class="important">우리 개인의 힘으로는 도저히 감당하기 어려워 보이는 거대한 세력들</span>과 싸우고 있습니다. 그러나 삼갈의 이야기는 우리에게 <span class="highlight-answer">두려워하지 않고 하나님을 의지하여 담대히 나아가면 승리할 수 있다</span>는 확신을 줍니다. 우리는 삼갈이 소 모는 막대기를 사용했듯이, 우리에게 주어진 영적인 도구들, 즉 <span class="important">기도, 말씀, 성령의 능력</span>을 적극적으로 사용하여 영적 전쟁에서 승리해야 합니다. 중요한 것은 우리의 연약함을 인정하고 하나님께 전적으로 의존하는 겸손한 태도와, 그분의 명령에 순종하여 용기 있게 행동하는 믿음입니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>5. 삼갈의 이야기가 사사기 전체에서 갖는 의미와 현재 우리의 신앙 여정에 주는 교훈은 무엇인가?</h3>
+                    <p>삼갈의 이야기는 사사기 전체의 흐름 속에서 <span class="highlight-answer">하나님의 구원 방법이 얼마나 다양하고 예측 불가능한지</span>를 보여주는 중요한 사례입니다. 옷니엘의 정통적인 승리와 에훗의 기발하고 지혜로운 전략에 이어, 삼갈의 이야기는 <span class="important">단순하고 직접적인 개인의 용기</span>가 하나님의 구원 도구로 사용될 수 있음을 보여줍니다. 이는 하나님께서 각 상황과 개인의 특성, 그리고 사용하시고자 하는 도구에 맞춰 <span class="important">놀랍도록 창의적인 방법으로 구원을 이루신다</span>는 것을 강조합니다. 또한, 삼갈의 간결한 기록은 하나님의 구원 역사에서 모든 사건이 동일한 비중으로 기록될 필요는 없으며, 각각의 이야기가 고유한 의미와 목적을 가진다는 것을 나타냅니다.</p>
+                    
+                    <p>현재 우리의 신앙 여정에서 이는 매우 중요한 교훈을 줍니다. 우리는 종종 다른 사람들의 성공적인 사역이나 신앙 방식을 모방하려 하거나, 자신과 비교하며 낙심할 때가 있습니다. 그러나 삼갈의 이야기는 우리 각자에게 <span class="highlight-answer">하나님께서 주신 고유한 부르심과 사명</span>이 있다는 확신을 줍니다. 다른 사람의 방식과 동일해야 한다는 부담감에서 벗어나, 하나님께서 자신에게 주신 <span class="important">고유한 은사와 환경을 통해 하나님의 뜻을 이루어가면 충분</span>합니다. 때로는 조용하고 단순한 순종이 복잡하고 화려한 사역보다 더 큰 영적인 의미를 가질 수 있습니다. 하나님은 우리의 진정성을 보시며, 우리의 작은 순종을 통해 위대한 일을 이루십니다. 우리는 자신만의 독특한 길을 통해 하나님께 영광을 돌릴 수 있습니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>🎯 최종 결론: 평범함 속의 비범한 구원</h3>
+                <p><strong>1. 포용적 구원의 하나님:</strong> 삼갈의 이야기는 <span class="key-point">하나님께서 사람의 배경, 출신, 사회적 지위에 관계없이 당신의 구원 계획을 이루기 위해 누구든 사용하실 수 있다</span>는 놀라운 진리를 보여줍니다. 이는 하나님의 은혜가 모든 경계를 초월하며, <span class="important-text">우리 모두가 그분의 부르심에 합당한 존재</span>임을 일깨웁니다.</p>
+                
+                <p><strong>2. 평범한 도구의 위대함:</strong> 삼갈이 <span class="key-point">일상적인 "소 모는 막대기"로 600명을 물리친 것</span>은 <span class="important-text">하나님께서 평범한 도구를 통해 비범한 역사를 이루신다</span>는 강력한 메시지입니다. 이는 우리가 가진 재능이나 수단이 아무리 작고 보잘것없어 보여도, <span class="key-point">하나님의 손에 맡겨질 때 위대한 목적을 이룰 수 있음</span>을 확신시켜 줍니다.</p>
+                
+                <p><strong>3. 겸손한 섬김의 가치:</strong> 삼갈의 기록이 성경에 <span class="key-point">단 한 구절에 불과하다는 사실</span>은 <span class="important-text">하나님의 구원 역사에서 중요한 것은 세상의 인정이나 기록의 분량이 아니라, 하나님의 뜻을 이루려는 진실하고 충성된 마음</span>임을 보여줍니다. 조용하고 묵묵한 섬김도 하나님 앞에서는 결코 헛되지 않습니다.</p>
+                
+                <p><strong>4. 영적 전쟁의 승리:</strong> 압도적인 숫자 앞에서도 <span class="key-point">하나님을 의지하여 담대히 싸운 삼갈의 용기</span>는 <span class="important-text">우리가 직면한 영적 전쟁에서도 우리의 힘이 아닌 하나님의 능력으로 승리할 수 있다</span>는 희망과 확신을 줍니다. 주님께서 우리보다 앞서 싸우신다는 믿음으로 나아가야 합니다.</p>
+                
+                <p>따라서 삼갈의 이야기는 <span class="key-point">하나님의 구원 방식의 다양성과 창의성</span>을 보여주는 동시에, <span class="important-text">우리의 연약함과 평범함을 통해 역사하시는 하나님의 위대한 은혜</span>를 강조하는 깊이 있는 교훈을 제공합니다. 이는 모든 성도에게 각자의 자리에서 하나님께 충성할 용기와 동기를 부여합니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 이 단원의 핵심 성경 구절</h2>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>1. 사사기 3:31 - 삼갈의 구원 사역</h3>
+                <p>"그 후에 아낫의 아들 삼갈이 소 모는 막대기로 블레셋 사람 육백 명을 죽였고 그도 이스라엘을 구원하였더라"</p>
+                <div class="verse-full-text">삼갈의 이야기는 하나님께서 평범한 도구와 사람을 통해 어떻게 비범한 구원을 이루시는지를 보여줍니다. 그의 이름과 함께 그의 놀라운 행동이 간결하게 기록되어 있습니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>2. 고린도전서 1:27-28 - 하나님의 지혜와 선택</h3>
+                <p>"그러나 하나님께서 세상의 미련한 것들을 택하사 지혜 있는 자들을 부끄럽게 하려 하시고 세상의 약한 것들을 택하사 강한 것들을 부끄럽게 하려 하시며 하나님께서 세상의 천한 것들과 멸시 받는 것들과 없는 것들을 택하사 있는 것들을 폐하려 하시나니"</p>
+                <div class="verse-full-text">이 구절은 하나님께서 세상의 기준으로 보잘것없는 존재들을 들어 사용하셔서 세상의 강하고 지혜로운 자들을 부끄럽게 하신다는 진리를 선포합니다. 삼갈은 이 진리의 좋은 예입니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>3. 스가랴 4:6 - 능력의 근원</h3>
+                <p>"그가 내게 대답하여 이르되 여호와께서 스룹바벨에게 하신 말씀이 이러하니라 만군의 여호와께서 말씀하시되 이는 힘으로 되지 아니하며 능력으로 되지 아니하고 오직 나의 영으로 되느니라"</p>
+                <div class="verse-full-text">이 구절은 하나님의 일이 인간의 힘이나 능력이 아닌, 오직 하나님의 영으로 이루어진다는 것을 강조합니다. 삼갈의 비범한 승리도 그의 막대기 힘이 아닌 하나님의 영으로 가능했습니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>4. 마태복음 25:21 - 충성에 대한 보상</h3>
+                <p>"그 주인이 이르되 잘하였도다 착하고 충성된 종아 네가 적은 일에 충성하였으매 내가 많은 것을 네게 맡기리니 네 주인의 즐거움에 참여할지어다 하고"</p>
+                <div class="verse-full-text">삼갈의 이야기는 비록 한 구절이지만 그가 '이스라엘을 구원했다'고 기록되어 그의 충성을 인정합니다. 이 구절은 작은 일에 충성하는 자에게 더 큰 책임을 맡기시는 하나님의 원리를 보여줍니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./5t.html" class="nav-button secondary">
+                ➡️ 다음 단계로 가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 정의 (삼갈 관련 내용, 중요사항 강조)
+        const data = [
+            {
+                verse: "사사기 3:31",
+                event: "삼갈의 영웅적 구원 사역 - <span class='important'>아낫의 아들 삼갈</span>이 전문 무기가 아닌 <span class='important'>소 모는 막대기로 블레셋 사람 600명을 죽이고</span> <span class='important'>이스라엘을 구원</span>하는 놀라운 승리를 거둠",
+                place: "<span class='important'>이스라엘 땅</span>",
+                question: "삼갈이 사용한 무기와 그의 승리가 주는 교훈은 무엇인가?",
+                answer: "삼갈은 <span class='important'>소 모는 막대기</span>라는 평범한 농기구로 <span class='important'>블레셋 사람 600명</span>을 죽이며 이스라엘을 구원했습니다. 이는 <span class='important'>하나님께서 평범한 도구를 통해 비범한 일을 행하신다</span>는 진리를 보여주며, 우리의 가진 작은 능력이라도 하나님께 맡길 때 큰 역사를 이룰 수 있음을 일깨웁니다.",
+                fullVerse: "그 후에 아낫의 아들 삼갈이 소 모는 막대기로 블레셋 사람 육백 명을 죽였고 그도 이스라엘을 구원하였더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        // 테이블 렌더링 함수
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+            
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleMainVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="main-verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // 메인 테이블 성경 구절 토글 함수
+        function toggleMainVerse(index) {
+            const verseText = document.getElementById(`main-verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 검색 기능
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderTable();
+            
+            // 검색 결과 하이라이트
+            if (searchTerm && filteredData.length > 0) {
+                setTimeout(() => {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.classList.add('highlight');
+                            setTimeout(() => row.classList.remove('highlight'), 2000);
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // 핵심 구절 토글 기능 (key-verses-section 전용)
+        function toggleVerseText(element) {
+            const verseText = element.querySelector('.verse-full-text');
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 초기 렌더링 및 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            document.getElementById('searchInput').addEventListener('input', searchTable);
+
+            // 페이지 로드 시 애니메이션
+            const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+            elementsToAnimate.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

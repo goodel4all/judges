@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엘론 (사사기 12:11-12)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #7b68ee;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #7b68ee;
+            box-shadow: 0 0 10px rgba(123, 104, 238, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #7b68ee;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #7b68ee;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .thinking-qa .important {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #7b68ee;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #7b68ee;
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👨‍🦳 압돈 (사사기 12:13-15)</h1>
+            <p>열한 번째 사사 - 가족 중심의 평안한 리더</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 압돈 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">압돈 (사사기 12:13-15)</span>의 이야기는 <span class="important">입다 이후 이스라엘에 찾아온 평안과 안정의 시대</span>를 보여주는 중요한 전환점입니다. 비록 <span class="emphasis">단 세 구절에만 기록된 간단한 내용</span>이지만, 그의 통치는 이스라엘 역사에서 매우 특별한 의미를 가지고 있습니다.</p>
+                
+                <p>압돈의 이야기는 크게 <span class="emphasis">네 가지 특징</span>으로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 비라돈 출신의 지역적 배경(12:13)</strong><br>
+                압돈은 <span class="important">비라돈 사람</span>으로 기록되어 있습니다. 비라돈은 <span class="highlight">에브라임 지파의 영토 내에 위치한 성읍</span>으로, 이는 압돈이 중앙 이스라엘 지역의 영향력 있는 가문 출신임을 시사합니다. <span class="emphasis">에브라임 지파는 이스라엘 북부 지역의 중심 지파</span>로서 정치적, 경제적으로 중요한 위치를 차지하고 있었습니다.</p>
+                
+                <p><strong>둘째, 8년간의 안정적인 통치(12:13-14)</strong><br>
+                압돈은 <span class="important">8년 동안 이스라엘을 다스렸다</span>고 기록되어 있습니다. 이 기간 동안 <span class="highlight">특별한 전쟁이나 갈등에 대한 언급이 없다</span>는 것은 그의 통치가 평화롭고 안정적이었음을 보여줍니다. <span class="emphasis">8년이라는 기간은 짧지 않은 시간으로, 그의 리더십이 백성들에게 인정받았음</span>을 의미합니다. 특히 <span class="important">입다의 격렬한 갈등 이후에 찾아온 평화</span>는 더욱 소중한 의미를 가집니다.</p>
+                
+                <p><strong>셋째, 놀라운 가족의 번영(12:14)</strong><br>
+                압돈에게는 <span class="important">아들 40명과 손자 30명을 두었다</span>는 것입니다. 이는 <span class="highlight">당시 이스라엘 사회에서 극도로 번영한 가문의 상징</span>이었습니다. 또한 <span class="emphasis">그들이 모두 나귀 새끼 70마리를 탔다</span>는 기록은 경제적 풍요와 사회적 지위를 나타냅니다. 나귀는 당시 <span class="important">부와 권력의 상징</span>이었으며, 70마리라는 숫자는 완전함과 풍성함을 의미했습니다.</p>
+                
+                <p><strong>넷째, 비라돈에서의 장사(12:15)</strong><br>
+                압돈은 <span class="important">자신의 고향인 비라돈에서 죽어 장사되었다</span>고 기록되어 있습니다. 이는 <span class="highlight">그가 평생 자신의 뿌리를 잊지 않고 지역 공동체와 밀접한 관계를 유지했음</span>을 보여줍니다. <span class="emphasis">에브라임 산지의 아말렉 사람의 땅</span>이라는 구체적인 장소 언급은 그 지역의 역사적 중요성을 강조합니다.</p>
+                
+                <p>압돈의 이야기는 <span class="important">하나님의 축복이 개인과 가정, 그리고 공동체 전체에 어떻게 임하는지</span>를 보여주는 모범적인 사례입니다. 그는 <span class="highlight">개인적인 번영과 공적인 책임을 조화롭게 수행한 지혜로운 지도자</span>였습니다. 특히 <span class="emphasis">대가족을 이루며 후손들에게 풍성한 유산을 남긴 것</span>은 하나님의 언약 백성으로서의 사명을 충실히 이행했음을 의미합니다.</p>
+                
+                <p>현재 우리에게 압돈의 이야기는 <span class="important">진정한 리더십이 무엇인지</span>에 대한 깊은 성찰을 요구합니다. 그의 리더십은 <span class="highlight">화려한 성취보다 꾸준한 섬김과 안정적인 관리</span>에 기반했습니다. <span class="emphasis">10년간의 평화는 하루아침에 이루어진 것이 아니라 매일매일의 지혜로운 결정과 신실한 섬김의 결과</span>였습니다. 또한 <span class="important">자신의 뿌리를 잊지 않고 공동체와 함께 살아간 그의 모습</span>은 현재 우리가 추구해야 할 균형 잡힌 삶의 모델을 제시합니다. 마지막으로 <span class="highlight">하나님의 백성을 평안 가운데 인도하는 것이 리더의 가장 중요한 사명</span>임을 깨닫게 합니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 압돈, 비라돈, 10년)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 압돈을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 압돈이 40명의 아들과 30명의 손자를 둔 것이 갖는 의미는 무엇이며, 이는 현재 우리의 가족관과 공동체 의식에 어떤 교훈을 주는가?</h3>
+                    <p>압돈의 대가족은 <span class="highlight-answer">하나님의 축복이 개인적 번영을 넘어 다음 세대와 공동체 전체에 대한 책임으로 이어짐</span>을 보여줍니다. 
+                    
+                    <br><br>대가족의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">가문의 번영과 힘</span>입니다. <span class="important">40명의 아들과 30명의 손자</span>는 단순한 숫자가 아니라 <span class="highlight-answer">가문의 번영과 사회적 영향력을 상징</span>합니다. 이는 <span class="important">가정이 사회의 중요한 기본 단위</span>임을 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">하나님의 언약적 축복</span>입니다. 많은 자녀는 <span class="important">하나님께서 이스라엘과 맺으신 언약의 축복</span>을 보여주는 상징입니다. <span class="highlight-answer">가족의 번영은 하나님의 은혜에 대한 감사와 책임</span>을 동반합니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">공동체에 대한 기여</span>입니다. 이 많은 가족 구성원은 <span class="important">가문 자체의 힘뿐만 아니라, 지역 사회의 안정과 발전에 기여할 수 있는 인적 자원</span>이었습니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">책임감 있는 양육의 중요성</span>입니다. 많은 후손을 잘 양육하고 이끌었다는 것은 <span class="important">가정에서의 훈련과 교육이 얼마나 중요했는지</span>를 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">가족은 단순한 혈연 관계를 넘어 사회의 기초이며, 그 안에서 우리는 책임감과 사랑을 배워야</span> 합니다. 또한 <span class="highlight-answer">개인의 성공은 가족과 공동체의 행복과 연결되어야 한다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important">하나님께서 우리에게 주신 모든 관계와 자원을 공동체의 유익을 위해 사용할 때 참된 의미</span>를 찾게 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 압돈의 8년 통치 기간 동안 특별한 사건이 기록되지 않은 이유와 이것이 시사하는 바는 무엇인가?</h3>
+                    <p>압돈의 8년 통치에 특별한 사건이 기록되지 않은 것은 <span class="highlight-answer">그의 통치가 평화롭고 안정되었음</span>을 보여주는 역설적인 증거입니다. 
+                    
+                    <br><br>특별한 사건이 없다는 것의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">평화로운 시대의 도래</span>입니다. 이는 <span class="important">이전 사사들의 수고로 말미암아 이스라엘이 안정을 되찾았고, 더 이상 극심한 위기 상황이 발생하지 않았음</span>을 시사합니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">효율적인 리더십</span>입니다. 특별한 위기가 없었다는 것은 <span class="important">압돈이 문제를 미리 예방하고 평화를 유지하는 데 탁월한 능력을 발휘했음</span>을 의미합니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">하나님의 은혜의 지속</span>입니다. <span class="important">8년간의 평화는 하나님의 지속적인 보호와 축복</span>이 있었기에 가능했습니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">기록의 선택적 중요성</span>입니다. 성경 기록은 <span class="important">하나님의 구원 역사에서 중요한 전환점이나 교훈이 되는 사건을 중심으로 기록</span>됩니다. 엘론과 압돈의 짧은 기록은 <span class="highlight-answer">모든 사사가 극적인 영웅이 아니어도 됨을 보여주며</span>, <span class="important">평범하고 충실한 섬김 또한 하나님께서 귀하게 여기신다</span>는 것을 시사합니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">우리의 삶에서도 극적인 사건이나 주목받는 업적만이 가치 있는 것은 아니다</span>라는 것입니다. 오히려 <span class="highlight-answer">꾸준하고 신실하게 자신의 역할을 감당하는 것이 더 큰 의미</span>를 가질 수 있습니다. 또한 <span class="important">평안한 시기에도 영적 경계를 늦추지 않고 하나님께 감사하며, 공동체를 위해 헌신하는 삶</span>이 필요합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 압돈이 비라돈에 장사된 것이 갖는 의미와 현재 우리의 정체성 및 지역 공동체와의 관계에 대해 주는 교훈은 무엇인가?</h3>
+                    <p>압돈이 비라돈에 장사된 것은 <span class="highlight-answer">그의 삶이 지역 공동체와 깊이 뿌리내리고 있었음</span>을 보여줍니다. 
+                    
+                    <br><br>비라돈에서의 장사가 갖는 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">뿌리에 대한 존중</span>입니다. 압돈은 <span class="important">자신의 출신과 배경을 소중히 여겼으며, 그곳에서 생을 마감하고 싶어 했습니다</span>. 이는 <span class="highlight-answer">자신의 뿌리를 잊지 않고 그것을 지키는 것</span>이 얼마나 중요한지를 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">공동체와의 연대</span>입니다. 고향에 묻힌다는 것은 <span class="important">그의 삶이 개인의 성공을 넘어 지역 공동체와 깊이 연결되어 있었음</span>을 의미합니다. 이는 <span class="highlight-answer">리더는 자신의 공동체를 떠나 고립되지 않고 함께해야 함</span>을 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">일관성 있는 삶의 증거</span>입니다. 에브라임 땅 비라돈에서 태어나고 자라 죽어 장사된 것은 <span class="important">그의 삶이 일관되고 안정적이었음</span>을 나타냅니다. 이는 <span class="highlight-answer">자신의 정체성을 잃지 않고 살아가는 것</span>의 가치를 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">신앙 공동체 안에서의 소속감</span>입니다. 약속의 땅에 장사된다는 것은 <span class="important">하나님과의 언약 관계 안에서 소속감을 확인하는 행위</span>입니다. 이는 <span class="highlight-answer">우리의 삶도 하나님 안에서 뿌리를 내려야 함</span>을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">우리의 정체성과 뿌리를 소중히 여기며, 우리가 속한 공동체와 깊은 유대를 맺어야</span> 합니다. 또한 <span class="highlight-answer">자신의 삶이 공동체에 긍정적인 영향을 미치도록 노력해야</span> 합니다. 마지막으로 <span class="important">하나님과의 관계가 우리의 가장 근본적인 정체성이며, 모든 삶의 뿌리</span>임을 기억해야 합니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 평화롭고 안정된 시대의 리더</h3>
+                <p><strong>1. 평범함 속의 안정</strong><br>
+                압돈의 이야기는 <span class="key-point">화려한 업적 없이도 조용하고 꾸준한 섬김이 공동체에 평안과 안정을 가져온다</span>는 것을 보여줍니다. <span class="important-text">하나님께서는 평범한 삶 속에서도 위대한 일을 이루신다</span>는 것을 증명합니다.</p>
+                
+                <p><strong>2. 가족과 공동체의 조화</strong><br>
+                <span class="key-point">대가족을 이루고 이를 통해 사회적 안정을 도모한 그의 모습</span>은 <span class="important-text">리더십이 가정과 공동체를 얼마나 중요하게 여기는가</span>에 달려 있음을 보여줍니다.</p>
+                
+                <p><strong>3. 번영의 책임</strong><br>
+                <span class="key-point">하나님께서 주신 축복을 개인의 영광이 아닌 공동체의 유익을 위해 사용해야 한다</span>는 것을 깨닫게 합니다. <span class="important-text">압돈의 번영은 그의 충실한 청지기 직분을 반영</span>합니다.</p>
+                
+                <p><strong>4. 뿌리와 정체성의 중요성</strong><br>
+                <span class="key-point">자신의 뿌리를 잊지 않고 공동체와 깊은 유대를 맺는 것이 진정한 리더십</span>입니다. <span class="important-text">그의 고향 장사는 공동체에 대한 그의 충성과 헌신</span>을 보여줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 압돈 핵심 성경 구절</h2>
+            <div class="key-verse">
+                <h3>사사기 12:13</h3>
+                <p>"그 후에 비라돈 사람 힐렐의 아들 압돈이 이스라엘을 다스렸더라"</p>
+                <div class="verse-full-text">압돈은 에브라임 지파 비라돈 출신으로 8년간 이스라엘을 다스렸습니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 12:14</h3>
+                <p>"그에게 아들 사십 명과 손자 삼십 명이 있어 나귀 새끼 칠십 마리를 탔더라 압돈이 팔 년 동안 이스라엘을 다스렸더라"</p>
+                <div class="verse-full-text">압돈의 막대한 번영과 그가 누린 평화를 상징적으로 보여줍니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 12:15</h3>
+                <p>"비라돈 사람 힐렐의 아들 압돈이 죽어 에브라임 땅 비라돈 아말렉 사람의 산지에 장사되었더라"</p>
+                <div class="verse-full-text">그의 고향 땅에 장사되었다는 것은 그의 삶이 공동체와 깊이 뿌리내렸음을 나타냅니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./14t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 12:13",
+                event: "압돈의 사사직 시작과 8년 통치",
+                place: "비라돈 (에브라임 땅)",
+                question: "압돈이 8년간 평화롭게 통치할 수 있었던 이유는 무엇인가?",
+                answer: "<span class='highlight-text'>에브라임 지파의 안정적인 기반, 지혜로운 리더십, 그리고 평화를 추구하는 성향과 하나님의 축복</span>",
+                fullVerse: "그 후에 비라돈 사람 힐렐의 아들 압돈이 이스라엘을 다스렸더라"
+            },
+            {
+                verse: "사사기 12:14",
+                event: "압돈의 대가족과 번영",
+                place: "비라돈과 길르앗 땅의 30개 성읍",
+                question: "압돈의 40명 아들과 30명 손자, 나귀 70마리가 갖는 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>하나님의 축복, 가문의 번영, 사회적 지위, 그리고 공동체 안정에 기여할 수 있는 인적 자원</span>",
+                fullVerse: "그에게 아들 사십 명과 손자 삼십 명이 있어 나귀 새끼 칠십 마리를 탔더라 압돈이 팔 년 동안 이스라엘을 다스렸더라"
+            },
+            {
+                verse: "사사기 12:15",
+                event: "압돈의 죽음과 장사",
+                place: "비라돈 (에브라임 땅)",
+                question: "압돈이 고향에 장사된 것이 갖는 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>뿌리에 대한 존중, 공동체와의 깊은 유대, 그리고 일관성 있는 삶의 증거</span>",
+                fullVerse: "비라돈 사람 힐렐의 아들 압돈이 죽어 에브라임 땅 비라돈 아말렉 사람의 산지에 장사되었더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm) ||
+                    item.place.toLowerCase().includes(searchTerm) ||
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

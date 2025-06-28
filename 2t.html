@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>옷니엘 (사사기 3:7-11)</title>
+    <style>
+        /*
+        GLOBAL STYLES (from 14t.html)
+        Consistent box-sizing, font-family, line-height, color, min-height, padding for body.
+        Container styling is also global.
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /*
+        HEADER STYLES (using 4t.html's specific colors, 14t.html's structure/text shadows)
+        */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); /* 4t.html color */
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* from 14t.html */
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /*
+        OVERVIEW STYLES (from 14t.html, with 4t.html's border color)
+        */
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        /*
+        CONTROLS & SEARCH BAR (from 14t.html, with 4t.html's border color)
+        */
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3498db;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3498db;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white; /* Changed for contrast on thinking-section background */
+        }
+        
+        .thinking-qa .important { /* Standardized to 'important' as in 14t.html */
+            color: #ffeb3b; /* Consistent with 14t.html's thinking section */
+            font-weight: bold;
+        }
+        
+        /*
+        CONCLUSION (from 14t.html, with 4t.html's color for key-point and important-text)
+        */
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        /*
+        KEY VERSES SECTION (from 14t.html, with 4t.html's border color)
+        */
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db; /* 4t.html color */
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db; /* 4t.html color */
+            cursor: pointer; /* Retain toggle functionality from original 4t.html/5t.html */
+            transition: all 0.3s ease;
+        }
+
+        .key-verse:hover { /* Retain hover effect from original 4t.html/5t.html */
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+
+        /* Full verse text toggle for key verses - specific to original 4t.html/5t.html */
+        .verse-full-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #3498db; /* 4t.html color */
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        
+        .verse-full-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /*
+        NAVIGATION BUTTONS (from 14t.html)
+        */
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        /*
+        SEARCH HIGHLIGHT & NO RESULTS (from 14t.html)
+        */
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text { /* Used for general highlights within table data */
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        /*
+        RESPONSIVE DESIGN (from 14t.html)
+        */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚔️ 옷니엘 (사사기 3:7-11)</h1>
+            <p>첫 번째 사사 - 구원과 평안의 시작</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 옷니엘 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">옷니엘 (사사기 3:7-11)</span>은 <span class="important">사사기에 등장하는 첫 번째 사사</span>로서, 이스라엘의 영적 타락과 하나님의 구원 역사가 시작되는 중요한 인물입니다.</p>
+                
+                <p>옷니엘의 이야기는 크게 <span class="emphasis">네 가지 단계</span>로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 이스라엘의 배교와 하나님의 진노(3:7)</strong><br>
+                이스라엘 자손이 <span class="important">여호와를 잊어버리고 바알들과 아세라들을 섬기게 되어</span> 하나님의 진노를 사게 됩니다. 이는 사사 시대 전체를 관통하는 영적 타락의 전형적인 모습을 보여줍니다.</p>
+                
+                <p><strong>둘째, 메소보다미아 왕의 압제(3:8)</strong><br>
+                <span class="highlight">구산 리사다임 왕이 8년간 이스라엘을 압제</span>하게 됩니다. 이는 하나님의 심판이 구체적인 역사적 사건을 통해 나타나는 것을 보여주며, <span class="important">죄의 결과가 얼마나 실제적이고 고통스러운지</span>를 드러냅니다.</p>
+                
+                <p><strong>셋째, 이스라엘의 부르짖음과 하나님의 응답(3:9)</strong><br>
+                고통 중에 있던 이스라엘이 <span class="emphasis">여호와께 부르짖자 하나님께서 구원자 옷니엘을 세우심</span>으로 응답하십니다. 이는 하나님의 변함없는 사랑과 긍휼을 보여주는 핵심적인 순간입니다.</p>
+                
+                <p><strong>넷째, 옷니엘의 승리와 평안의 회복(3:10-11)</strong><br>
+                <span class="highlight">여호와의 영이 옷니엘에게 임하여</span> 그가 이스라엘을 다스리고 전쟁에서 승리하게 됩니다. 그 결과 <span class="important">40년간의 평안</span>이 이스라엘에게 주어지며, 이는 하나님의 구원이 완전하고 지속적임을 보여줍니다.</p>
+                
+                <p>옷니엘의 이야기는 단순한 영웅담이 아니라, <span class="important">사사 시대 전체의 패턴을 제시하는 모범 사례</span>입니다. 특히 <span class="highlight">하나님의 영이 임하는 것</span>과 <span class="emphasis">완전한 승리와 오랜 평안</span>은 후에 등장하는 다른 사사들과 비교할 때 옷니엘의 탁월함을 보여줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 옷니엘, 바알, 구산 리사다임)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 옷니엘을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 이스라엘이 여호와를 잊어버리고 바알들과 아세라들을 섬기게 된 근본적인 이유는 무엇이며, 현재 우리에게 주는 교훈은?</h3>
+                    <p>이스라엘이 여호와를 잊어버리고 바알과 아세라를 섬기게 된 것은 <span class="highlight-answer">가나안 정착 후 찾아온 영적 해이와 물질주의적 유혹</span> 때문이었습니다. 약속의 땅에 정착한 이스라엘은 더 이상 생존을 위한 절박한 싸움을 하지 않아도 되었고, 대신 비옥한 땅에서 농업 중심의 삶을 살게 되었습니다. 이러한 환경에서 그들은 <span class="important">하나님에 대한 의존성을 점차 잃어버리고</span>, 가나안 주민들이 섬기던 풍요와 다산의 신인 바알과 아세라를 통해 물질적 번영을 얻으려 했습니다. 이는 <span class="important">눈에 보이는 현실적인 이득에 눈이 멀어 보이지 않는 하나님을 등한시</span>하게 된 결과였습니다. 또한, 주변 이방 민족과의 잦은 교류는 신앙 전승의 약화와 혼합주의를 초래했습니다.</p>
+                    
+                    <p>현재 우리에게 옷니엘 시대의 이스라엘은 중요한 교훈을 줍니다. 우리는 <span class="highlight-answer">안정되고 풍요로운 시대에 오히려 영적으로 나태해지기 쉽다</span>는 것을 깨달아야 합니다. 삶의 어려움이 없을 때, 우리는 하나님을 찾는 대신 세상의 즐거움과 성공에 매몰될 수 있습니다. 물질주의와 세속주의는 현대 사회의 강력한 바알과 아세라와 같습니다. 눈에 보이는 돈, 권력, 쾌락을 통해 삶의 만족과 안정을 얻으려는 유혹에 넘어가지 않기 위해, 우리는 <span class="important">끊임없이 하나님과의 관계를 점검하고, 말씀과 기도로 영적 경계심을 유지</span>해야 합니다. 다음 세대에게 살아있는 신앙을 전수하는 것 또한 매우 중요한 책임입니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 하나님이 구산 리사다임을 통해 이스라엘을 징계하신 목적과 현재 우리 삶의 어려움에 대한 이해는?</h3>
+                    <p>하나님께서 메소보다미아 왕 구산 리사다임을 강성하게 하사 이스라엘을 8년간 압제하게 하신 것은 단순한 벌이 아니라, <span class="highlight-answer">이스라엘을 회개와 돌이킴으로 인도하기 위한 교육적이고 긍휼에 찬 징계</span>였습니다. 이스라엘은 하나님의 백성으로서 맺은 언약을 파기하고 우상을 숭배했기에, 하나님의 공의로운 심판을 피할 수 없었습니다. 그러나 8년이라는 기간은 그들을 완전히 멸망시키기 위한 것이 아니라, <span class="important">고통을 통해 자신들의 죄를 깨닫고 하나님께 다시 부르짖게</span> 하려는 목적이었습니다. 이는 하나님의 사랑과 공의가 함께 작용하는 방식입니다. 하나님은 죄를 미워하시지만, 동시에 당신의 백성이 영원히 멸망하기를 원하지 않으시고 회복의 기회를 주십니다.</p>
+                    
+                    <p>현재 우리의 삶에서 겪는 어려움과 고난들도 때로는 이러한 <span class="highlight-answer">하나님의 징계 또는 연단의 과정</span>으로 이해될 수 있습니다. 모든 고난이 죄의 직접적인 결과는 아니지만, 우리는 고난을 통해 <span class="important">자신을 성찰하고, 하나님께 더 가까이 나아가며, 삶의 우선순위를 재정립</span>할 기회를 얻을 수 있습니다. 어려움 속에서 하나님을 원망하기보다, <span class="important">왜 이러한 상황이 허락되었는지 묻고, 겸손히 그분께 부르짖는 태도</span>가 중요합니다. 하나님은 우리가 고통받는 것을 즐거워하지 않으시며, 오히려 그 고통을 통해 우리를 더욱 성숙시키고 당신의 뜻을 이루어가십니다. 구산 리사다임의 압제는 이스라엘이 하나님께 돌아오는 통로가 되었듯이, 우리의 고난도 하나님과의 관계를 깊게 하는 계기가 될 수 있습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 옷니엘에게 여호와의 영이 임한 것의 의미와 현재 성령의 역할에 대한 이해는?</h3>
+                    <p>사사기 3장 10절에 "여호와의 영이 그에게 임하셨으므로"라는 표현은 <span class="highlight-answer">옷니엘이 단순히 인간적인 능력이나 용기로 싸운 것이 아니라, 하나님의 초자연적인 능력과 지혜로 무장되었음</span>을 의미합니다. 구약 시대에 '여호와의 영'이 임하는 것은 특별한 사명(여기서는 사사로서 이스라엘을 구원하는 임무)을 위해 하나님이 특별히 선택한 사람에게 <span class="important">일시적이고 특정 목적을 위해 능력이 부여되는 것</span>을 나타냈습니다. 옷니엘은 이 임재를 통해 백성을 다스리고 전쟁에서 승리할 수 있는 영적 권위와 신체적 능력을 부여받았습니다.</p>
+                    
+                    <p>이러한 옷니엘의 경험은 현재 우리에게 <span class="highlight-answer">성령 하나님의 중요한 역할</span>을 일깨웁니다. 신약 시대에는 성령께서 모든 믿는 자들 안에 <span class="important">영구적으로 내주하시며</span>, 우리가 하나님의 자녀로서 합당하게 살아가고 그분의 사역을 감당할 수 있도록 능력을 주십니다. 옷니엘처럼 특별한 구원 사역을 수행하든, 아니면 일상생활 속에서 증인된 삶을 살아가든, <span class="important">하나님의 일을 할 때는 반드시 하나님의 능력이 필요</span>합니다. 우리는 자신의 힘과 지혜를 의지하기보다, <span class="important">성령의 인도하심과 능력에 전적으로 의존</span>해야 합니다. 성령은 우리를 지혜롭게 하고, 담대하게 하며, 하나님의 뜻을 분별하고 순종할 수 있는 힘을 주십니다. 옷니엘의 승리는 성령의 주도적인 역사가 가져온 결과였음을 기억해야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 옷니엘 시대의 40년 평안이 주는 의미와 현재 우리가 추구해야 할 참된 평안은?</h3>
+                    <p>옷니엘의 승리 이후 이스라엘 땅에 <span class="important">"40년간 평온하였더라"</span>는 기록은 <span class="highlight-answer">하나님의 구원이 얼마나 완전하고 지속적인 축복을 가져다주는지</span>를 보여줍니다. 성경에서 '40'이라는 숫자는 종종 시련, 시험, 또는 완전함과 성숙함을 상징합니다. 40년의 평안은 단순히 전쟁이 없는 상태만을 의미하는 것이 아니라, <span class="important">이스라엘이 하나님과의 관계를 회복하고, 안정과 번영 속에서 율법을 따르며 하나님을 예배할 수 있었던 총체적인 평화</span>(샬롬)를 의미합니다. 이 평안은 옷니엘 개인의 능력이나 지도력의 결과라기보다, 하나님께서 그 백성에게 주신 은혜로운 선물이었습니다.</p>
+                    
+                    <p>현재 우리가 추구해야 할 참된 평안도 마찬가지입니다. 세상이 주는 평안은 대개 <span class="highlight-answer">일시적이고 외부 환경에 의해 좌우되는 불안정한 것</span>입니다. 그러나 하나님께서 주시는 평안은 <span class="important">죄로부터의 해방, 하나님과의 화목한 관계에서 오는 내적인 안식</span>을 포함합니다. 이는 고난의 상황 속에서도 흔들리지 않는 견고한 평안입니다. 옷니엘 시대의 평안이 이스라엘의 회개와 하나님의 구원에 대한 응답으로 주어진 것처럼, 우리의 삶에 찾아오는 진정한 평안도 <span class="important">하나님께 대한 전적인 신뢰와 순종</span>을 통해 깊어집니다. 이 평안은 세상이 줄 수 없는 하나님의 선물이며, 성령의 열매 중 하나입니다. 우리는 이 평안을 지속적으로 추구하고, 그것을 통해 하나님께 영광을 돌리는 삶을 살아가야 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>5. 옷니엘의 리더십에서 배울 수 있는 교훈과 현재 우리가 실천할 수 있는 방안은?</h3>
+                    <p>옷니엘의 리더십은 사사 시대의 첫 모델로서 중요한 교훈들을 제시합니다. 첫째, 그는 <span class="highlight-answer">하나님의 부르심에 대한 즉각적인 순종과 성령의 능력에 대한 전적인 의존</span>을 보여주었습니다. 그는 자신의 능력이나 배경을 내세우지 않고, 오직 여호와의 영이 임하시자 이스라엘의 사사가 되어 나섰습니다. 이는 모든 믿는 자가 어떤 위치에 있든 <span class="important">하나님의 부르심을 인식하고 겸손히 순종</span>해야 함을 가르칩니다.</p>
+                    
+                    <p>둘째, 옷니엘은 승리 후에도 <span class="highlight-answer">교만하지 않고 겸손하게 백성을 다스리며 40년간 평안을 유지</span>하는 데 기여했습니다. 그는 개인적인 영광을 추구하기보다 하나님의 뜻을 이루고 공동체의 평화를 위해 헌신했습니다. 현재 우리가 실천할 수 있는 방안으로는, 어떤 성공이나 성취를 이루더라도 <span class="important">모든 영광을 하나님께 돌리는 겸손한 자세를 유지</span>하는 것입니다. 또한, 우리는 자신이 가진 은사나 영향력을 <span class="important">개인적인 이익이 아닌 공동체의 유익과 하나님의 나라를 위해 사용</span>하는 섬김의 리더십을 실천해야 합니다.</p>
+                    
+                    <p>셋째, 옷니엘의 이야기는 <span class="highlight-answer">하나님의 구원이 단발적 사건이 아니라 지속적인 과정</span>임을 보여줍니다. 비록 40년 후 다시 타락의 패턴이 시작되지만, 옷니엘 시대는 백성들에게 하나님과의 관계를 회복하고 영적으로 성장할 수 있는 소중한 기회를 제공했습니다. 이는 우리가 받은 구원과 평안을 소홀히 여기지 않고, <span class="important">지속적인 영적 경각심과 신앙의 성숙을 위해 노력</span>해야 함을 일깨웁니다. 옷니엘의 모범을 따라, 우리는 매일의 삶 속에서 하나님을 의지하고 순종하며, 그분의 뜻을 이루는 신실한 도구로 자신을 드려야 합니다.</p>
+                </div>
+                
+                <div class="conclusion">
+                    <h3>🎯 최종 결론: 구원과 평안의 첫 모델, 옷니엘</h3>
+                    <p><strong>1. 죄와 징계의 반복적 패턴:</strong> 옷니엘의 이야기는 <span class="key-point">이스라엘의 배교가 하나님의 징계를 초래하고, 고통 속에서 부르짖으면 하나님이 구원자를 세우시는 사사 시대의 전형적인 순환 구조</span>를 명확하게 제시합니다. 이는 죄의 심각성과 하나님의 공의를 동시에 보여줍니다.</p>
+                    
+                    <p><strong>2. 성령의 능력과 구원:</strong> 특히 <span class="key-point">"여호와의 영이 옷니엘에게 임하셨으므로"</span>라는 구절은 <span class="important-text">인간의 능력이 아닌 하나님의 초자연적인 능력과 개입</span>이 진정한 구원과 승리를 가져온다는 핵심 진리를 분명히 합니다. 모든 영광은 오직 하나님께 돌아가야 합니다.</p>
+                    
+                    <p><strong>3. 완전하고 지속적인 평안:</strong> 옷니엘을 통한 <span class="key-point">40년간의 평안</span>은 하나님의 구원이 일시적인 위기 모면이 아닌 <span class="important-text">총체적이고 지속적인 안식과 번영</span>을 목표로 함을 보여줍니다. 이는 백성이 하나님과의 올바른 관계를 유지할 때 누리는 축복입니다.</p>
+                    
+                    <p><strong>4. 리더십의 모범과 책임:</strong> 옷니엘은 겸손한 순종, 하나님의 능력에 대한 의존, 그리고 승리 후에도 공동체의 평화를 우선시하는 <span class="key-point">이상적인 초기 사사의 리더십</span>을 보여줍니다. 이는 모든 시대의 지도자들과 성도들이 본받아야 할 모범을 제시합니다.</p>
+                    
+                    <p>따라서 옷니엘의 이야기는 우리에게 <span class="key-point">죄에 대한 경각심과 회개의 중요성, 하나님의 무한한 긍휼과 구원 능력에 대한 신뢰</span>, 그리고 <span class="important-text">주어진 은혜 속에서 지속적으로 하나님께 순종하며 평안을 지켜나갈 책임감</span>을 일깨우는 귀중한 영적 교훈입니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 이 단원의 핵심 성경 구절</h2>
+            
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>1. 사사기 3:7 - 배교와 죄</h3>
+                <p>"이스라엘 자손이 여호와의 목전에 악을 행하여 자기들의 하나님 여호와를 잊어버리고 바알들과 아세라들을 섬긴지라"</p>
+                <div class="verse-full-text">이스라엘의 영적 타락과 우상 숭배가 사사 시대의 시작을 알립니다. 이는 하나님을 잊어버리고 세상의 유혹에 넘어간 백성의 모습을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>2. 사사기 3:8 - 하나님의 징계</h3>
+                <p>"여호와께서 이스라엘에게 진노하사 그들을 메소보다미아 왕 구산 리사다임의 손에 파시매 이스라엘 자손이 구산 리사다임을 팔 년 동안 섬기니라"</p>
+                <div class="verse-full-text">이스라엘의 죄에 대한 하나님의 공의로운 심판이 구체적인 압제를 통해 나타납니다. 이는 죄의 결과와 하나님의 징계가 현실적임을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>3. 사사기 3:9 - 부르짖음과 구원</h3>
+                <p>"이스라엘 자손이 여호와께 부르짖매 여호와께서 이스라엘 자손을 위하여 한 구원자를 세우사 그들을 구원하게 하시니 그는 갈렙의 아우 그나스의 아들 옷니엘이라"</p>
+                <div class="verse-full-text">고통 중에 이스라엘이 하나님께 부르짖자, 하나님은 변함없는 사랑과 긍휼로 응답하시며 첫 번째 사사 옷니엘을 세우십니다. 이는 회개의 중요성을 강조합니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>4. 사사기 3:10 - 성령의 임재와 승리</h3>
+                <p>"여호와의 영이 그에게 임하셨으므로 그가 이스라엘의 사사가 되어 나가서 싸우니 여호와께서 메소보다미아 왕 구산 리사다임을 그의 손에 넘겨 주시매 옷니엘의 손이 구산 리사다임을 이기니라"</p>
+                <div class="verse-full-text">옷니엘의 승리는 그의 개인적 능력이 아니라, 하나님의 영의 초자연적인 임재와 능력에 힘입은 것임을 명확히 보여줍니다. 모든 구원과 승리의 근원은 하나님이십니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>5. 사사기 3:11 - 평화의 시대</h3>
+                <p>"그 땅이 평온한 지 사십 년에 그나스의 아들 옷니엘이 죽었더라"</p>
+                <div class="verse-full-text">옷니엘의 사역을 통해 이스라엘은 40년간의 평화를 누렸습니다. 이는 하나님의 완전한 구원과 백성의 순종이 가져다주는 실제적인 축복과 안식을 상징합니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./3t.html" class="nav-button secondary">
+                ➡️ 다음 단계로 가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 정의 (옷니엘 관련 내용, 중요사항 강조)
+        const data = [
+            {
+                verse: "사사기 3:7",
+                event: "이스라엘의 배교와 우상 숭배 - 이스라엘이 <span class='important'>여호와를 잊어버리고</span> 가나안의 <span class='important'>바알들과 아세라들을 섬기며</span> 하나님 앞에서 악을 행함",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "이스라엘이 하나님을 잊고 우상 숭배에 빠진 이유는?",
+                answer: "가나안 정착 후 <span class='highlight-text'>영적 경계심이 해이</span>해지고, 물질적 풍요를 위해 가나안의 <span class='highlight-text'>바알과 아세라 신들을 섬기려는 유혹</span>에 넘어갔기 때문입니다. 이는 하나님보다 현실적 이득을 우선시한 결과입니다.",
+                fullVerse: "이스라엘 자손이 여호와의 목전에 악을 행하여 자기들의 하나님 여호와를 잊어버리고 바알들과 아세라들을 섬긴지라"
+            },
+            {
+                verse: "사사기 3:8",
+                event: "하나님의 진노와 메소보다미아의 압제 - <span class='important'>여호와께서 진노하시어</span> <span class='important'>구산 리사다임 왕의 손에 넘기시어</span> 8년간 굴욕적인 압제를 당하게 하심",
+                place: "<span class='important'>메소보다미아</span>",
+                question: "하나님이 구산 리사다임을 통해 이스라엘을 징계하신 목적은?",
+                answer: "이는 이스라엘을 <span class='highlight-text'>회개와 돌이킴으로 인도하기 위한 교육적 징계</span>였습니다. 고통을 통해 자신들의 죄를 깨닫고 하나님께 다시 부르짖게 하려는 하나님의 공의로운 사랑의 표현입니다.",
+                fullVerse: "여호와께서 이스라엘에게 진노하사 그들을 메소보다미아 왕 구산 리사다임의 손에 파시매 이스라엘 자손이 구산 리사다임을 팔 년 동안 섬기니라"
+            },
+            {
+                verse: "사사기 3:9",
+                event: "이스라엘의 부르짖음과 옷니엘의 부름 - 고통 중에 <span class='important'>여호와께 부르짖자</span> 하나님께서 긍휼히 여기시어 <span class='important'>구원자 옷니엘을 세우심</span>",
+                place: "<span class='important'>이스라엘 전체</span>",
+                question: "옷니엘이 구원자로 세워진 계기는 무엇인가?",
+                answer: "이스라엘 자손이 <span class='highlight-text'>고통 속에서 여호와께 부르짖었기 때문</span>입니다. 하나님은 백성의 탄원을 들으시고 긍휼히 여기시어 갈렙의 아우 그나스의 아들 옷니엘을 구원자로 세우셨습니다.",
+                fullVerse: "이스라엘 자손이 여호와께 부르짖매 여호와께서 이스라엘 자손을 위하여 한 구원자를 세우사 그들을 구원하게 하시니 그는 갈렙의 아우 그나스의 아들 옷니엘이라"
+            },
+            {
+                verse: "사사기 3:10",
+                event: "성령의 임재와 완전한 승리 - <span class='important'>여호와의 영이 옷니엘에게 임하여</span> 사사로 세우시고, 하나님의 능력으로 <span class='important'>구산 리사다임을 완전히 이기게</span> 하시어 이스라엘을 해방시키심",
+                place: "<span class='important'>전쟁터</span>",
+                question: "여호와의 영이 옷니엘에게 임한 것의 의미는?",
+                answer: "<span class='highlight-text'>하나님의 초자연적 능력과 지혜가 그에게 부여되었음</span>을 의미합니다. 이는 옷니엘이 인간적인 힘이 아닌 하나님의 직접적인 개입과 능력으로 사명을 감당했음을 보여줍니다.",
+                fullVerse: "여호와의 영이 그에게 임하셨으므로 그가 이스라엘의 사사가 되어 나가서 싸우니 여호와께서 메소보다미아 왕 구산 리사다임을 그의 손에 넘겨 주시매 옷니엘의 손이 구산 리사다임을 이기니라"
+            },
+            {
+                verse: "사사기 3:11",
+                event: "40년 평안과 옷니엘의 죽음 - 옷니엘의 승리 후 <span class='important'>그 땅이 40년간 평온</span>하였으며, 이는 하나님의 완전한 구원과 축복을 나타내고, <span class='important'>옷니엘의 죽음</span>으로 첫 번째 사사 시대가 마감됨",
+                place: "<span class='important'>이스라엘 땅</span>",
+                question: "옷니엘 시대의 40년 평안이 주는 의미는?",
+                answer: "이 평안은 <span class='highlight-text'>하나님과의 올바른 관계 회복으로 인한 총체적 평안</span>입니다. 단순히 전쟁이 없는 상태가 아니라, 백성들이 안정과 번영 속에서 하나님을 예배하고 율법을 따를 수 있었음을 의미합니다.",
+                fullVerse: "그 땅이 평온한 지 사십 년에 그나스의 아들 옷니엘이 죽었더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        // 테이블 렌더링 함수
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+            
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleMainVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="main-verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // 메인 테이블 성경 구절 토글 함수
+        function toggleMainVerse(index) {
+            const verseText = document.getElementById(`main-verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 검색 기능
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm) ||
+                    item.fullVerse.toLowerCase().includes(searchTerm) /* Search full verse text as well */
+                );
+            }
+            
+            renderTable();
+            
+            // 검색 결과 하이라이트
+            if (searchTerm && filteredData.length > 0) {
+                setTimeout(() => {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.classList.add('highlight');
+                            setTimeout(() => row.classList.remove('highlight'), 2000);
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // 핵심 구절 토글 기능 (key-verses-section 전용)
+        function toggleVerseText(element) {
+            const verseText = element.querySelector('.verse-full-text');
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        // 초기 렌더링 및 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            document.getElementById('searchInput').addEventListener('input', searchTable);
+
+            // 페이지 로드 시 애니메이션
+            const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+            elementsToAnimate.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

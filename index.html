@@ -1,0 +1,366 @@
+--- START OF FILE index.html ---
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성경 사사기</title>
+    <style>
+        :root {
+            /* Royal / Scripture Palette */
+            --bg-body-start: #f5f2e8; /* Warm parchment */
+            --bg-body-end: #e8dcc0;   /* Deeper parchment */
+            --text-color: #2c3e50;    /* Deep blue-gray */
+            --text-color-light: #5d6d7e; /* Lighter blue-gray */
+            --highlight-color: #8b4513; /* Saddle brown for titles */
+            --button-bg-original: rgba(255, 255, 255, 0.8); /* Translucent white */
+            --button-text-original-color: var(--text-color);
+            --button-border-color: var(--highlight-color);
+            --button-text-hover: #ffffff;
+            --container-bg: rgba(255, 255, 255, 0.9); /* More opaque container */
+            --section-divider-color: #a08a6a; /* Slightly darker parchment for dividers */
+        }
+
+        body, html {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.8;
+            /* Parchment-like background */
+            background: linear-gradient(to bottom right, var(--bg-body-start), var(--bg-body-end));
+            background-attachment: fixed;
+            color: var(--text-color);
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 90%;
+            margin: 20px auto;
+            background-color: var(--container-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            color: var(--highlight-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+            word-break: keep-all;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 0.4em;
+            color: var(--text-color-light);
+            font-style: italic;
+            margin-top: 10px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: var(--text-color);
+            margin-bottom: 35px;
+            text-align: justify;
+            line-height: 1.8;
+            word-break: keep-all;
+            hyphens: auto;
+        }
+
+        .intro-text p {
+            margin-bottom: 1em;
+            margin-top: 0;
+        }
+
+        .button-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 20px 25px;
+            background-color: var(--button-bg-original);
+            color: var(--button-text-original-color);
+            border: 2px solid var(--button-border-color);
+            border-radius: 12px;
+            text-align: left;
+            font-size: 1.05em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            word-break: keep-all;
+            align-items: flex-start;
+        }
+
+        .nav-button:hover {
+            background-color: var(--highlight-color);
+            color: var(--button-text-hover);
+            border-color: var(--text-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .nav-button .button-main-title {
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .nav-button .button-description {
+            font-size: 0.85em;
+            font-weight: normal;
+            color: var(--text-color-light);
+            line-height: 1.5;
+        }
+
+        .nav-button:hover .button-description {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Additional learning materials button styles */
+        .nav-button.special {
+            background: linear-gradient(135deg, var(--highlight-color) 0%, #a0522d 100%); /* Saddle brown to darker brown gradient */
+            color: white;
+            border-color: #8b4513;
+        }
+
+        .nav-button.special:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-button.special .button-main-title {
+            font-size: 1.2em;
+        }
+        
+        .nav-button.special .button-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .chapter-number {
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-right: 8px;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .section-divider {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid var(--section-divider-color);
+            opacity: 0.3;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .section-subtitle {
+            font-size: 1em;
+            color: var(--text-color-light);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0 auto;
+                padding: 25px;
+                border-radius: 0;
+                box-shadow: none;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 25px;
+                letter-spacing: 1px;
+            }
+            
+            h1 small {
+                font-size: 0.35em;
+                margin-top: 8px;
+            }
+            
+            .intro-text {
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+            
+            .nav-button {
+                font-size: 1em;
+                padding: 18px 20px;
+            }
+            
+            .nav-button .button-main-title {
+                font-size: 1.1em;
+                margin-bottom: 6px;
+            }
+            
+            .nav-button .button-description {
+                font-size: 0.8em;
+            }
+            
+            .chapter-number {
+                font-size: 0.85em;
+                padding: 3px 6px;
+                min-width: 20px;
+            }
+
+            .section-divider {
+                margin-top: 40px;
+                padding-top: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .section-subtitle {
+                font-size: 0.95em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .nav-button {
+                padding: 15px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>성경 사사기<small>(Book of Judges)</small></h1>
+
+        <div class="button-list">
+            <a href="17t.html" class="nav-button special">
+                <span class="button-main-title">🎯 성경 사사기 족집게 강의</span>
+                <span class="button-description">핵심 포인트를 콕콕 짚어주는 심화 강의와 해설</span>
+            </a>
+            <a href="18t.html" class="nav-button special">
+                <span class="button-main-title">❓ 질문-답변지 (사사기 성경 따라가기)</span>
+                <span class="button-description">단계별 질문과 답변으로 사사기를 체계적으로 학습</span>
+            </a>
+        </div>
+
+        <div class="section-divider"></div>
+        
+        <div>
+            <h2 class="section-title">📖 사사별 이야기</h2>
+        </div>
+
+        <div class="button-list">
+            <a href="0t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">0</span>사사기 개요</span>
+                <span class="button-description">사사기의 배경, 주제, 구조 및 전체적인 개관</span>
+            </a>
+            <a href="1t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">1</span>서론 (사사기 1:1-3:6)</span>
+                <span class="button-description">가나안 정착과 불완전한 정복, 반복되는 타락의 시작</span>
+            </a>
+            <a href="2t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">2</span>옷니엘 - 사 3:7-11</span>
+                <span class="button-description">첫 번째 사사, 갈렙의 아우이자 이스라엘의 구원자</span>
+            </a>
+            <a href="3t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">3</span>에훗 - 사 3:12-30</span>
+                <span class="button-description">베냐민 지파의 왼손잡이 사사, 모압 왕 에글론을 물리침</span>
+            </a>
+            <a href="4t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">4</span>삼갈 - 사 3:31</span>
+                <span class="button-description">소 모는 막대기로 블레셋 600명을 물리친 용사</span>
+            </a>
+            <a href="5t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">5</span>드보라와 바락 - 사 4:1-5:31</span>
+                <span class="button-description">여선지자 드보라와 바락의 연합으로 가나안 왕 야빈을 물리침</span>
+            </a>
+            <a href="6t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">6</span>기드온 - 사 6:1-8:35</span>
+                <span class="button-description">300명으로 미디안 대군을 물리친 믿음의 용사</span>
+            </a>
+            <a href="7t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">7</span>아비멜렉 - 사 9:1-57</span>
+                <span class="button-description">기드온의 아들, 왕이 되려 했으나 실패한 반면교사</span>
+            </a>
+            <a href="8t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">8</span>돌라 - 사 10:1-2</span>
+                <span class="button-description">잇사갈 지파 출신으로 이스라엘을 23년간 다스림</span>
+            </a>
+            <a href="9t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">9</span>야일 - 사 10:3-5</span>
+                <span class="button-description">길르앗 사람으로 22년간 이스라엘을 다스림</span>
+            </a>
+            <a href="10t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">10</span>입다 - 사 10:6-12:7</span>
+                <span class="button-description">기생의 아들이었으나 하나님이 세우신 사사, 암몬을 물리침</span>
+            </a>
+            <a href="11t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">11</span>입산 - 사 12:8-10</span>
+                <span class="button-description">베들레헴 사람으로 7년간 이스라엘을 다스림</span>
+            </a>
+            <a href="12t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">12</span>엘론 - 사 12:11-12</span>
+                <span class="button-description">스불론 지파 출신으로 10년간 이스라엘을 다스림</span>
+            </a>
+            <a href="13t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">13</span>압돈 - 사 12:13-15</span>
+                <span class="button-description">에브라임 지파 출신으로 8년간 이스라엘을 다스림</span>
+            </a>
+            <a href="14t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">14</span>삼손 - 사 13:1-16:31</span>
+                <span class="button-description">나실인으로 구별받은 최후의 사사, 블레셋과의 투쟁</span>
+            </a>
+            <a href="15t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">15</span>결말 - 사 17:1-21:25</span>
+                <span class="button-description">미가의 우상, 단 지파의 이주, 베냐민 지파의 범죄</span>
+            </a>
+            <a href="16t.html" class="nav-button">
+                <span class="button-main-title"><span class="chapter-number">16</span>결론 및 생각해보기</span>
+                <span class="button-description">사사기의 교훈과 오늘날 우리에게 주는 메시지</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+--- END OF FILE index.html ---

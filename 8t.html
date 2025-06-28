@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>돌라 (사사기 10:1-2)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3cb371;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3cb371;
+            box-shadow: 0 0 10px rgba(60, 179, 113, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3cb371;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3cb371;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .thinking-qa .important {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .conclusion-list li {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .conclusion-list li::before {
+            content: counter(conclusion-counter);
+            counter-increment: conclusion-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ffd700;
+            color: #2c3e50;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .conclusion-list {
+            counter-reset: conclusion-counter;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3cb371;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3cb371;
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ 돌라 (사사기 10:1-2)</h1>
+            <p>여섯 번째 사사 - 평안한 회복의 시작</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 돌라 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">돌라 (사사기 10:1-2)</span>의 이야기는 <span class="important">사사기에 등장하는 여섯 번째 사사</span>로, 아비멜렉의 혼란 이후 이스라엘에 찾아온 평안과 회복의 시작을 보여주는 중요한 전환점입니다. 비록 <span class="emphasis">단 두 구절에만 기록된 짧은 내용</span>이지만, 그의 사역은 이스라엘 역사에서 매우 의미 있는 역할을 담당했습니다.</p>
+                
+                <p>돌라의 이야기는 크게 <span class="emphasis">세 가지 특징</span>으로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 구원자로서의 부름과 사명(10:1)</strong><br>
+                돌라는 <span class="important">"아비멜렉 후에 이스라엘을 구원하기 위하여 일어났다"</span>고 기록되어 있습니다. 이는 <span class="highlight">그가 단순한 통치자가 아닌 하나님께서 세우신 구원자</span>였음을 의미합니다. <span class="emphasis">아비멜렉의 폭정과 혼란 이후</span> 이스라엘은 정치적, 사회적, 영적으로 극도로 피폐해진 상태였습니다. 이런 상황에서 돌라의 등장은 <span class="important">하나님의 은혜로운 개입과 회복의 시작</span>을 의미했습니다. 그는 <span class="highlight">잇사갈 지파 출신으로 도도의 손자, 부아의 아들</span>이었는데, 이는 그가 명확한 족보와 정통성을 가진 인물임을 보여줍니다.</p>
+                
+                <p><strong>둘째, 사밀 거주와 지역적 기반(10:1)</strong><br>
+                돌라는 <span class="important">에브라임 산지 사밀에 거주</span>했습니다. 이는 매우 의미 있는 지리적 위치입니다. <span class="highlight">에브라임 산지는 이스라엘의 중심부</span>로, 남북을 연결하는 전략적 요충지였습니다. <span class="emphasis">사밀이라는 곳은 평화롭고 안전한 거주지</span>를 의미하며, 이는 돌라의 통치 하에서 이스라엘이 안정을 되찾았음을 상징합니다. 또한 <span class="important">잇사갈 지파 출신이 에브라임 산지에 거주한다는 것</span>은 지파 간의 화합과 통합을 의미하며, <span class="highlight">아비멜렉 시대의 분열과 갈등이 치유되었음</span>을 보여줍니다.</p>
+                
+                <p><strong>셋째, 23년간의 장기 통치와 평안(10:2)</strong><br>
+                돌라는 <span class="important">23년 동안 이스라엘을 다스렸습니다</span>. 이는 <span class="highlight">사사 시대에서 상당히 긴 기간</span>으로, 그의 통치가 매우 안정적이었음을 보여줍니다. <span class="emphasis">23년이라는 긴 기간 동안 특별한 전쟁이나 위기가 기록되지 않은 것</span>은 그의 뛰어난 리더십과 하나님의 축복을 증명합니다. 이 기간은 <span class="important">이스라엘이 아비멜렉의 상처를 치유하고 내적으로 성장할 수 있는 충분한 시간</span>이었습니다. 마지막에 <span class="highlight">그가 죽어 사밀에 장사되었다</span>는 기록은 그가 자신의 거주지에서 평안히 생을 마감했음을 의미하며, <span class="emphasis">백성들의 존경과 사랑을 받으며 통치했음</span>을 보여줍니다.</p>
+                
+                <p>돌라의 이야기가 주는 교훈은 매우 깊습니다. 그는 <span class="important">화려한 업적이나 극적인 승리보다는 조용하고 성실한 섬김</span>을 통해 이스라엘을 회복시켰습니다. <span class="highlight">"구원하기 위하여 일어났다"</span>는 표현은 그의 사역이 단순한 정치적 통치가 아닌 <span class="emphasis">영적이고 총체적인 회복 사역</span>이었음을 보여줍니다. 그는 <span class="important">아비멜렉의 파괴적 유산을 건설적 유산으로 바꾸는 역할</span>을 감당했습니다.</p>
+                
+                <p>현재 우리에게 돌라의 이야기는 <span class="important">위기 이후의 회복과 치유가 얼마나 중요한지</span>를 보여줍니다. <span class="highlight">극적인 변화보다는 꾸준하고 성실한 섬김이 더 큰 영향력을 갖는다</span>는 것을 깨닫게 됩니다. 또한 <span class="emphasis">진정한 리더십은 자기 과시가 아닌 공동체의 회복과 치유에 집중하는 것</span>임을 배우게 됩니다. 돌라의 23년 통치는 <span class="important">평범해 보이지만 충실한 섬김이 얼마나 소중하고 필요한지</span>를 증명하는 귀중한 사례입니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 돌라, 구원, 사밀)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 돌라를 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 돌라가 "아비멜렉 후에 이스라엘을 구원하기 위하여 일어났다"는 것이 갖는 의미는 무엇이며, 이는 현재 우리의 회복과 치유에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>돌라의 등장은 <span class="highlight-answer">위기 이후의 회복과 치유가 하나님의 은혜로운 계획의 일부</span>라는 것을 보여줍니다. 
+                    
+                    <br><br>구원자로서의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">하나님의 주권적 개입</span>입니다. <span class="important">아비멜렉의 폭정과 혼란 이후</span> 이스라엘이 절망적 상황에 있을 때, <span class="highlight-answer">하나님께서 돌라를 구원자로 세우셨습니다</span>. 이는 <span class="important">인간의 실패와 죄악이 하나님의 계획을 좌절시킬 수 없다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">점진적 회복의 과정</span>입니다. <span class="important">돌라는 극적인 승리나 화려한 업적보다는 조용하고 성실한 섬김</span>을 통해 이스라엘을 회복시켰습니다. 이는 <span class="highlight-answer">진정한 치유는 시간이 걸리는 과정</span>이며, <span class="important">급진적 변화보다는 점진적이고 안정적인 회복이 더 지속가능하다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">총체적 구원의 개념</span>입니다. <span class="important">"구원하기 위하여"라는 표현</span>은 단순한 정치적 해방이 아닌 <span class="highlight-answer">영적, 사회적, 경제적 전 영역의 회복</span>을 의미합니다. 이는 <span class="important">하나님의 구원이 삶의 모든 영역을 포괄한다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">겸손한 섬김의 리더십</span>입니다. <span class="important">돌라는 자신을 드러내지 않고 조용히 섬겼습니다</span>. 이는 <span class="highlight-answer">진정한 리더십은 자기 과시가 아닌 공동체의 유익을 추구하는 것</span>임을 보여줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">치유와 회복의 사역</span>입니다. <span class="important">아비멜렉의 파괴적 유산을 건설적 유산으로 바꾸는 역할</span>을 감당했습니다. 이는 <span class="highlight-answer">과거의 상처를 치유하고 새로운 희망을 제시하는 것이 리더의 중요한 역할</span>임을 의미합니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">개인적이든 공동체적이든 위기와 실패 이후에는 반드시 회복과 치유의 과정이 필요</span>하다는 것입니다. 또한 <span class="highlight-answer">진정한 회복은 하나님의 은혜와 인간의 성실한 노력이 결합될 때 이루어진다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important">우리 각자도 주변의 상처받은 사람들을 위한 '돌라'가 될 수 있다</span>는 소명을 발견하게 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 돌라가 23년간 평화롭게 통치한 것이 갖는 의미는 무엇이며, 이는 현재 우리의 지속가능한 섬김과 리더십에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>돌라의 23년 평화 통치는 <span class="highlight-answer">지속가능한 리더십과 안정적 발전의 중요성</span>을 보여주는 중요한 교훈입니다. 
+                    
+                    <br><br>평화 통치의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">예방적 리더십의 지혜</span>입니다. <span class="important">23년간 특별한 전쟁이나 위기가 기록되지 않은 것</span>은 돌라가 <span class="highlight-answer">문제가 발생하기 전에 미리 대비하고 관리하는 지혜</span>를 가졌음을 의미합니다. 이는 <span class="important">위기 대응보다 위기 예방이 더 중요하다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">내적 성장의 기반 제공</span>입니다. <span class="important">23년이라는 긴 기간</span>은 이스라엘이 <span class="highlight-answer">아비멜렉의 상처를 치유하고 내적으로 성장할 수 있는 충분한 시간</span>을 제공했습니다. 이는 <span class="important">진정한 발전은 외적 성과보다 내적 성숙이 우선되어야 한다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">일관성 있는 리더십</span>입니다. <span class="important">23년간 지속된 통치</span>는 돌라의 리더십이 <span class="highlight-answer">일관성 있고 신뢰할 만했음</span>을 의미합니다. 이는 <span class="important">리더십의 핵심은 변덕스러운 카리스마가 아닌 꾸준한 신뢰성</span>임을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">평화의 가치에 대한 인식</span>입니다. <span class="important">전쟁과 갈등이 없는 평화로운 시대</span>를 유지한 것은 <span class="highlight-answer">평화 자체가 얼마나 소중하고 어려운 것인지</span>를 보여줍니다. 이는 <span class="important">평화를 당연하게 여기지 않고 적극적으로 지키려는 노력이 필요</span>하다는 교훈을 줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">겸손한 삶의 태도</span>입니다. <span class="important">화려한 업적 없이도 23년간 존경받으며 통치한 것</span>은 <span class="highlight-answer">겸손하고 소박한 삶을 살았음</span>을 보여줍니다. 이는 <span class="important">진정한 리더는 권력을 과시하지 않고 백성과 함께 살아간다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>여섯째</strong>, <span class="highlight-answer">유산과 기억의 중요성</span>입니다. <span class="important">그곳에 장사되었다는 것</span>은 <span class="highlight-answer">돌라의 삶과 사역이 그 지역에 영구적인 유산으로 남았음</span>을 의미합니다. 이는 <span class="important">우리의 삶이 어떤 기억과 유산으로 남을지 항상 염두에 두어야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">지속가능한 리더십은 단기적 성과보다 장기적 안정성에 집중해야 한다</span>는 것입니다. 또한 <span class="highlight-answer">진정한 영향력은 화려한 이벤트가 아닌 일상의 성실함에서 나온다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important">평화로운 시대에도 지속적인 관리와 책임감 있는 리더십이 필요</span>하다는 것을 배우게 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 돌라가 사밀에 거주하며 그곳에 장사된 것이 갖는 의미는 무엇이며, 이는 현재 우리의 정착과 뿌리에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>돌라의 사밀 거주와 장사는 <span class="highlight-answer">정착과 뿌리의 중요성, 그리고 지역 공동체와의 깊은 유대</span>를 보여주는 의미 있는 교훈입니다. 
+                    
+                    <br><br>사밀 거주의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">전략적 위치 선택의 지혜</span>입니다. <span class="important">에브라임 산지 사밀</span>은 <span class="highlight-answer">이스라엘의 중심부로서 남북을 연결하는 전략적 요충지</span>였습니다. 이는 <span class="important">리더가 자신의 위치를 선택할 때 개인적 편의보다 공동체 전체의 유익을 고려해야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">지파 간 화합과 통합</span>입니다. <span class="important">잇사갈 지파 출신이 에브라임 산지에 거주한다는 것</span>은 <span class="highlight-answer">지파 간의 벽을 허물고 통합을 추구했음</span>을 의미합니다. 이는 <span class="important">진정한 리더십은 분열을 치유하고 화합을 이루는 것</span>임을 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">안정성과 평화의 상징</span>입니다. <span class="important">"사밀"이라는 지명 자체가 평화롭고 안전한 거주지</span>를 의미하며, 이는 <span class="highlight-answer">돌라의 통치 하에서 이스라엘이 안정을 되찾았음</span>을 상징합니다. 이는 <span class="important">리더의 존재 자체가 공동체에 안정감을 주어야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">지역 공동체와의 깊은 유대</span>입니다. <span class="important">23년간 한 곳에 거주하며 그곳에 장사된 것</span>은 <span class="highlight-answer">돌라가 지역 공동체와 깊은 관계를 형성했음</span>을 의미합니다. 이는 <span class="important">진정한 리더십은 일시적 방문이 아닌 지속적 동행</span>임을 보여줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">겸손한 삶의 태도</span>입니다. <span class="important">화려한 궁전이나 기념비가 아닌 평범한 거주지에서 생활한 것</span>은 <span class="highlight-answer">돌라가 겸손하고 소박한 삶을 살았음</span>을 보여줍니다. 이는 <span class="important">진정한 리더는 권력을 과시하지 않고 백성과 함께 살아간다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>여섯째</strong>, <span class="highlight-answer">유산과 기억의 의미</span>입니다. <span class="important">그곳에 장사되었다는 것</span>은 <span class="highlight-answer">돌라의 삶과 사역이 그 지역에 영구적인 유산으로 남았음</span>을 의미합니다. 이는 <span class="important">우리의 삶이 어떤 기억과 유산으로 남을지 항상 염두에 두어야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">진정한 영향력은 떠돌아다니는 것이 아니라 한 곳에 뿌리를 내리고 깊이 있는 관계를 형성할 때 나온다</span>는 것입니다. 또한 <span class="highlight-answer">우리가 속한 공동체와 깊은 유대를 형성하고 그들과 함께 성장해야 한다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important">우리의 삶이 어떤 기억과 유산으로 남을지 항상 염두에 두어야</span> 한다는 것을 배우게 됩니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 평안한 회복의 시작</h3>
+                <p><strong>1. 위기 이후의 회복과 치유</strong><br>
+                돌라의 이야기는 <span class="key-point">위기와 실패 이후에도 하나님의 은혜로운 회복이 가능하다</span>는 것을 보여줍니다. <span class="important-text">아비멜렉의 혼란 이후 찾아온 평안은 하나님의 주권적 개입의 결과</span>였습니다.</p>
+                
+                <p><strong>2. 겸손하고 성실한 섬김의 리더십</strong><br>
+                <span class="key-point">화려한 업적보다는 조용하고 성실한 섬김이 더 큰 영향력을 갖는다</span>는 것을 보여줍니다. <span class="important-text">23년간의 평화로운 통치는 예방적 리더십과 일관성 있는 섬김의 결과</span>였습니다.</p>
+                
+                <p><strong>3. 지속가능한 발전의 기반</strong><br>
+                <span class="key-point">진정한 발전은 급진적 변화보다 점진적이고 안정적인 성장</span>에서 나온다는 것을 보여줍니다. <span class="important-text">23년이라는 긴 기간은 내적 성장과 치유를 위한 충분한 시간</span>이었습니다.</p>
+                
+                <p><strong>4. 정착과 뿌리의 중요성</strong><br>
+                <span class="key-point">진정한 영향력은 지역 공동체와의 깊은 유대에서 나온다</span>는 것을 보여줍니다. <span class="important-text">사밀에서의 거주와 장사는 지속적 동행과 깊은 관계의 중요성</span>을 의미합니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 돌라 핵심 성경 구절</h2>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>사사기 10:1</h3>
+                <p>"아비멜렉 후에 이스라엘을 구원하기 위하여 잇사갈 사람 도도의 손자 부아의 아들 돌라가 일어났고 그가 에브라임 산지 사밀에 거주하였더라"</p>
+                <div class="verse-full-text">돌라의 부르심과 그의 거주지가 갖는 의미를 보여줍니다. 이는 하나님의 회복 사역이 시작되었음을 알립니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 10:2</h3>
+                <p>"돌라가 이십삼 년 동안 이스라엘을 다스리다가 죽어 사밀에 장사되었더라"</p>
+                <div class="verse-full-text">돌라의 긴 통치 기간과 평화로운 죽음은 그의 리더십의 안정성과 신뢰성을 보여줍니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./9t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 10:1",
+                event: "돌라의 등장과 구원자로서의 부름",
+                place: "에브라임 산지 사밀",
+                question: "돌라가 구원자로 일어난 배경과 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>아비멜렉의 혼란 이후 하나님께서 세우신 회복과 치유의 리더로서, 평안한 회복의 시작을 의미</span>",
+                fullVerse: "아비멜렉 후에 이스라엘을 구원하기 위하여 잇사갈 사람 도도의 손자 부아의 아들 돌라가 일어났고 그가 에브라임 산지 사밀에 거주하였더라"
+            },
+            {
+                verse: "사사기 10:2",
+                event: "23년간의 평화로운 통치와 죽음",
+                place: "사밀",
+                question: "돌라의 23년 통치가 갖는 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>지속가능한 리더십과 안정적 발전의 모델로서, 겸손하고 성실한 섬김을 통한 평화 유지</span>",
+                fullVerse: "돌라가 이십삼 년 동안 이스라엘을 다스리다가 죽어 사밀에 장사되었더라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            verseText.classList.toggle('show');
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm) ||
+                    item.place.toLowerCase().includes(searchTerm) ||
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

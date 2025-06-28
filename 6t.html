@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기드온 (사사기 6:1-8:35)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #3498db;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #3498db;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .thinking-qa .important-point {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .conclusion-list li {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .conclusion-list li::before {
+            content: counter(conclusion-counter);
+            counter-increment: conclusion-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ffd700;
+            color: #2c3e50;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .conclusion-list {
+            counter-reset: conclusion-counter;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .key-verse:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion-list li {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ 기드온 (사사기 6:1-8:35)</h1>
+            <p>다섯 번째 사사 - 믿음의 성장과 하나님의 능력</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 기드온 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">기드온 (사사기 6:1-8:35)</span>의 이야기는 <span class="important">사사기에서 가장 길고 상세하게 기록된 사사 이야기</span>로, <span class="emphasis">믿음의 성장 과정과 하나님의 능력이 인간의 약함을 통해 나타나는 과정</span>을 생생하게 보여주는 감동적인 구원 사건입니다.</p>
+                
+                <p>기드온의 이야기는 크게 <span class="emphasis">일곱 가지 단계</span>로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 미디안의 압제와 이스라엘의 고통(6:1-6)</strong><br>
+                이스라엘이 <span class="important">다시 여호와의 목전에 악을 행하여</span> 7년간 미디안의 압제를 받게 됩니다. 미디안족과 아말렉족이 <span class="emphasis">메뚜기 떼처럼 몰려와</span> 이스라엘의 농작물을 약탈하여 백성들이 <span class="important">산 굴과 동굴에 숨어 살아야</span> 하는 절망적인 상황이었습니다.</p>
+                
+                <p><strong>둘째, 하나님의 부르심과 기드온의 두려움(6:7-24)</strong><br>
+                여호와의 사자가 <span class="emphasis">오브라에서 포도주 틀에 밀을 타작하고 있던</span> 기드온에게 나타나 <span class="important">"큰 용사여"</span>라고 부르며 이스라엘을 구원할 사명을 맡깁니다. 기드온은 자신의 <span class="emphasis">연약함과 가문의 미천함</span>을 들어 거절하지만, 하나님은 <span class="important">"내가 너와 함께 하리라"</span>고 약속하십니다.</p>
+                
+                <p><strong>셋째, 바알 제단 파괴와 여호와 제단 건축(6:25-32)</strong><br>
+                하나님은 기드온에게 먼저 <span class="important">아버지의 바알 제단을 헐고 아세라 상을 찍어</span> 여호와께 제단을 쌓으라 명하십니다. 기드온이 밤에 이를 행하자 성읍 사람들이 분노하지만, 아버지 요아스가 <span class="emphasis">"바알이 신이라면 스스로 변론하라"</span>며 기드온을 보호합니다.</p>
+                
+                <p><strong>넷째, 양털 시험과 믿음의 확증(6:33-40)</strong><br>
+                미디안 연합군이 침입하자 <span class="important">여호와의 영이 기드온에게 임하여</span> 나팔을 불어 군대를 소집합니다. 그러나 기드온은 여전히 확신이 서지 않아 <span class="emphasis">양털 시험을 두 번</span> 행하여 하나님의 뜻을 확인합니다.</p>
+                
+                <p><strong>다섯째, 300명 선별과 하나님의 전략(7:1-15)</strong><br>
+                32,000명의 군대 중에서 <span class="important">먼저 22,000명이 두려워 돌아가고</span>, 남은 10,000명 중에서 <span class="emphasis">물 마시는 방법으로 300명만 선별</span>됩니다. 하나님은 <span class="important">"이스라엘이 나를 거슬러 자랑하지 않게 하려 함"</span>이라며 소수로 승리하게 하실 계획을 밝히십니다.</p>
+                
+                <p><strong>여섯째, 미디안 대승리와 추격전(7:16-8:21)</strong><br>
+                기드온의 300명이 <span class="emphasis">나팔과 횃불과 항아리</span>로 기습 공격하여 미디안 대군을 완전히 패배시킵니다. 이후 에브라임 지파와의 갈등을 지혜롭게 해결하고, <span class="important">미디안 왕 세바와 살문나를 사로잡아 처형</span>하여 완전한 승리를 거둡니다.</p>
+                
+                <p><strong>일곱째, 에봇 제작과 말년의 실수(8:22-35)</strong><br>
+                백성들이 기드온에게 왕이 되어 달라고 요청하지만 <span class="important">"여호와께서 너희를 다스리시리라"</span>며 거절합니다. 그러나 <span class="emphasis">금 귀고리로 에봇을 만들어</span> 자신의 성읍 오브라에 두었는데, 이것이 <span class="important">이스라엘에게 올무가 되어</span> 우상 숭배의 빌미를 제공하게 됩니다.</p>
+                
+                <p>기드온의 이야기는 <span class="highlight">하나님의 능력이 인간의 연약함을 통해 완전히 나타나는 과정</span>을 보여주며, 동시에 <span class="important">믿음의 성장과 인간적 한계</span>를 균형 있게 제시하는 깊이 있는 신앙 교육의 모델입니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="성경 구절, 사건, 장소 등을 검색하세요...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 6:1-6
+                                <div class="verse-text">이스라엘 자손이 여호와의 목전에 악을 행하였으므로 여호와께서 칠 년 동안 그들을 미디안의 손에 넘겨 주시니 미디안의 손이 이스라엘을 이긴지라 이스라엘 자손이 미디안으로 말미암아 산에서 굴과 동굴과 산성을 자기들을 위하여 만들었으며</div>
+                            </td>
+                            <td><span class="highlight">미디안의 7년 압제</span> - 이스라엘이 다시 악을 행하여 미디안족의 침입을 받음. 메뚜기 떼 같은 대군이 농작물을 약탈하여 백성들이 굴과 동굴에 숨어 살게 됨</td>
+                            <td class="place-cell"><span class="highlight">이스라엘 전 지역</span> - 산지의 굴과 동굴, 요단강 동편 미디안 땅</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 미디안의 압제가 7년간 지속된 이유는?</div>
+                                <div class="answer">A: <span class="highlight">이스라엘이 여호와의 목전에 악을 행했기 때문</span>이며, 하나님의 징계와 회개를 위한 기간이었음</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 6:11-16
+                                <div class="verse-text">여호와의 사자가 아비에셀 사람 요아스에게 속한 오브라에 이르러 상수리나무 아래에 앉으니라 마침 요아스의 아들 기드온이 미디안 사람에게 알리지 아니하려 하여 포도주 틀에서 밀을 타작하더니 여호와의 사자가 기드온에게 나타나 이르되 큰 용사여 여호와께서 너와 함께 하시도다</div>
+                            </td>
+                            <td><span class="highlight">기드온의 부르심</span> - 여호와의 사자가 포도주 틀에 숨어 밀을 타작하던 기드온에게 나타나 "큰 용사여"라고 부르며 구원의 사명을 맡김</td>
+                            <td class="place-cell"><span class="highlight">오브라</span> - 아비에셀 족속의 땅, 요아스의 상수리나무 아래</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 기드온이 포도주 틀에서 밀을 타작한 이유는?</div>
+                                <div class="answer">A: <span class="highlight">미디안 사람들에게 들키지 않기 위해</span> 숨어서 작업했으며, 이는 당시 압제의 심각성을 보여줌</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 6:25-32
+                                <div class="verse-text">이 밤에 여호와께서 기드온에게 이르시되 네 아버지의 수소 곧 칠 년 된 둘째 수소를 취하고 네 아버지에게 있는 바알의 제단을 헐며 그 곁의 아세라 상을 찍고 또 이 산성 꼭대기의 평평한 곳에 네 하나님 여호와를 위하여 규례대로 한 제단을 쌓고</div>
+                            </td>
+                            <td><span class="highlight">바알 제단 파괴</span> - 하나님의 명령으로 아버지의 바알 제단을 헐고 아세라 상을 찍어 여호와께 제단을 쌓음. 성읍 사람들의 분노를 샀으나 아버지가 보호함</td>
+                            <td class="place-cell"><span class="highlight">오브라 산성</span> - 요아스의 바알 제단이 있던 곳, 산성 꼭대기</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 기드온이 밤에 바알 제단을 헐은 이유는?</div>
+                                <div class="answer">A: <span class="highlight">아버지의 집 사람들과 성읍 사람들이 두려워서</span>였지만, 순종의 행위였음</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 6:36-40
+                                <div class="verse-text">기드온이 하나님께 아뢰되 주께서 이미 말씀하신 대로 내 손으로 이스라엘을 구원하려 하시는지 내가 양털 한 뭉치를 타작 마당에 두리니 이슬이 양털에만 있고 사면 땅은 마르면 주께서 이미 말씀하신 대로 내 손으로 이스라엘을 구원하실 줄 내가 알겠나이다</div>
+                            </td>
+                            <td><span class="highlight">양털 시험</span> - 기드온이 하나님의 뜻을 확인하기 위해 양털로 두 번의 기적을 요청함. 첫 번째는 양털만 젖고 땅은 마르게, 두 번째는 그 반대로</td>
+                            <td class="place-cell"><span class="highlight">타작 마당</span> - 오브라의 타작하는 곳</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 양털 시험이 두 번 필요했던 이유는?</div>
+                                <div class="answer">A: <span class="highlight">기드온의 연약한 믿음을 강화하고</span> 하나님의 확실한 뜻을 확인하기 위함이었음</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 7:2-7
+                                <div class="verse-text">여호와께서 기드온에게 이르시되 너를 따르는 백성이 너무 많은즉 내가 미디안 사람을 그들의 손에 넘겨 주지 아니하리니 이는 이스라엘이 나를 거슬러 자랑하기를 내 손이 나를 구원하였다 할까 함이니라</div>
+                            </td>
+                            <td><span class="highlight">300명 선별</span> - 32,000명 중 22,000명이 두려워 돌아가고, 남은 10,000명 중 물 마시는 방법으로 300명만 선별됨. 하나님의 영광을 위한 선택</td>
+                            <td class="place-cell"><span class="highlight">하롯 샘</span> - 군대를 시험한 곳, 길르앗 산 근처</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 하나님이 군대를 줄이신 이유는?</div>
+                                <div class="answer">A: <span class="highlight">이스라엘이 자랑하지 않게 하려 함</span>이며, 승리가 하나님께로부터 온 것임을 분명히 하기 위함</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 7:16-22
+                                <div class="verse-text">삼백 명을 세 대로 나누고 각 손에 나팔과 빈 항아리를 들리고 항아리 안에는 횃불을 감추게 하고 그들에게 이르되 너희는 나를 보고 내가 하는 대로 하되 내가 진영 가에 이르러서 내가 하는 대로 너희도 그리하여</div>
+                            </td>
+                            <td><span class="highlight">미디안 대승리</span> - 300명이 나팔, 횃불, 항아리로 기습 공격하여 미디안 대군을 완전히 패배시킴. 적들이 서로 칼로 치며 도망함</td>
+                            <td class="place-cell"><span class="highlight">미디안 진영</span> - 모레 산 아래 골짜기, 요단강 동편</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 나팔과 횃불 작전의 의미는?</div>
+                                <div class="answer">A: <span class="highlight">하나님의 지혜로운 전략</span>으로 적을 혼란시켜 스스로 멸망하게 하는 완전한 승리의 방법이었음</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td class="verse-cell" onclick="toggleVerse(this)">
+                                사사기 8:22-27
+                                <div class="verse-text">그 때에 이스라엘 사람들이 기드온에게 이르되 당신이 우리를 미디안의 손에서 구원하셨으니 당신과 당신의 아들과 당신의 손자가 우리를 다스리소서 기드온이 그들에게 이르되 내가 너희를 다스리지 아니하겠고 나의 아들도 너희를 다스리지 아니할 것이요 여호와께서 너희를 다스리시리라</div>
+                            </td>
+                            <td><span class="highlight">왕권 거절과 에봇 제작</span> - 백성들의 왕 요청을 거절하며 여호와의 통치를 선언했으나, 금 귀고리로 에봇을 만들어 우상 숭배의 빌미를 제공함</td>
+                            <td class="place-cell"><span class="highlight">오브라</span> - 기드온의 성읍, 에봇을 둔 곳</td>
+                            <td class="qa-cell">
+                                <div class="question">Q: 기드온의 에봇 제작이 문제가 된 이유는?</div>
+                                <div class="answer">A: <span class="highlight">이스라엘에게 올무가 되어</span> 우상 숭배를 유발했으며, 신앙의 순수성을 해쳤기 때문</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 기드온이 "큰 용사"라고 불린 것은 그의 현재 모습 때문일까요, 아니면 미래의 가능성 때문일까요?</h3>
+                    <p><span class="highlight-answer">하나님은 기드온의 현재가 아닌 미래의 가능성을 보셨습니다.</span></p>
+                    
+                    <p><strong>첫째, 하나님의 관점은 인간과 다릅니다.</strong><br>
+                    기드온이 <span class="important-point">포도주 틀에 숨어서 밀을 타작하는 두려운 모습</span>이었지만, 하나님은 그 안에 숨겨진 <span class="important-point">용기와 지도력의 잠재력</span>을 보셨습니다. 이는 하나님이 <span class="highlight-answer">외모가 아닌 중심을 보시는 분</span>임을 보여줍니다.</p>
+                    
+                    <p><strong>둘째, 하나님의 부르심은 변화를 전제로 합니다.</strong><br>
+                    "큰 용사여"라는 호칭은 <span class="important-point">현재의 선언이자 미래의 약속</span>이었습니다. 하나님의 부르심을 받은 자는 <span class="highlight-answer">그 부르심에 합당한 자로 변화되어 갑니다.</span></p>
+                    
+                    <p><strong>셋째, 믿음은 과정입니다.</strong><br>
+                    기드온의 <span class="important-point">양털 시험과 점진적 성장</span>은 믿음이 하루아침에 완성되는 것이 아님을 보여줍니다. 하나님은 우리의 <span class="highlight-answer">연약함을 이해하시고 단계적으로 성장시키십니다.</span></p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 하나님이 32,000명을 300명으로 줄이신 것은 단순히 교만을 막기 위함이었을까요?</h3>
+                    <p><span class="highlight-answer">교만 방지뿐만 아니라 더 깊은 신앙 교육의 목적이 있었습니다.</span></p>
+                    
+                    <p><strong>첫째, 하나님의 능력을 드러내기 위함입니다.</strong><br>
+                    <span class="important-point">인간의 힘으로는 불가능한 상황</span>을 만들어 <span class="highlight-answer">오직 하나님의 능력으로만 승리할 수 있음</span>을 분명히 하셨습니다. 이는 이스라엘뿐만 아니라 주변 민족들에게도 여호와가 참 하나님이심을 증명하는 일이었습니다.</p>
+                    
+                    <p><strong>둘째, 진정한 용기와 믿음을 구별하기 위함입니다.</strong><br>
+                    <span class="important-point">두려워 돌아간 22,000명과 물 마시는 방법으로 선별된 300명</span>의 차이는 단순한 용기가 아니라 <span class="highlight-answer">하나님에 대한 신뢰와 경계심의 차이</span>였습니다.</p>
+                    
+                    <p><strong>셋째, 소수의 헌신된 자들의 가치를 보여주기 위함입니다.</strong><br>
+                    하나님의 일은 <span class="important-point">많은 수가 아닌 헌신된 소수</span>를 통해 이루어집니다. 이는 <span class="highlight-answer">질적 성장의 중요성</span>을 가르치는 영원한 원리입니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 기드온의 에봇 제작은 왜 문제가 되었으며, 이것이 현대 신앙에 주는 교훈은 무엇일까요?</h3>
+                    <p><span class="highlight-answer">선한 의도라도 하나님의 뜻을 벗어나면 올무가 될 수 있음을 보여줍니다.</span></p>
+                    
+                    <p><strong>첫째, 기념과 우상 숭배의 경계선입니다.</strong><br>
+                    기드온의 에봇은 아마도 <span class="important-point">하나님의 은혜를 기념하려는 선한 의도</span>에서 시작되었을 것입니다. 그러나 이것이 <span class="highlight-answer">백성들에게 우상 숭배의 대상</span>이 되어버렸습니다.</p>
+                    
+                    <p><strong>둘째, 성공 후의 영적 위험성입니다.</strong><br>
+                    큰 승리 후에 오는 <span class="important-point">영적 교만과 자만</span>은 매우 위험합니다. 기드온은 왕권은 거절했지만 <span class="highlight-answer">종교적 권위는 취하려 했던 것</span> 같습니다.</p>
+                    
+                    <p><strong>셋째, 현대적 적용입니다.</strong><br>
+                    오늘날에도 <span class="important-point">선한 목적의 종교적 행위나 전통</span>이 하나님보다 더 중요해질 수 있습니다. 우리는 <span class="highlight-answer">끊임없이 순수한 신앙을 점검해야 합니다.</span></p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>🎯 믿음의 성장과 하나님의 능력</h3>
+                <ol class="conclusion-list">
+                    <li><span class="key-point">하나님의 관점으로 자신을 바라보기</span> - 현재의 연약함이 아닌 <span class="important-text">하나님이 보시는 가능성과 잠재력</span>을 믿고 나아가야 합니다.</li>
+                    <li><span class="key-point">점진적 믿음의 성장 인정하기</span> - 기드온처럼 <span class="important-text">단계적으로 성장하는 믿음의 과정</span>을 인정하고 조급해하지 말아야 합니다.</li>
+                    <li><span class="key-point">하나님의 능력에 의존하기</span> - 인간의 힘과 지혜가 아닌 <span class="important-text">오직 하나님의 능력으로만 승리할 수 있음</span>을 인정해야 합니다.</li>
+                    <li><span class="key-point">성공 후의 영적 경계</span> - 큰 승리와 성공 후에 오는 <span class="important-text">영적 교만과 자만을 경계</span>하며 겸손을 유지해야 합니다.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 이 단원의 중요 성경 구절</h2>
+            
+            <div class="key-verse">
+                <h3>1. 사사기 6:12 - 하나님의 관점</h3>
+                <p>"여호와의 사자가 기드온에게 나타나 이르되 큰 용사여 여호와께서 너와 함께 하시도다"</p>
+                <div class="verse-full-text">하나님은 우리의 현재가 아닌 가능성을 보시며 부르십니다. 연약함 속에서도 하나님의 부르심을 붙잡아야 합니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>2. 사사기 6:14 - 하나님의 약속</h3>
+                <p>"여호와께서 그를 돌아보시며 이르시되 너는 이 네 힘으로 가서 이스라엘을 미디안의 손에서 구원하라 내가 너를 보내지 아니하였느냐"</p>
+                <div class="verse-full-text">하나님의 보내심에는 능력이 함께합니다. 그분의 명령을 받을 때 우리는 연약함을 넘어설 수 있습니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>3. 사사기 6:16 - 동행의 약속</h3>
+                <p>"여호와께서 그에게 이르시되 내가 반드시 너와 함께 하리니 네가 미디안 사람 치기를 한 사람을 치듯 하리라" 하시니라</p>
+                <div class="verse-full-text">하나님의 동행하심이 승리의 비결입니다. 그분이 우리와 함께하시면 어떤 어려움도 극복할 수 있습니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>4. 사사기 7:2 - 하나님의 영광</h3>
+                <p>"여호와께서 기드온에게 이르시되 너를 따르는 백성이 너무 많은즉 내가 미디안 사람을 그들의 손에 넘겨 주지 아니하리니 이는 이스라엘이 나를 거슬러 자랑하기를 내 손이 나를 구원하였다 할까 함이니라"</p>
+                <div class="verse-full-text">모든 영광은 하나님께 돌려야 합니다. 승리의 결과가 인간의 노력이 아닌 하나님의 능력임을 기억해야 합니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>5. 사사기 7:20 - 승리의 외침</h3>
+                <p>"세 대가 나팔을 불며 항아리를 부수고 좌수에 횃불을 들고 우수에 나팔을 들어 불며 외쳐 이르되 여호와와 기드온의 칼이여 하니"</p>
+                <div class="verse-full-text">하나님과 함께하는 승리의 선언입니다. 하나님의 능력과 우리의 순종이 결합될 때 놀라운 역사가 일어납니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>6. 사사기 8:23 - 신정 사상</h3>
+                <p>"기드온이 그들에게 이르되 내가 너희를 다스리지 아니하겠고 나의 아들도 너희를 다스리지 아니할 것이요 여호와께서 너희를 다스리시리라" 하니라</p>
+                <div class="verse-full-text">참된 지도자는 하나님의 주권을 인정하며 백성을 하나님께로 인도합니다. 인간적인 권력욕보다 하나님의 통치를 앞세워야 합니다.</div>
+            </div>
+            
+            <div class="key-verse">
+                <h3>7. 사사기 8:27 - 영적 경계</h3>
+                <p>"기드온이 그것으로 에봇을 만들어 자기의 성읍 오브라에 두었더니 온 이스라엘이 그것을 음란하게 위하므로 그것이 기드온과 그의 집에 올무가 되니라"</p>
+                <div class="verse-full-text">선한 의도라도 하나님의 뜻을 벗어나거나 인간을 높이는 행위는 결국 우상 숭배의 올무가 될 수 있습니다. 항상 하나님의 뜻을 신중하게 구해야 합니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./7t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 6:1-6",
+                event: "미디안의 7년 압제 - 이스라엘이 다시 악을 행하여 미디안족의 침입을 받음. 메뚜기 떼 같은 대군이 농작물을 약탈하여 백성들이 산 굴과 동굴에 숨어 살게 됨",
+                place: "이스라엘 전 지역",
+                question: "미디안의 압제가 7년간 지속된 이유는?",
+                answer: "이스라엘이 여호와의 목전에 악을 행했기 때문이며, 하나님의 징계와 회개를 위한 기간이었음",
+                fullVerse: "이스라엘 자손이 여호와의 목전에 악을 행하였으므로 여호와께서 칠 년 동안 그들을 미디안의 손에 넘겨 주시니 미디안의 손이 이스라엘을 이긴지라 이스라엘 자손이 미디안으로 말미암아 산에서 굴과 동굴과 산성을 자기들을 위하여 만들었으며"
+            },
+            {
+                verse: "사사기 6:11-16",
+                event: "기드온의 부르심 - 여호와의 사자가 포도주 틀에 숨어 밀을 타작하던 기드온에게 나타나 \"큰 용사여\"라고 부르며 구원의 사명을 맡김",
+                place: "오브라, 아비에셀 땅, 요아스의 상수리나무 아래",
+                question: "기드온이 포도주 틀에서 밀을 타작한 이유는?",
+                answer: "미디안 사람들에게 들키지 않기 위해 숨어서 작업했으며, 이는 당시 압제의 심각성을 보여줌",
+                fullVerse: "여호와의 사자가 아비에셀 사람 요아스에게 속한 오브라에 이르러 상수리나무 아래에 앉으니라 마침 요아스의 아들 기드온이 미디안 사람에게 알리지 아니하려 하여 포도주 틀에서 밀을 타작하더니 여호와의 사자가 기드온에게 나타나 이르되 큰 용사여 여호와께서 너와 함께 하시도다"
+            },
+            {
+                verse: "사사기 6:25-32",
+                event: "바알 제단 파괴 - 하나님의 명령으로 아버지의 바알 제단을 헐고 아세라 상을 찍어 여호와께 제단을 쌓음. 성읍 사람들의 분노를 샀으나 아버지가 보호함",
+                place: "오브라 산성, 요아스의 바알 제단",
+                question: "기드온이 밤에 바알 제단을 헐은 이유는?",
+                answer: "아버지의 집 사람들과 성읍 사람들이 두려워서였지만, 순종의 행위였음",
+                fullVerse: "이 밤에 여호와께서 기드온에게 이르시되 네 아버지의 수소 곧 칠 년 된 둘째 수소를 취하고 네 아버지에게 있는 바알의 제단을 헐며 그 곁의 아세라 상을 찍고 또 이 산성 꼭대기의 평평한 곳에 네 하나님 여호와를 위하여 규례대로 한 제단을 쌓고"
+            },
+            {
+                verse: "사사기 6:36-40",
+                event: "양털 시험 - 기드온이 하나님의 뜻을 확인하기 위해 양털로 두 번의 기적을 요청함. 첫 번째는 양털만 젖고 땅은 마르게, 두 번째는 그 반대로",
+                place: "오브라 타작 마당",
+                question: "양털 시험이 두 번 필요했던 이유는?",
+                answer: "기드온의 연약한 믿음을 강화하고 하나님의 확실한 뜻을 확인하기 위함이었음",
+                fullVerse: "기드온이 하나님께 아뢰되 주께서 이미 말씀하신 대로 내 손으로 이스라엘을 구원하려 하시는지 내가 양털 한 뭉치를 타작 마당에 두리니 이슬이 양털에만 있고 사면 땅은 마르면 주께서 이미 말씀하신 대로 내 손으로 이스라엘을 구원하실 줄 내가 알겠나이다"
+            },
+            {
+                verse: "사사기 7:2-7",
+                event: "300명 선별 - 32,000명 중 22,000명이 두려워 돌아가고, 남은 10,000명 중 물 마시는 방법으로 300명만 선별됨. 하나님의 영광을 위한 선택",
+                place: "하롯 샘, 길르앗 산 근처",
+                question: "하나님이 군대를 줄이신 이유는?",
+                answer: "이스라엘이 자랑하지 않게 하려 함이며, 승리가 하나님께로부터 온 것임을 분명히 하기 위함",
+                fullVerse: "여호와께서 기드온에게 이르시되 너를 따르는 백성이 너무 많은즉 내가 미디안 사람을 그들의 손에 넘겨 주지 아니하리니 이는 이스라엘이 나를 거슬러 자랑하기를 내 손이 나를 구원하였다 할까 함이니라"
+            },
+            {
+                verse: "사사기 7:16-22",
+                event: "미디안 대승리 - 300명이 나팔, 횃불, 항아리로 기습 공격하여 미디안 대군을 완전히 패배시킴. 적들이 서로 칼로 치며 도망함",
+                place: "미디안 진영, 모레 산 아래 골짜기, 요단강 동편",
+                question: "나팔과 횃불 작전의 의미는?",
+                answer: "하나님의 지혜로운 전략으로 적을 혼란시켜 스스로 멸망하게 하는 완전한 승리의 방법이었음",
+                fullVerse: "삼백 명을 세 대로 나누고 각 손에 나팔과 빈 항아리를 들리고 항아리 안에는 횃불을 감추게 하고 그들에게 이르되 너희는 나를 보고 내가 하는 대로 하되 내가 진영 가에 이르러서 내가 하는 대로 너희도 그리하여"
+            },
+            {
+                verse: "사사기 8:22-27",
+                event: "왕권 거절과 에봇 제작 - 백성들의 왕 요청을 거절하며 여호와의 통치를 선언했으나, 금 귀고리로 에봇을 만들어 우상 숭배의 빌미를 제공함",
+                place: "오브라, 기드온의 성읍",
+                question: "기드온의 에봇 제작이 문제가 된 이유는?",
+                answer: "이스라엘에게 올무가 되어 우상 숭배를 유발했으며, 신앙의 순수성을 해쳤기 때문",
+                fullVerse: "그 때에 이스라엘 사람들이 기드온에게 이르되 당신이 우리를 미디안의 손에서 구원하셨으니 당신과 당신의 아들과 당신의 손자가 우리를 다스리소서 기드온이 그들에게 이르되 내가 너희를 다스리지 아니하겠고 나의 아들도 너희를 다스리지 아니할 것이요 여호와께서 너희를 다스리시리라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(this)">
+                        ${item.verse}
+                        <div class="verse-text">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(element) {
+            const verseText = element.querySelector('.verse-text');
+            verseText.classList.toggle('show');
+        }
+        
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                const rows = document.querySelectorAll('#dataTable tbody tr');
+                if (searchTerm) {
+                    rows.forEach(row => {
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.classList.add('highlight');
+                            setTimeout(() => row.classList.remove('highlight'), 2000);
+                        }
+                    });
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            document.getElementById('searchInput').addEventListener('input', searchTable);
+
+            const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+            elementsToAnimate.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

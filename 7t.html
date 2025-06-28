@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아비멜렉 (사사기 9:1-57)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #dc143c;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #dc143c;
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #dc143c;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #dc143c;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .thinking-qa .important {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .conclusion-list li {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .conclusion-list li::before {
+            content: counter(conclusion-counter);
+            counter-increment: conclusion-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ffd700;
+            color: #2c3e50;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .conclusion-list {
+            counter-reset: conclusion-counter;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #dc143c;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #dc143c;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .key-verse:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👑 아비멜렉 (사사기 9:1-57)</h1>
+            <p>기드온의 아들 - 권력욕과 교만의 비극적 결말</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 아비멜렉 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">아비멜렉 (사사기 9:1-57)</span>의 이야기는 <span class="important">사사기에서 가장 어둡고 비극적인 장</span>으로, <span class="emphasis">권력욕과 교만이 가져오는 파멸적 결과</span>를 생생하게 보여주는 경고의 메시지입니다. 아비멜렉은 기드온의 아들이지만 사사가 아닌 <span class="important">자칭 왕</span>으로서 이스라엘 역사상 최초의 왕권 찬탈 사건을 일으킵니다.</p>
+                
+                <p>아비멜렉의 이야기는 크게 <span class="emphasis">다섯 가지 단계</span>로 구성되어 있습니다:</p>
+                
+                <p><strong>첫째, 왕권 찬탈과 형제 살해(9:1-6)</strong><br>
+                아비멜렉은 <span class="important">세겜 사람들을 설득하여 자신을 왕으로 세우고, 70명의 형제들을 한 돌 위에서 죽였습니다</span>. 이는 <span class="highlight">권력욕이 얼마나 잔인하고 파괴적인지</span>를 보여주는 충격적인 사건입니다. <span class="emphasis">오직 막내 요담만이 숨어서 살아남았습니다</span>. 이 사건은 <span class="important">가족의 유대와 형제애를 완전히 파괴하는 권력의 어두운 면</span>을 드러냅니다.</p>
+                
+                <p><strong>둘째, 요담의 우화와 예언(9:7-21)</strong><br>
+                요담은 <span class="important">그리심 산에서 나무들의 우화를 통해 아비멜렉과 세겜 사람들의 운명을 예언</span>했습니다. <span class="highlight">좋은 나무들은 왕이 되기를 거부하고, 오직 가시나무만이 왕이 되려 했다</span>는 우화는 <span class="emphasis">진정한 리더와 권력욕에 사로잡힌 자의 차이</span>를 명확히 보여줍니다. 요담의 예언은 <span class="important">아비멜렉과 세겜 사람들이 서로를 파멸시킬 것</span>이라는 하나님의 심판을 선포했습니다.</p>
+                
+                <p><strong>셋째, 3년간의 통치와 갈등의 시작(9:22-25)</strong><br>
+                아비멜렉은 <span class="important">3년 동안 이스라엘을 다스렸지만, 하나님께서 악한 영을 보내어 그와 세겜 사람들 사이에 갈등이 생겼습니다</span>. <span class="highlight">하나님의 심판이 시작된 것</span>입니다. <span class="emphasis">세겜 사람들이 아비멜렉을 배반하고 산적질을 시작</span>했으며, 이는 <span class="important">악한 동맹의 필연적 결과</span>를 보여줍니다.</p>
+                
+                <p><strong>넷째, 가알의 반란과 세겜 성 파괴(9:26-49)</strong><br>
+                <span class="important">에벳의 아들 가알이 세겜 사람들을 선동하여 아비멜렉에게 반란</span>을 일으켰습니다. 아비멜렉은 <span class="highlight">세겜 성을 완전히 파괴하고 소금을 뿌려 영원히 황폐하게 만들었습니다</span>. 또한 <span class="emphasis">세겜 망대에 피한 사람들을 불태워 죽였습니다</span>. 이는 <span class="important">권력 투쟁이 얼마나 파괴적이고 무자비한지</span>를 보여주는 끔찍한 사건입니다.</p>
+                
+                <p><strong>다섯째, 데베스에서의 비참한 최후(9:50-57)</strong><br>
+                아비멜렉은 <span class="important">데베스 성을 공격하다가 한 여인이 던진 맷돌 조각에 머리가 깨져 치명상을 입었습니다</span>. <span class="highlight">그는 자신의 무기를 든 소년에게 자신을 죽이라고 명령</span>했는데, 이는 <span class="emphasis">"여인에게 죽었다"는 수치를 피하려는 마지막 교만</span>이었습니다. 성경은 <span class="important">"하나님이 아비멜렉의 악을 그의 머리로 돌리셨다"</span>고 기록하여 하나님의 공의로운 심판을 강조합니다.</p>
+                
+                <p>아비멜렉의 이야기가 주는 교훈은 매우 심각합니다. <span class="important">권력욕과 교만은 결국 자기 파멸을 가져온다</span>는 것입니다. <span class="highlight">진정한 리더십은 섬김에 있지 지배에 있지 않다</span>는 것을 보여줍니다. 또한 <span class="emphasis">하나님의 공의는 반드시 실현된다</span>는 것을 증명합니다.</p>
+                
+                <p>현재 우리에게 아비멜렉의 이야기는 <span class="important">권력과 지위에 대한 올바른 태도</span>를 가르쳐줍니다. <span class="highlight">진정한 성공은 다른 사람을 밟고 올라서는 것이 아니라 함께 성장하는 것</span>임을 깨닫게 됩니다. 또한 <span class="emphasis">교만과 이기심이 얼마나 파괴적인지</span>를 경고하며, <span class="important">겸손과 섬김의 리더십이 얼마나 소중한지</span>를 일깨워줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 아비멜렉, 세겜, 요담)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 아비멜렉을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 아비멜렉이 70명의 형제를 죽이고 왕이 된 것이 갖는 의미는 무엇이며, 이는 현재 우리의 권력욕과 경쟁에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>아비멜렉의 형제 살해와 왕권 찬탈은 <span class="highlight-answer">권력욕이 얼마나 파괴적이고 비인간적인지</span>를 보여주는 극단적인 사례입니다. 
+                    
+                    <br><br>형제 살해의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">권력욕의 맹목성</span>입니다. <span class="important-point">아비멜렉은 왕이 되기 위해 가장 소중한 가족의 유대까지 파괴했습니다</span>. 이는 <span class="highlight-answer">권력욕이 인간의 기본적 도덕성과 양심을 마비시킨다</span>는 것을 보여줍니다. <span class="important-point">70명이라는 숫자는 완전한 파괴를 의미</span>하며, 그의 잔인함이 얼마나 철저했는지를 드러냅니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">정당성 없는 권력의 허상</span>입니다. <span class="important-point">아비멜렉은 하나님의 부르심이나 백성의 진정한 지지 없이 권력을 찬탈했습니다</span>. 이는 <span class="highlight-answer">진정한 리더십은 강제나 조작이 아닌 인정과 신뢰에서 나온다</span>는 것을 보여줍니다. <span class="important-point">세겜 사람들의 지지도 혈연관계와 이익에 기반한 것</span>이었지 진정한 존경에서 나온 것이 아니었습니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">경쟁의 왜곡된 형태</span>입니다. <span class="important-point">건전한 경쟁은 서로를 발전시키지만, 아비멜렉의 경쟁은 상대방을 완전히 제거하는 것</span>이었습니다. 이는 <span class="highlight-answer">진정한 성공은 다른 사람을 밟고 올라서는 것이 아니라 함께 성장하는 것</span>임을 보여줍니다. <span class="important-point">제로섬 게임의 사고방식은 결국 모든 것을 파괴한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">단기적 성공의 함정</span>입니다. <span class="important-point">아비멜렉은 일시적으로 왕이 되었지만 결국 비참한 최후를 맞았습니다</span>. 이는 <span class="highlight-answer">부정한 방법으로 얻은 성공은 지속될 수 없다</span>는 것을 보여줍니다. <span class="important-point">진정한 성공은 과정의 정당성과 결과의 지속성을 모두 고려해야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">하나님의 공의에 대한 도전</span>입니다. <span class="important-point">아비멜렉의 행위는 하나님의 질서와 공의에 대한 직접적인 도전</span>이었습니다. 이는 <span class="highlight-answer">인간의 교만이 얼마나 위험한지</span>를 보여주며, <span class="important-point">하나님의 주권을 인정하지 않는 권력은 결국 심판받는다</span>는 것을 의미합니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important-point">건전한 경쟁과 성취욕은 필요하지만, 그것이 다른 사람을 해치는 수단이 되어서는 안 된다</span>는 것입니다. 또한 <span class="highlight-answer">진정한 리더십은 섬김과 희생에서 나오며, 권력은 책임과 함께 온다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important-point">단기적 성공보다 장기적 신뢰와 관계가 더 중요하다</span>는 것을 배우게 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 요담의 우화가 갖는 의미는 무엇이며, 이는 현재 우리의 리더십과 선택에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>요담의 우화는 <span class="highlight-answer">진정한 리더십의 본질과 권력의 올바른 사용</span>에 대한 깊은 통찰을 제공하는 지혜로운 교훈입니다. 
+                    
+                    <br><br>우화의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">진정한 리더의 특성</span>입니다. <span class="important-point">감람나무, 무화과나무, 포도나무는 모두 왕이 되기를 거부했습니다</span>. 이는 <span class="highlight-answer">진정한 리더는 권력 자체를 추구하지 않고 자신의 본분에 충실하다</span>는 것을 보여줍니다. <span class="important-point">각 나무는 자신만의 고유한 열매를 맺는 일에 집중했습니다</span>. 이는 <span class="highlight-answer">진정한 가치는 권력이 아닌 기여와 섬김에서 나온다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">권력욕의 위험성</span>입니다. <span class="important-point">오직 가시나무만이 왕이 되려고 했습니다</span>. 가시나무는 <span class="highlight-answer">열매도 맺지 못하고 그늘도 제공하지 못하는 무용한 존재</span>였습니다. 이는 <span class="important">권력욕에 사로잡힌 자는 실제로는 아무런 가치를 창출하지 못한다</span>는 것을 보여줍니다. <span class="highlight-answer">가시나무의 위협은 공허한 허세</span>였으며, 이는 <span class="important">진정한 능력 없는 권력의 허상</span>을 드러냅니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">상호 파괴의 예언</span>입니다. <span class="important-point">요담은 아비멜렉과 세겜 사람들이 서로를 파멸시킬 것이라고 예언했습니다</span>. 이는 <span class="highlight-answer">부정한 동맹과 이익 관계는 결국 서로를 배신하고 파괴한다</span>는 것을 보여줍니다. <span class="important-point">진정한 신뢰와 존경 없는 관계는 지속될 수 없다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">하나님의 공의로운 심판</span>입니다. <span class="important-point">요담의 예언은 단순한 개인적 복수가 아닌 하나님의 공의의 선포</span>였습니다. 이는 <span class="highlight-answer">악한 행위는 반드시 그에 상응하는 결과를 가져온다</span>는 것을 보여줍니다. <span class="important-point">하나님의 공의는 때로 지연될 수 있지만 결코 사라지지 않는다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">지혜로운 저항의 방법</span>입니다. <span class="important-point">요담은 무력으로 대항하지 않고 지혜로운 우화를 통해 진리를 선포했습니다</span>. 이는 <span class="highlight-answer">진정한 힘은 폭력이 아닌 진리와 지혜에서 나온다</span>는 것을 보여줍니다. <span class="important-point">올바른 저항은 감정이 아닌 원칙에 기반해야 한다</span>는 교훈을 줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important-point">진정한 리더십은 권력을 추구하는 것이 아니라 자신의 역할에 충실하며 다른 사람을 섬기는 것</span>이라는 것입니다. 또한 <span class="highlight-answer">우리는 권력이나 지위보다는 실제적인 기여와 가치 창출에 집중해야 한다</span>는 것을 깨닫게 됩니다. 마지막으로 <span class="important-point">부정한 방법으로 얻은 성공은 지속될 수 없으며, 진정한 성공은 정직과 성실에서 나온다</span>는 것을 배우게 됩니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 아비멜렉이 여인이 던진 맷돌 조각에 맞아 죽은 것이 갖는 의미는 무엇이며, 이는 현재 우리의 교만과 겸손에 대해 무엇을 가르쳐주는가?</h3>
+                    <p>아비멜렉의 비참한 최후는 <span class="highlight-answer">교만의 파멸적 결과와 하나님의 공의로운 심판</span>을 극명하게 보여주는 상징적 사건입니다. 
+                    
+                    <br><br>맷돌 조각 사건의 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">교만한 자의 굴욕적 패배</span>입니다. <span class="important-point">강력한 전사였던 아비멜렉이 이름 없는 여인의 맷돌 조각에 맞아 쓰러진 것</span>은 <span class="highlight-answer">인간의 교만이 얼마나 허무한지</span>를 보여줍니다. <span class="important-point">그가 가장 무시했을 법한 존재에 의해 치명상을 입은 것</span>은 <span class="highlight-answer">하나님께서 교만한 자를 낮추시는 방식</span>을 보여줍니다. 이는 <span class="important-point">진정한 힘은 인간의 능력이 아닌 하나님께 있다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">성별에 대한 편견의 심판</span>입니다. <span class="important-point">아비멜렉이 \"여인에게 죽었다\"는 수치를 피하려고 소년에게 자신을 죽이라고 한 것</span>은 <span class="highlight-answer">그의 성별 편견과 교만을 드러냅니다</span>. 하나님께서는 <span class="important-point">그가 가장 무시하던 여성을 통해 심판을 내리셨습니다</span>. 이는 <span class="highlight-answer">하나님 앞에서는 성별, 지위, 신분의 차이가 없다</span>는 것을 보여주며, <span class="important-point">모든 인간은 하나님의 형상으로 창조된 존귀한 존재</span>라는 교훈을 줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="highlight-answer">일상적 도구를 통한 하나님의 역사</span>입니다. <span class="important-point">맷돌 조각은 가장 평범한 일상용품</span>이었습니다. 하나님께서는 <span class="highlight-answer">특별한 무기가 아닌 일상의 도구를 사용하여 교만한 자를 심판하셨습니다</span>. 이는 <span class="important-point">하나님께서는 어떤 것이든 사용하실 수 있으며, 인간의 계획과 준비를 무력화시킬 수 있다</span>는 것을 보여줍니다. <span class="highlight-answer">하나님의 주권은 인간의 예상을 뛰어넘는다</span>는 교훈을 줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">마지막 순간까지의 교만</span>입니다. <span class="important-point">아비멜렉은 죽어가면서도 자신의 체면을 지키려고 했습니다</span>. 이는 <span class="highlight-answer">교만이 얼마나 뿌리 깊고 완고한지</span>를 보여줍니다. <span class="important-point">진정한 회개나 겸손 없이 죽음을 맞은 것</span>은 <span class="highlight-answer">교만의 최종적 파멸</span>을 의미합니다. 이는 <span class="important-point">겸손은 선택의 문제이며, 끝까지 교만을 고집하면 회복의 기회를 잃는다</span>는 경고를 줍니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">하나님의 완전한 공의</span>입니다. <span class="important-point">성경은 \"하나님이 아비멜렉의 악을 그의 머리로 돌리셨다\"고 명시합니다</span>. 이는 <span class="highlight-answer">하나님의 공의가 완전하고 정확하다</span>는 것을 보여줍니다. <span class="important-point">아비멜렉이 형제들에게 행한 악이 정확히 자신에게 돌아온 것</span>은 <span class="highlight-answer">뿌린 대로 거두는 하나님의 법칙</span>을 증명합니다. 
+                    
+                    <br><br><strong>여섯째</strong>, <span class="highlight-answer">예상치 못한 곳에서 오는 심판</span>입니다. <span class="important-point">아비멜렉은 전장에서 적군에게 죽을 것이라고 예상했겠지만, 성벽 위의 여인에게 당했습니다</span>. 이는 <span class="highlight-answer">하나님의 심판은 예상치 못한 곳에서, 예상치 못한 방식으로 온다</span>는 것을 보여줍니다. <span class="important-point">인간의 계산과 예측을 뛰어넘는 하나님의 주권</span>을 드러냅니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important-point">교만은 우리를 파멸로 이끄는 가장 위험한 죄</span>라는 것입니다. 또한 <span class="highlight-answer">진정한 겸손은 모든 사람을 존중하고 하나님의 주권을 인정하는 것</span>이라는 것을 깨닫게 됩니다. 마지막으로 <span class="important-point">우리의 행위는 반드시 그에 상응하는 결과를 가져오므로, 항상 정직하고 겸손하게 살아야 한다</span>는 것을 배우게 됩니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 권력욕과 교만의 비극</h3>
+                <p><strong>1. 권력욕의 파괴적 본질</strong><br>
+                아비멜렉의 이야기는 <span class="key-point">권력욕이 얼마나 파괴적이고 비인간적인지</span>를 보여줍니다. <span class="important-text">진정한 리더십은 권력 추구가 아닌 섬김과 희생에서 나온다</span>는 것을 깨닫게 합니다.</p>
+                
+                <p><strong>2. 교만의 필연적 결과</strong><br>
+                <span class="key-point">교만한 자는 결국 자신이 무시하던 것에 의해 심판받는다</span>는 것을 보여줍니다. <span class="important-text">겸손은 선택의 문제이며, 교만을 고집하면 회복의 기회를 잃는다</span>는 경고를 받습니다.</p>
+                
+                <p><strong>3. 하나님의 공의로운 심판</strong><br>
+                <span class="key-point">하나님의 공의는 반드시 실현되며, 악한 행위는 그에 상응하는 결과를 가져온다</span>는 것을 보여줍니다. <span class="important-text">뿌린 대로 거두는 하나님의 법칙은 변하지 않는다</span>는 진리를 확인합니다.</p>
+                
+                <p><strong>4. 진정한 가치와 성공의 기준</strong><br>
+                <span class="key-point">진정한 성공은 다른 사람을 밟고 올라서는 것이 아니라 함께 성장하는 것</span>임을 보여줍니다. <span class="important-text">부정한 방법으로 얻은 성공은 지속될 수 없으며, 정직과 성실이 진정한 성공의 기반</span>이라는 교훈을 줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 아비멜렉 핵심 성경 구절</h2>
+            <div class="key-verse" onclick="toggleVerseText(this)">
+                <h3>사사기 9:4</h3>
+                <p>"세겜 사람들이 바알브릿의 신전에서 은 칠십 개를 내어 그에게 주매 아비멜렉이 그것으로 방탕하고 경박한 자들을 사서 자기를 따르게 하고"</p>
+                <div class="verse-full-text">권력욕에 사로잡힌 아비멜렉은 부정한 방법으로 백성을 매수하고 따르게 합니다. 이는 맹목적인 권력 추구의 위험성을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:5</h3>
+                <p>"오브라에 있는 그의 아버지 집에 가서 여룹바알의 아들들인 자기 형제 칠십 명을 한 돌 위에서 죽였으되 여룹바알의 막내아들 요담은 숨었으므로 남았더라"</p>
+                <div class="verse-full-text">아비멜렉은 왕이 되기 위해 가장 가까운 가족을 무참히 살해했습니다. 이는 권력욕이 인간의 도덕성을 얼마나 파괴할 수 있는지를 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:15</h3>
+                <p>"가시나무가 나무들에게 이르되 너희가 참으로 나를 왕으로 세우려거든 와서 내 그늘에 피하라 그리하지 아니하면 불이 가시나무에서 나와서 레바논의 백향목을 사를지어다 하였느니라"</p>
+                <div class="verse-full-text">요담의 우화는 가시나무와 같은 무익한 존재가 권력을 탐하는 위험성을 경고합니다. 진정한 리더는 섬김과 열매로 인정받습니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:23</h3>
+                <p>"하나님이 아비멜렉과 세겜 사람들 사이에 악한 영을 보내시매 세겜 사람들이 아비멜렉을 배반하였으니"</p>
+                <div class="verse-full-text">하나님은 아비멜렉과 세겜 사람들의 악함에 개입하시어 그들 사이에 갈등을 일으키십니다. 이는 악한 행위에 대한 하나님의 심판이 시작됨을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:45</h3>
+                <p>"아비멜렉이 그 날 종일토록 그 성을 쳐서 마침내 취하고 거기 있는 백성을 죽이며 그 성을 헐고 소금을 뿌리니라"</p>
+                <div class="verse-full-text">아비멜렉은 세겜을 완전히 파괴함으로써 자신의 잔인함과 권력욕의 파괴성을 드러냅니다. 이는 복수의 악순환을 보여줍니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:53</h3>
+                <p>"한 여인이 맷돌 위짝을 아비멜렉의 머리 위에 던져서 그의 두개골을 깨뜨리니"</p>
+                <div class="verse-full-text">교만했던 아비멜렉은 결국 비천한 존재에게, 일상적인 도구에 의해 치명상을 입습니다. 이는 하나님의 공의로운 심판을 보여주는 상징적인 사건입니다.</div>
+            </div>
+            <div class="key-verse" onclick="toggleVerse(this)">
+                <h3>사사기 9:56</h3>
+                <p>"하나님이 아비멜렉의 악을 그의 머리로 돌리셨으니 곧 그가 자기 형제 칠십 명을 죽여서 자기 아버지에게 행한 악이러라"</p>
+                <div class="verse-full-text">하나님은 아비멜렉의 모든 악행을 그의 머리로 되돌리십니다. 이는 뿌린 대로 거두는 하나님의 공의로운 법칙을 명확히 보여줍니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./8t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 9:1-3",
+                event: "아비멜렉의 세겜 사람들 설득",
+                place: "세겜",
+                question: "아비멜렉이 세겜 사람들을 어떻게 설득했는가?",
+                answer: "<span class='highlight-text'>혈연관계를 이용하여 '나는 너희 골육이라' 하며 자신을 왕으로 세우도록 설득</span>",
+                fullVerse: "여룹바알의 아들 아비멜렉이 세겜에 가서 그의 어머니의 형제들에게 이르러 그들과 그의 외조부의 온 가족에게 말하여 이르되 청하건대 세겜 사람들의 귀에 말하라 여룹바알의 아들 칠십 명이 다 너희를 다스리는 것과 한 사람이 너희를 다스리는 것 중 어느 것이 너희에게 나으냐 또 나는 너희의 골육임을 기억하라 하니 그의 어머니의 형제들이 그를 위하여 이 모든 말을 온 세겜 사람들의 귀에 고하매 그들의 마음이 아비멜렉을 따르게 되었으니 이는 그가 자기들의 형제라 함이라"
+            },
+            {
+                verse: "사사기 9:4-6",
+                event: "70명 형제 살해와 왕 즉위",
+                place: "오브라, 세겜",
+                question: "아비멜렉이 왕이 되기 위해 무엇을 했는가?",
+                answer: "<span class='highlight-text'>바알브릿 신전에서 은 70개를 받아 불량배들을 고용하고, 70명의 형제를 한 돌 위에서 죽인 후 왕으로 즉위</span>",
+                fullVerse: "세겜 사람들이 바알브릿의 신전에서 은 칠십 개를 내어 그에게 주매 아비멜렉이 그것으로 방탕하고 경박한 자들을 사서 자기를 따르게 하고 오브라에 있는 그의 아버지의 집에 가서 여룹바알의 아들들인 자기 형제 칠십 명을 한 돌 위에서 죽였으되 여룹바알의 막내아들 요담은 숨었으므로 남았더라 온 세겜 사람들과 밀로 족속이 모여 가서 세겜에 있는 기둥 상수리나무 아래에서 아비멜렉을 왕으로 세웠더라"
+            },
+            {
+                verse: "사사기 9:7-15",
+                event: "요담의 우화와 예언",
+                place: "그리심 산",
+                question: "요담이 선포한 우화의 핵심 메시지는 무엇인가?",
+                answer: "<span class='highlight-text'>좋은 나무들은 왕이 되기를 거부하고 오직 가시나무만이 왕이 되려 했다는 우화로, 진정한 리더와 권력욕자의 차이를 보여줌</span>",
+                fullVerse: "혹이 요담에게 그 소식을 알리매 요담이 가서 그리심 산 꼭대기에 서서 소리를 높여 그들에게 외쳐 이르되 세겜 사람들아 나에게 들으라 그리하면 하나님이 너희에게 들으시리라 하루는 나무들이 가서 기름을 부어 왕을 삼으려 하여 감람나무에게 이르되 너는 우리의 왕이 되라 하매 감람나무가 그들에게 이르되 나는 어찌 하나님과 사람에게 쓸모 있는 나의 기름 만드는 일을 버리고 가서 나무들 위에 요동하리요 하고 나무들이 무화과나무에게 이르되 너는 와서 우리의 왕이 되라 하매 무화과나무가 그들에게 이르되 나는 어찌 나의 단 것과 나의 아름다운 열매 맺는 일을 버리고 가서 나무들 위에 요동하리요 하고 나무들이 포도나무에게 이르되 너는 와서 우리의 왕이 되라 하매 포도나무가 그들에게 이르되 나는 어찌 하나님과 사람을 기쁘게 하는 나의 새 술 만드는 일을 버리고 가서 나무들 위에 요동하리요 하고 모든 나무가 가시나무에게 이르되 너는 와서 우리의 왕이 되라 하매 가시나무가 나무들에게 이르되 너희가 참으로 나를 왕으로 세우려거든 와서 내 그늘에 피하라 그리하지 아니하면 불이 가시나무에서 나와서 레바논의 백향목을 사를지어다 하였느니라"
+            },
+            {
+                verse: "사사기 9:22-25",
+                event: "3년 통치와 갈등 시작",
+                place: "이스라엘",
+                question: "아비멜렉과 세겜 사람들 사이에 갈등이 생긴 이유는 무엇인가?",
+                answer: "<span class='highlight-text'>하나님이 악한 영을 보내어 그들 사이에 갈등을 일으키셨고, 세겜 사람들이 아비멜렉을 배반하며 산적질을 시작</span>",
+                fullVerse: "아비멜렉이 이스라엘을 다스린 지 삼 년에 하나님이 아비멜렉과 세겜 사람들 사이에 악한 영을 보내시매 세겜 사람들이 아비멜렉을 배반하였으니 이는 여룹바알의 아들 칠십 명에게 행한 포학한 일의 죄가 돌아가서 그 피가 그들을 죽인 그들의 형제 아비멜렉과 그의 손을 도와서 그의 형제들을 죽인 세겜 사람들에게 돌아가게 하려 하심이라 세겜 사람들이 산들의 꼭대기에 사람들을 매복시켜 아비멜렉을 엿보게 하고 무릇 그 길로 지나가는 자를 다 겁탈하게 하니 어떤 사람이 그것을 아비멜렉에게 알리니라"
+            },
+            {
+                verse: "사사기 9:26-33",
+                event: "가알의 반란",
+                place: "세겜",
+                question: "가알이 어떻게 세겜 사람들을 선동했는가?",
+                answer: "<span class='highlight-text'>포도 축제 때 '아비멜렉이 누구이기에 우리가 그를 섬기느냐'며 반란을 선동하고 자신이 지휘관이 되겠다고 선언</span>",
+                fullVerse: "에벳의 아들 가알이 그의 형제들과 더불어 세겜으로 건너오니 세겜 사람들이 그를 의지하니니 그들이 밭에 가서 포도를 거두어다가 밟아 짜서 축제를 베풀고 그들의 신전에 들어가서 먹고 마시며 아비멜렉을 저주하니 에벳의 아들 가알이 이르되 아비멜렉은 누구이며 세겜은 누구이기에 우리가 아비멜렉을 섬기리요 그가 여룹바알의 아들이 아니냐 그의 대장은 스불이 아니냐 차라리 세겜의 아버지 하몰의 후손을 섬길 것이라 우리가 어찌 아비멜렉을 섬기리요 아 이 백성이 내 수하에 있었더라면 내가 아비멜렉을 제거하였으리라 하고 아비멜렉에게는 네 군대를 늘리고 나오라 하였더라 성읍 지휘관 스불이 에벳의 아들 가알의 말을 듣고 노하여 사자들을 아비멜렉에게 가만히 보내어 이르되 보소서 에벳의 아들 가알과 그의 형제들이 세겜에 이르러 성읍 사람들을 충동하여 당신을 대적하게 하나니 당신은 밤에 일어나서 당신과 함께 한 백성과 더불어 밭에 매복하였다가 아침 해 뜰 때에 일찍이 일어나 이 성읍을 엄습하면 가알과 그와 함께 한 백성이 나와서 당신을 대적하리니 당신은 기회를 보아 그들에게 행하소서 하니라"
+            },
+            {
+                verse: "사사기 9:34-41",
+                event: "가알과의 전투",
+                place: "세겜 성문",
+                question: "아비멜렉이 가알을 어떻게 물리쳤는가?",
+                answer: "<span class='highlight-text'>밤에 네 무리로 나누어 매복했다가 새벽에 공격하여 가알을 패배시키고 세겜에서 쫓아냄</span>",
+                fullVerse: "아비멜렉과 그와 함께 한 모든 백성이 밤에 일어나 네 무리로 나누어 세겜을 대하여 매복하였더니 에벳의 아들 가알이 나와서 성문 입구에 설 때에 아비멜렉과 그와 함께 한 백성이 매복한 곳에서 일어난지라 가알이 그 백성을 보고 스불에게 이르되 보라 백성이 산 꼭대기에서 내려온다 하니 스불이 그에게 이르되 네가 산들의 그림자를 사람으로 보았느니라 하니라 가알이 다시 말하여 이르되 보라 백성이 땅의 중앙에서 내려오고 또 한 무리는 므오느님 상수리나무 길로 온다 하니 스불이 그에게 이르되 네가 전에 말하기를 아비멜렉이 누구이기에 우리가 그를 섬기리요 하던 그 입이 이제 어디 있느냐 이가 네가 업신여기던 백성이 아니냐 청하건대 이제 나가서 그들과 싸우라 하니 가알이 세겜 사람들의 앞서 나가서 아비멜렉과 싸우니 아비멜렉이 그를 쫓으니 그가 그 앞에서 도망하였고 성문 입구까지 이르는 동안에 상한 자가 많이 엎드러졌더라 아비멜렉은 아루마에 거주하고 스불은 가알과 그의 형제들을 쫓아내어 세겜에 거주하지 못하게 하니라"
+            },
+            {
+                verse: "사사기 9:42-49",
+                event: "세겜 성 완전 파괴",
+                place: "세겜, 세겜 망대",
+                question: "아비멜렉이 세겜을 어떻게 완전히 파괴했는가?",
+                answer: "<span class='highlight-text'>성을 점령하여 백성을 죽이고 성을 헐어 소금을 뿌렸으며, 세겜 망대에 피한 사람들을 불태워 죽임</span>",
+                fullVerse: "이튿날 백성이 밭으로 나오매 어떤 사람이 그것을 아비멜렉에게 알리니라 아비멜렉이 자기 백성을 가져다가 세 무리로 나누어 밭에 매복하고 보니 백성이 성에서 나오는지라 그가 일어나서 그들을 치니 아비멜렉과 그와 함께 한 무리는 앞으로 달려가서 성문 입구에 서고 다른 두 무리는 밭에 있는 모든 자에게 달려들어 그들을 죽이니 아비멜렉이 그 날 종일토록 그 성을 쳐서 마침내 취하고 거기 있는 백성을 죽이며 그 성을 헐고 소금을 뿌리니라 세겜 망대의 사람들이 이를 듣고 엘브릿 신전의 보루로 들어갔더니 세겜 망대의 모든 사람들이 모인 것이 아비멜렉에게 알려지매 아비멜렉이 자기 백성과 더불어 살몬 산에 오르고 아비멜렉이 손에 도끼를 들고 나뭇가지를 찍어 그것을 가져다가 자기 어깨에 메고 자기와 함께 한 백성에게 이르되 너희는 내가 하는 것을 보나니 빨리 나와 같이 행하라 하니 모든 백성이 각각 나뭇가지를 찍어 아비멜렉을 따라 보루 위에 놓고 그것에 불을 놓아 보루를 사르매 세겜 망대 사람들도 다 죽었으니 남녀가 대략 천 명이었더라"
+            },
+            {
+                verse: "사사기 9:50-53",
+                event: "데베스 공격과 치명상",
+                place: "데베스",
+                question: "아비멜렉이 데베스에서 어떻게 치명상을 입었는가?",
+                answer: "<span class='highlight-text'>망대를 공격하다가 한 여인이 성벽 위에서 던진 맷돌 위짝에 머리가 깨져 치명상을 입음</span>",
+                fullVerse: "아비멜렉이 데베스로 가서 데베스를 향하여 진을 치고 그것을 취하였더니 그 성 중에 견고한 망대가 있으므로 그 성의 모든 백성의 남녀가 그리로 도망하여 들어가서 문을 잠그고 망대 꼭대기로 올라간지라 아비멜렉이 망대에 이르러 그것을 쳐서 망대 문에 가까이 나아가 그것을 불사르려 하니 한 여인이 맷돌 위짝을 아비멜렉의 머리 위에 던져서 그의 두개골을 깨뜨리니"
+            },
+            {
+                verse: "사사기 9:54-57",
+                event: "아비멜렉의 죽음과 하나님의 심판",
+                place: "데베스",
+                question: "아비멜렉이 어떻게 죽었으며 그 의미는 무엇인가?",
+                answer: "<span class='highlight-text'>치명상을 입고 소년에게 자신을 죽이라 명령했으며, 하나님이 그의 악을 그의 머리로 돌리신 공의로운 심판</span>",
+                fullVerse: "아비멜렉이 자기의 무기를 든 소년을 급히 불러 그에게 이르되 너는 칼을 빼어 나를 죽이라 사람들이 나를 가리켜 이르기를 여인이 그를 죽였다 할까 하노라 하니 그 소년이 그를 찌르매 그가 죽은지라 이스라엘 사람들이 아비멜렉이 죽은 것을 보고 각각 자기 곳으로 떠나갔더라 하나님이 아비멜렉의 악을 그의 머리로 돌리셨으니 곧 그가 자기 형제 칠십 명을 죽여서 자기 아버지에게 행한 악이러라 또한 하나님이 세겜 사람들의 모든 악을 그들의 머리로 돌리시매 여룹바알의 아들 요담의 저주가 그들에게 응하니라"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            verseText.classList.toggle('show');
+        }
+        
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.place.toLowerCase().includes(searchTerm.replace(/<[^>]*>/g, '')) || 
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

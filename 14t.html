@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미가와 단 지파, 그리고 베냐민 전쟁 (사사기 17-21장)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .overview-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #495057;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .overview-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .overview-content .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .overview-content .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .overview-content .emphasis {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #34495e;
+            box-shadow: 0 0 10px rgba(52, 73, 94, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .verse-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 100px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .verse-cell:hover {
+            color: #34495e;
+        }
+        
+        .verse-cell::before {
+            content: "👉";
+            margin-right: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .verse-cell::after {
+            content: "📖";
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .verse-text {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid #34495e;
+            border-radius: 0 5px 5px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        
+        .verse-text.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 200px;
+            }
+        }
+        
+        .place-cell {
+            color: #27ae60;
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        .qa-cell {
+            line-height: 1.8;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #8e44ad;
+            margin-bottom: 3px;
+        }
+        
+        .answer {
+            color: #e74c3c;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .thinking-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 50px 30px;
+            margin-top: 30px;
+        }
+        
+        .thinking-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .thinking-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .thinking-qa {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .thinking-qa h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            line-height: 1.5;
+        }
+        
+        .thinking-qa p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .thinking-qa .highlight-answer {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .thinking-qa .important {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .conclusion p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .conclusion .key-point {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .conclusion .important-text {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        .key-verses-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 50px 30px;
+        }
+        
+        .key-verses-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #34495e;
+            padding-bottom: 15px;
+        }
+        
+        .key-verse {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #34495e;
+        }
+        
+        .key-verse h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .key-verse p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #495057;
+        }
+        
+        .navigation-buttons {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: highlight 2s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+            100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .overview {
+                padding: 25px;
+            }
+            
+            .overview h2 {
+                font-size: 1.6rem;
+            }
+            
+            .overview-content {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .verse-cell::after {
+                display: none;
+            }
+            
+            .qa-cell {
+                font-size: 11px;
+            }
+            
+            .thinking-section {
+                padding: 35px 20px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .thinking-qa {
+                padding: 20px;
+            }
+            
+            .thinking-qa h3 {
+                font-size: 1.2rem;
+            }
+            
+            .thinking-qa p {
+                font-size: 1rem;
+            }
+            
+            .conclusion {
+                padding: 25px;
+            }
+            
+            .conclusion h3 {
+                font-size: 1.5rem;
+            }
+            
+            .conclusion p {
+                font-size: 1rem;
+            }
+            
+            .key-verses-section {
+                padding: 35px 20px;
+            }
+            
+            .key-verses-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .key-verse {
+                padding: 20px;
+            }
+            
+            .key-verse h3 {
+                font-size: 1.2rem;
+            }
+            
+            .key-verse p {
+                font-size: 1rem;
+            }
+            
+            .navigation-buttons {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .overview {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .search-box input {
+                font-size: 12px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .thinking-section {
+                padding: 25px 15px;
+            }
+            
+            .thinking-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .thinking-qa {
+                padding: 15px;
+            }
+            
+            .conclusion {
+                padding: 20px;
+            }
+            
+            .key-verses-section {
+                padding: 25px 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦁 삼손 (사사기 13:1-16:31)</h1>
+            <p>가장 강력한 사사 - 하나님의 부르심과 인간적 약점</p>
+        </div>
+        
+        <div class="overview">
+            <h2>📋 삼손 개요</h2>
+            <div class="overview-content">
+                <p><span class="highlight">삼손 (사사기 13:1-16:31)</span>은 <span class="important">사사 시대에 하나님께서 특별히 세우신 강력한 능력의 소유자</span>였습니다. 그의 이야기는 <span class="emphasis">하나님의 부르심과 인간의 나실인 서약, 그리고 그 능력의 근원과 연약함</span>에 대한 깊이 있는 통찰을 제공합니다.</p>
+                
+                <p>삼손의 이야기는 크게 <span class="emphasis">다섯 가지 주요 부분</span>으로 구성됩니다:</p>
+                
+                <p><strong>첫째, 삼손의 탄생 예고와 나실인 서약(13장)</strong><br>
+                <span class="important">마노아와 그의 아내에게 나타난 하나님의 사자</span>는 아이가 태어나기 전부터 <span class="highlight">나실인으로 구별될 것</span>을 명합니다. 이는 그의 삶이 <span class="emphasis">하나님의 특별한 목적</span>을 위해 존재했음을 보여줍니다.</p>
+                
+                <p><strong>둘째, 블레셋과의 첫 만남과 힘의 발현(14-15장)</strong><br>
+                삼손은 <span class="important">블레셋 여인과의 결혼 문제</span>로 부모와 갈등하며 첫 사역을 시작합니다. 이 과정에서 <span class="highlight">새끼 사자를 찢고, 나귀 턱뼈로 블레셋 사람 천 명을 죽이는 등</span> 초인적인 힘을 발휘합니다. 또한 <span class="emphasis">불 갓 당긴 여우 꼬리 사건</span>은 그의 감정적이고 때로는 충동적인 모습을 보여줍니다.</p>
+                
+                <p><strong>셋째, 들릴라의 유혹과 힘의 약점(16:4-22)</strong><br>
+                삼손의 결정적인 약점은 <span class="important">들릴라라는 여인에 대한 사랑과 그로 인한 약점 노출</span>이었습니다. 들릴라의 끊임없는 유혹에 넘어가 자신의 힘의 근원인 머리카락을 자르게 되고, 결국 힘을 잃고 블레셋 사람들에게 붙잡히게 됩니다.</p>
+                
+                <p><strong>넷째, 블레셋의 승리와 삼손의 몰락(16:20-22)</strong><br>
+                힘을 잃은 삼손은 <span class="important">블레셋 사람들에게 붙잡혀 눈이 뽑히고 성전에서 맷돌질을 하는 비참한 처지</span>에 놓입니다. 그러나 <span class="highlight">머리카락은 다시 자라기 시작했고, 이는 하나님과의 관계 회복의 가능성</span>을 시사합니다.</p>
+                
+                <p><strong>다섯째, 최후의 복수와 순교적 죽음(16:23-31)</strong><br>
+                블레셋 사람들이 <span class="important">자신들의 신 다곤을 찬양하기 위해 삼손을 데려온 것</span>을 보고, 삼손은 <span class="highlight">온 힘을 다해 성전 기둥을 밀어 무너뜨려 자신과 블레셋 사람 3천 명을 함께 죽음</span>으로 몰아넣습니다. 이는 <span class="important">비록 인간적인 약점이 있었으나, 결국 하나님의 목적을 이루는 마지막 위대한 행위</span>였습니다.</p>
+                
+                <p>삼손의 이야기는 <span class="important">하나님께서 특별한 목적을 위해 연약한 인간을 사용하신다</span>는 것을 보여주는 동시에, <span class="highlight">인간의 죄성과 약점이 하나님의 능력과 어떻게 충돌하는지</span>에 대한 경고를 담고 있습니다. 그의 삶은 <span class="emphasis">결과보다 과정, 능력보다 순종</span>이 중요하다는 것을 가르쳐줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 삼손, 들릴라, 나실인)">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>순서</th>
+                            <th>성경 구절</th>
+                            <th>사건</th>
+                            <th>장소</th>
+                            <th>질문과 답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 데이터는 JavaScript로 채워집니다 -->
+                    </tbody>
+                </table>
+                <div id="noResults" class="no-results" style="display: none;">검색 결과가 없습니다.</div>
+            </div>
+        </div>
+        
+        <div class="thinking-section">
+            <h2>🤔 삼손을 통한 깊은 생각해보기</h2>
+            <div class="thinking-content">
+                <div class="thinking-qa">
+                    <h3>1. 삼손의 나실인 서원과 그 서원을 지키지 못한 삶이 주는 교훈은 무엇인가?</h3>
+                    <p>삼손의 나실인 서원은 그의 삶 전체를 <span class="highlight-answer">하나님께 거룩하게 구별된 삶</span>으로 만들었습니다. 하지만 그는 <span class="important">머리털을 자르거나 술을 마시는 것 같은 규례는 잘 지켰지만, 하나님께서 주신 힘의 근원을 지키는 데는 실패</span>했습니다. 
+                    
+                    <br><br>이것이 우리에게 주는 교훈은 다음과 같습니다:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">하나님의 부르심과 인간의 책임</span>입니다. 하나님께서는 삼손을 특별한 목적을 위해 부르셨고, 그에게 능력을 주셨습니다. 하지만 <span class="important">그 능력을 어떻게 관리하고 지키느냐는 전적으로 삼손의 책임</span>이었습니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">약점의 위험성</span>입니다. 삼손의 가장 큰 약점은 <span class="important">여인에 대한 사랑과 그로 인한 정보 누출</span>이었습니다. 세상의 유혹이나 개인적인 욕망 앞에서 <span class="highlight-answer">하나님께서 주신 은사와 사명을 지키는 것이 얼마나 어려운지</span>를 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">믿음과 순종의 중요성</span>입니다. 힘의 근원이 머리카락에 있었던 것이 아니라 <span class="highlight-answer">하나님과의 관계와 그분께 대한 순종</span>에 있었습니다. 그러나 삼손은 <span class="important">자신의 힘을 하나님께로부터 온 것이 아닌 것처럼 여기고 들릴라에게 말해주었습니다</span>. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">회복의 가능성</span>입니다. 삼손은 비록 힘을 잃고 비참한 상태에 있었지만, <span class="important">그의 머리카락이 다시 자라면서 하나님께 마지막으로 힘을 구했습니다</span>. 이는 <span class="highlight-answer">인간의 연약함과 실패에도 불구하고 하나님은 언제나 회복의 기회를 주시는 분</span>임을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 삼손의 이야기는 <span class="important">하나님께서 우리에게 주신 재능과 은사를 어떻게 거룩하게 지켜나가야 하는지</span>에 대한 경고와 도전을 줍니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>2. 들릴라의 유혹에 넘어간 삼손의 실패에서 배우는 현대 사회의 위험은 무엇인가?</h3>
+                    <p>삼손의 실패는 <span class="highlight-answer">현대 사회에서 우리가 직면할 수 있는 여러 위험</span>을 경고합니다. 
+                    
+                    <br><br>들릴라 유혹에서 배우는 위험:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">세속적 관계의 위험</span>입니다. 삼손은 <span class="important">하나님보다 자신의 욕망과 사랑에 더 큰 가치를 두었습니다</span>. 세상의 유혹, 특히 <span class="highlight-answer">쾌락이나 인간적인 관계에서 오는 유혹</span>은 우리의 <span class="important">영적 분별력과 하나님과의 관계를 파괴</span>할 수 있습니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">정보 누설의 위험</span>입니다. 삼손은 <span class="important">자신의 약점을 계속해서 노출시켰고, 결국 그것이 치명적인 결과를 초래</span>했습니다. 우리의 <span class="highlight-answer">신앙적 약점이나 영적 비밀을 함부로 드러내는 것</span>은 사탄에게 공격의 빌미를 제공할 수 있습니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">집중력 상실의 위험</span>입니다. 들릴라는 삼손의 <span class="important">능력의 근원을 끊임없이 집요하게 파고들었습니다</span>. 이는 <span class="highlight-answer">우리의 신앙생활에서도 영적 전쟁의 집중력을 흐트러뜨리려는 끊임없는 방해</span>가 있음을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="important">결정적인 순간의 나약함</span>입니다. 삼손은 반복되는 유혹 앞에서 <span class="highlight-answer">결정적인 순간에 의지력을 발휘하지 못했습니다</span>. 이는 <span class="important">영적인 싸움은 삶의 모든 순간에 걸쳐 이루어져야 함</span>을 의미합니다. 
+                    
+                    <br><br><strong>다섯째</strong>, <span class="highlight-answer">자신의 능력에 대한 과신</span>입니다. 삼손은 하나님께서 주신 힘을 <span class="important">자신의 의지대로 사용할 수 있다고 착각</span>했을 수 있습니다. 이는 <span class="highlight-answer">우리가 받은 은사와 능력이 하나님의 손 안에 있음을 잊지 말아야 함</span>을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 이 이야기는 <span class="important">세상과의 타협이 얼마나 위험하며, 자신의 약점을 어떻게 지켜나가야 하는지</span>에 대한 경고를 줍니다. 또한 <span class="highlight-answer">영적 분별력을 유지하고 하나님과의 관계를 굳건히 하는 것이 얼마나 중요한지</span>를 깨닫게 합니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>3. 삼손의 최후의 행동이 갖는 의미는 무엇이며, 이는 현재 우리의 삶과 사역에 어떤 교훈을 주는가?</h3>
+                    <p>삼손의 최후의 행동은 <span class="highlight-answer">비극적인 실패를 넘어, 하나님 나라를 위한 자기 희생적 승리</span>로 해석될 수 있습니다. 
+                    
+                    <br><br>최후의 행동이 갖는 의미:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">회개와 능력의 회복</span>입니다. 힘을 잃었던 삼손은 <span class="important">마지막 순간에 하나님께 기도하여 힘을 되찾았습니다</span>. 이는 <span class="highlight-answer">인간의 연약함에도 불구하고 하나님께서는 회개하는 자에게 다시 능력을 주신다</span>는 희망을 줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">자신의 삶을 통한 하나님의 뜻 성취</span>입니다. 삼손은 비록 불순종하고 약점을 드러냈지만, <span class="important">결국 하나님의 계획 안에서 이스라엘을 블레셋의 손에서 구원하는 도구로 사용되었습니다</span>. 이는 <span class="highlight-answer">인간의 실수가 하나님의 위대한 뜻을 완전히 막을 수는 없다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">자신의 목숨을 건 자기희생</span>입니다. 삼손은 <span class="highlight-answer">자신의 죽음으로써 블레셋의 잔치를 방해하고 수많은 적을 제거하는 위대한 희생</span>을 치렀습니다. 이는 <span class="important">하나님의 일을 위해 자신을 내려놓는 것이 얼마나 중요한지</span>를 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">순교자적 삶의 가능성</span>입니다. 삼손의 마지막 행동은 <span class="important">자신의 생명을 바쳐 더 큰 유익을 추구하는 순교적 정신</span>을 보여줍니다. 이는 <span class="highlight-answer">우리 역시 우리의 모든 것을 하나님께 드려 하나님의 나라를 위해 살아갈 수 있음</span>을 시사합니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">실수와 실패에도 불구하고 하나님께서는 우리를 다시 사용하여 당신의 뜻을 이루실 수 있다</span>는 것입니다. 또한 <span class="highlight-answer">하나님의 나라를 위해 자신을 희생하는 삶의 가치</span>를 깨닫게 됩니다. 마지막으로 <span class="important">우리의 모든 삶이 하나님께 영광을 돌리는 도구가 될 수 있다</span>는 확신을 얻습니다.</p>
+                </div>
+                
+                <div class="thinking-qa">
+                    <h3>4. 삼손의 삶에서 '능력'과 '연약함'이 교차하는 지점은 무엇이며, 이는 우리 신앙의 여정에 어떤 영향을 주는가?</h3>
+                    <p>삼손의 삶은 <span class="highlight-answer">하나님의 초월적인 능력과 인간의 극심한 연약함이 공존하는 복잡한 모습</span>을 보여줍니다. 
+                    
+                    <br><br>능력과 연약함의 교차점:
+                    
+                    <br><br><strong>첫째</strong>, <span class="highlight-answer">능력의 근원과 관리</span>입니다. 삼손의 힘은 <span class="important">나실인 서원과 하나님과의 관계</span>에서 나왔습니다. 그러나 그는 <span class="highlight-answer">이 힘을 자신의 욕망을 위해 사용했고, 결국 약점 때문에 그것을 잃었습니다</span>. 이는 <span class="important">우리가 받은 모든 은사와 능력의 근원이 하나님께 있으며, 그것을 어떻게 관리하느냐에 따라 결과가 달라진다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>둘째</strong>, <span class="highlight-answer">하나님의 주권과 인간의 책임</span>입니다. 하나님께서는 삼손에게 엄청난 힘을 주셨지만, <span class="important">그 힘을 어떻게 사용할지는 삼손의 책임</span>이었습니다. 그의 선택은 <span class="highlight-answer">하나님의 능력을 제한하는 것이 아니라, 오히려 그 능력을 잘못 사용했을 때의 결과를 보여주는 것</span>입니다. 
+                    
+                    <br><br><strong>셋째</strong>, <span class="important">용서와 회복의 가능성</span>입니다. 비록 삼손은 큰 연약함을 보였지만, <span class="highlight-answer">마지막 순간에 하나님께 회개하고 힘을 되찾았습니다</span>. 이는 <span class="important">우리가 아무리 큰 죄를 지었어도 하나님께서는 용서와 회복의 기회를 주신다</span>는 것을 보여줍니다. 
+                    
+                    <br><br><strong>넷째</strong>, <span class="highlight-answer">하나님을 위한 삶의 최종적 승리</span>입니다. 삼손의 삶은 개인적으로는 실패의 연속이었지만, <span class="important">결과적으로 블레셋을 괴롭히고 이스라엘을 구원하는 하나님의 계획을 이루었습니다</span>. 이는 <span class="highlight-answer">인간의 불완전함에도 불구하고 하나님의 뜻은 반드시 이루어진다</span>는 것을 보여줍니다. 
+                    
+                    <br><br>현재 우리에게 주는 교훈은 다음과 같습니다. <span class="important">우리 또한 연약함을 가지고 있지만, 그것이 하나님의 능력을 가로막지 못한다는 믿음을 가져야 합니다</span>. 또한 <span class="highlight-answer">자신의 약점을 인정하고 하나님께 의지할 때, 하나님은 우리를 통해 일하실 것</span>입니다. 마지막으로 <span class="important">하나님께서는 우리의 실수에도 불구하고 궁극적으로 당신의 뜻을 이루신다</span>는 확신을 가져야 합니다.</p>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>결론: 능력과 연약함의 드라마</h3>
+                <p><strong>1. 하나님의 능력과 인간의 한계</strong><br>
+                삼손의 이야기는 <span class="key-point">하나님께서 인간의 연약함에도 불구하고 당신의 능력을 어떻게 나타내시는지</span>를 보여주는 극적인 사례입니다. <span class="important-text">우리의 부족함은 오히려 하나님의 위대함을 드러내는 기회</span>가 될 수 있습니다.</p>
+                
+                <p><strong>2. 서원과 약속의 신중함</strong><br>
+                <span class="key-point">나실인 서원과 그것을 지키는 과정에서 삼손이 겪었던 고뇌</span>는 <span class="important-text">하나님과의 약속이 얼마나 신중해야 하며, 그 약속을 지키는 것이 얼마나 중요한지</span>를 강조합니다.</p>
+                
+                <p><strong>3. 약점을 통한 교훈</strong><br>
+                <span class="key-point">삼손의 치명적인 약점이었던 들릴라와의 관계</span>는 <span class="important-text">우리의 약점이 어떻게 영적 침체의 원인이 될 수 있는지</span>를 보여주며, <span class="key-point">끊임없는 경계와 영적 싸움의 필요성</span>을 일깨웁니다.</p>
+                
+                <p><strong>4. 회복과 구원의 가능성</strong><br>
+                <span class="key-point">비록 삼손은 큰 실패를 겪었지만, 마지막 순간 하나님께 회개하고 능력을 회복</span>했습니다. 이는 <span class="important-text">아무리 큰 죄와 실패 속에서도 하나님께서는 언제나 회개의 문을 열어주신다</span>는 희망을 줍니다.</p>
+            </div>
+        </div>
+        
+        <div class="key-verses-section">
+            <h2>📖 삼손 핵심 성경 구절</h2>
+            <div class="key-verse">
+                <h3>사사기 13:5</h3>
+                <p>"보라 네가 임신하지 못하므로 낳지 못하였거니와 필경 임신하여 아들을 낳으리라"</p>
+                <div class="verse-full-text">삼손의 탄생 예고는 하나님께서 그의 삶을 특별한 목적을 위해 예정하셨음을 보여줍니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 14:6</h3>
+                <p>"그 때에 여호와의 영이 그를 움직이기 시작하였더라"</p>
+                <div class="verse-full-text">삼손의 초인적인 힘의 근원은 인간적인 능력이 아닌 하나님의 영에 있었습니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 15:14</h3>
+                <p>"그가 라이스 근처에 이르러서는 블레셋 사람들이 그를 향하여 부르짖는 소리를 듣고 여호와의 영이 힘 있게 그에게 임하였으므로 그의 허리에 있는 밧줄이 불 탄 삼 같게 되어서 그의 팔에서 떨어진지라"</p>
+                <div class="verse-full-text">그의 힘은 하나님께 있고, 하나님은 연약한 삼손에게 능력을 주시어 구원하십니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 16:20</h3>
+                <p>"여인이 이르되 블레셋 사람이 너를 잡으러 왔느니라 하니 삼손이 잠에서 깨어 이르되 내가 전과 같이 나가서 나를 흔들리라 하였으나 여호와께서 이미 자기를 떠나신 줄을 깨닫지 못하였더라"</p>
+                <div class="verse-full-text">삼손의 가장 큰 비극은 힘의 근원이 하나님과의 관계에 있음을 깨닫지 못한 것입니다.</div>
+            </div>
+            <div class="key-verse">
+                <h3>사사기 16:30</h3>
+                <p>"삼손이 이르되 블레셋 사람들과 함께 나로 죽게 하라 하고 힘을 다하여 몸을 굽혀 집이 그 군주들과 그 안에 있는 모든 사람에게 무너지게 하니 이는 삼손이 죽을 때에 행한 일이 그가 평생에 행한 모든 일보다 많았더라"</p>
+                <div class="verse-full-text">그의 마지막 행동은 비록 죽음이었으나, 가장 큰 규모로 블레셋을 괴롭힌 승리였습니다. 결과적으로 하나님의 뜻을 이루었습니다.</div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="./index.html" class="nav-button">
+                🏠 메인으로 돌아가기
+            </a>
+            <a href="./16t.html" class="nav-button secondary">
+                다음 단계로 가기 ➡️
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        const data = [
+            {
+                verse: "사사기 13:1-5",
+                event: "삼손의 탄생 예고와 나실인 서원",
+                place: "소라",
+                question: "삼손의 나실인 서원의 특징은 무엇인가?",
+                answer: "<span class='highlight-text'>머리털을 깎지 않고, 포도주나 독주를 마시지 않으며, 부정한 것을 만지지 않는 것</span>",
+                fullVerse: "이스라엘 자손이 다시 여호와의 목전에 악을 행하였으므로 여호와께서 칠 년 동안 그들을 미디안의 손에 넘겨 주시니 미디안의 손이 이스라엘을 이긴지라 이스라엘 자손이 미디안으로 말미암아 산에서 굴과 동굴과 산성을 자기들을 위하여 만들었으며"
+            },
+            {
+                verse: "사사기 14:1-20",
+                event: "블레셋 여인과의 결혼과 수수께끼",
+                place: "딤나, 에스다올",
+                question: "삼손이 블레셋 여인과 결혼하려 한 이유는 무엇인가?",
+                answer: "<span class='highlight-text'>블레셋 여인이 그의 눈에 보기에 좋았기 때문</span>이며, 이는 그의 약점을 드러내는 시작점이 되기도 함",
+                fullVerse: "삼손이 딤나에 내려가서 거기서 블레셋 여자를 보고 올라와서 자기 부모에게 말하되 내가 블레셋 사람 중에서 한 여자를 보고 내 마음에 들었으니 이제 그를 맞이하여 내 아내가 되게 하여 달라 하니라 그의 부모가 그에게 이르되 네 형제들의 딸들 중에서나 내 백성 중에서 너의 아내를 맞이할 것이지 어찌하여 할례 받지 아니한 블레셋 사람 중에서 맞이하여 내게 원수를 삼느냐 하니 삼손이 그의 아버지에게 이르되 내가 그 여자를 좋아하오니 나의 소견에 옳게 여기는 대로 그 여자를 데려오소서 하니라 그의 아버지와 어머니가 이 일이 여호와의 영에서 말미암은 것인지 혹 그가 이스라엘을 위하여 싸움을 찾는 것인지 알지 못하였더라"
+            },
+            {
+                verse: "사사기 15:14-20",
+                event: "나귀 턱뼈와 불 갓 꼬리 사건",
+                place: "라이스 골짜기, 에스다올",
+                question: "삼손의 힘이 어디서 나왔으며, 그의 힘이 약해진 원인은 무엇인가?",
+                answer: "힘의 근원은 하나님께 있었으며, 약점은 머리카락을 자르거나 부정한 것을 만지는 것",
+                fullVerse: "그가 라이스 근처에 이르러서는 블레셋 사람이 그를 향하여 부르짖는 소리를 듣고 여호와의 영이 그에게 임하였으므로 그의 허리에 있는 밧줄이 불 탄 삼 같이 되어서 그의 팔에서 떨어진지라"
+            },
+            {
+                verse: "사사기 16:4-22",
+                event: "들릴라의 유혹과 힘의 고갈",
+                place: "소렉 골짜기",
+                question: "들릴라가 삼손의 힘의 근원을 알아내려고 한 이유는 무엇인가?",
+                answer: "블레셋 방백들이 그녀에게 각각 은 천백 개씩을 주겠다고 약속했기 때문",
+                fullVerse: "그 후에 삼손이 소렉 골짜기에 사는 들릴라라 하는 여인에게 반하였더라 블레셋 사람들의 방백들이 그 여인에게 올라가서 그에게 말하되 너는 가서 삼손을 꿰어 그가 큰 힘을 가지고 있는 그것이 무엇이며 우리가 어떻게 하면 그를 제압하여 그를 괴롭게 하여 우리에게 복종하게 할지를 우리가 알게 하여 너는 각기 은 천백 개씩을 받으리라 하니라"
+            },
+            {
+                verse: "사사기 16:23-31",
+                event: "최후의 복수와 죽음",
+                place: "가사, 다곤 신전",
+                question: "삼손의 마지막 행동의 의미는 무엇인가?",
+                answer: "자신의 모든 삶을 하나님께 드린 자기희생적 행동으로, 비록 실패를 많이 겪었으나 마지막 순간에 하나님의 영광을 위해 죽음",
+                fullVerse: "블레셋 사람들이 이르되 우리가 우리 신을 그의 손에 넘겨 주었다 우리 신이 우리 원수 삼손을 우리 손에 넘겨 주었다 하더라 그들이 그들의 신을 찬양하고 고기 마시고 술을 마시며 그들의 신 다곤에게 또 이 백성을 우리가 죽인 우리 원수 삼손을 그의 손에 넘겨 주었다 하며 큰 소리로 부르며 삼손의 힘의 근원이 그의 머리카락에 있다고 여겼으므로 그들이 삼손을 그의 집에서 끌어내어 그의 두 눈을 빼고 그를 가사로 끌고 가서 놋 줄로 매고 그가 옥에서 맷돌을 돌리게 하니라 그가 옥에서 맷돌을 돌리고 있더라 그 머리털이 밀린 후에 길어지기 시작하더라 이에 블레셋 사람들이 모여 그들의 신 다곤에게 큰 제사를 드리고 재물을 삼손을 우리 가운데로 끌어내어 우리를 연희하게 하려 하였더라 그들이 성전 가운데 섰는 두 기둥을 붙잡고 삼손에게 이르되 네가 섬의 기초를 무너뜨려 우리 손으로 우리를 망하게 하려 하므로 네가 우리의 원수들보다 나에게 죽기를 원하노라 하니라 삼손이 그 땅의 모든 방백에게 이르되 너희가 나와 함께 와서 이 일을 보기를 원하노라 하매 블레셋 사람의 방백들이 그를 가운데 데리고 성전에 들어와서 성전의 두 기둥을 붙잡고"
+            }
+        ];
+
+        let filteredData = [...data];
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                document.getElementById('noResults').style.display = 'none';
+            }
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="verse-cell" onclick="toggleVerse(${index})">
+                        ${item.verse}
+                        <div class="verse-text" id="verse-${index}">${item.fullVerse}</div>
+                    </td>
+                    <td>${item.event}</td>
+                    <td class="place-cell">${item.place}</td>
+                    <td class="qa-cell">
+                        <div class="question">Q: ${item.question}</div>
+                        <div class="answer">A: ${item.answer}</div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleVerse(index) {
+            const verseText = document.getElementById(`verse-${index}`);
+            if (verseText) {
+                verseText.classList.toggle('show');
+            }
+        }
+
+        function searchTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const noResults = document.getElementById('noResults');
+            
+            if (searchTerm === '') {
+                filteredData = [...data];
+            } else {
+                filteredData = data.filter(item => 
+                    item.verse.toLowerCase().includes(searchTerm) ||
+                    item.event.toLowerCase().includes(searchTerm) ||
+                    item.place.toLowerCase().includes(searchTerm) ||
+                    item.question.toLowerCase().includes(searchTerm) ||
+                    item.answer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filteredData.length === 0) {
+                document.querySelector('#dataTable').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.querySelector('#dataTable').style.display = 'table';
+                noResults.style.display = 'none';
+                renderTable();
+                
+                // 검색 결과 하이라이트
+                if (searchTerm) {
+                    const rows = document.querySelectorAll('#dataTable tbody tr');
+                    rows.forEach(row => {
+                        row.classList.add('highlight');
+                        setTimeout(() => row.classList.remove('highlight'), 2000);
+                    });
+                }
+            }
+        }
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', searchTable);
+
+        // 초기 테이블 렌더링
+        renderTable();
+
+        // 페이지 로드 애니메이션
+        const elementsToAnimate = document.querySelectorAll('.thinking-qa, .key-verse, .conclusion');
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>
